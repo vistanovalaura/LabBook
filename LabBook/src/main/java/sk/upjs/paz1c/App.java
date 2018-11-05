@@ -1,13 +1,18 @@
 package sk.upjs.paz1c;
 
-/**
- * Hello world!
- *
- */
+import sk.upjs.paz1c.entities.User;
+import sk.upjs.paz1c.persistent.DAOfactory;
+import sk.upjs.paz1c.persistent.UserDAO;
+
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+//    	User oliver = new User();
+//    	oliver.setName("Oliver");
+//    	oliver.setPassword("1234");
+//    	oliver.setEmail("oliver.vahovsky@gmail.com");
+//        UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+//        userDAO.addUser(oliver);
     }
 }
