@@ -5,7 +5,7 @@ import java.util.List;
 public class User {
 
 	private Long userID;
-	private String name; 
+	private String name;
 	private String password;
 	private List<Project> projects;
 	private List<Task> tasks;
