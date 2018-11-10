@@ -1,4 +1,4 @@
-package sk.upjs.paz1c;
+package sk.upjs.paz1c.gui;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

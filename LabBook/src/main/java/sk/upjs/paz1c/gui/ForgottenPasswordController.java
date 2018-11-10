@@ -1,4 +1,4 @@
-package sk.upjs.paz1c;
+package sk.upjs.paz1c.gui;
 
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -1,4 +1,4 @@
-package sk.upjs.paz1c;
+package sk.upjs.paz1c.gui;
 
 import java.io.IOException;
 
