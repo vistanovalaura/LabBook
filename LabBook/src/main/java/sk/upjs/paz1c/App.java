@@ -9,23 +9,22 @@ import sk.upjs.paz1c.entities.User;
 //import sk.upjs.paz1c.persistent.DAOfactory;
 //import sk.upjs.paz1c.persistent.UserDAO;
 
-public class App 
-extends Application
-{
+public class App extends Application {
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		FrontPageController mainController	= new FrontPageController();            
-		FXMLLoader fxmlLoader = new	FXMLLoader(getClass().getResource("frontPage.fxml"));
+		FrontPageController mainController = new FrontPageController();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("frontPage.fxml"));
 		fxmlLoader.setController(mainController);
-		Parent rootPane	= fxmlLoader.load();
-		
-		Scene scene	= new Scene(rootPane);
+		Parent rootPane = fxmlLoader.load();
+
+		Scene scene = new Scene(rootPane);
 		primaryStage.setTitle("LabBook login");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
-	public static void main( String[] args ){
-        launch(args);
-    }
+
+	public static void main(String[] args) {
+		launch(args);
+	}
 }

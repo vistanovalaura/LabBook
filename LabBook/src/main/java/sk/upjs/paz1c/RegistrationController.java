@@ -1,5 +1,7 @@
 package sk.upjs.paz1c;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -17,10 +19,20 @@ public class RegistrationController {
     private TextField nameTextField;
 
     @FXML
-    private Button finichButton;
+    private Button finishButton;
     
     @FXML
     private TextField emailAdressTextField;
 
+    @FXML 
+    void initialize() {
+    	finishButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+	            finishButton.getScene().getWindow().hide();
+			}
+		});
+    }
     
 }

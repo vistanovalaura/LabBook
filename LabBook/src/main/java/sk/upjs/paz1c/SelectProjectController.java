@@ -37,6 +37,9 @@ public class SelectProjectController {
 
 	@FXML
 	private Button editButton;
+	
+	@FXML
+    private Button newProjectButton;
 
 	@FXML 
 	void initialize() {

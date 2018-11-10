@@ -7,26 +7,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="131.0" layoutY="51.0" text="Select project" textFill="#1075e1">
+      <Label layoutX="132.0" layoutY="40.0" text="Select project" textFill="#1075e1">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <TableView fx:id="projectsTableView" layoutX="16.0" layoutY="121.0" prefHeight="273.0" prefWidth="415.0">
+      <TableView fx:id="projectsTableView" layoutX="16.0" layoutY="175.0" prefHeight="273.0" prefWidth="415.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />
         </columns>
       </TableView>
-      <Button fx:id="openButton" layoutX="85.0" layoutY="429.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="92.0" text="Open">
+      <Button fx:id="openButton" layoutX="68.0" layoutY="474.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="127.0" text="Open">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="editButton" layoutX="269.0" layoutY="429.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="92.0" text="Edit">
+      <Button fx:id="editButton" layoutX="252.0" layoutY="474.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="127.0" text="Edit">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="newProjectButton" layoutX="17.0" layoutY="109.0" mnemonicParsing="false" text="New Project">
          <font>
             <Font size="18.0" />
          </font>
