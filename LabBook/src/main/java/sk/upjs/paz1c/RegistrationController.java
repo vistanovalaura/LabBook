@@ -18,6 +18,9 @@ public class RegistrationController {
 
     @FXML
     private Button finichButton;
+    
+    @FXML
+    private TextField emailAdressTextField;
 
     
 }

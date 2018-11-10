@@ -48,8 +48,17 @@ public class FrontPageController {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				RegistrationController editController = new RegistrationController();            
-				showModalWindow(editController, "registration.fxml");
+				RegistrationController registrationController = new RegistrationController();            
+				showModalWindow(registrationController, "registration.fxml");
+			}
+		});
+		
+		signInButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				SelectProjectController selectProjectController = new SelectProjectController();            
+				showModalWindow(selectProjectController, "selectProject.fxml");				
 			}
 		});
 		
