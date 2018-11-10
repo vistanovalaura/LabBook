@@ -12,7 +12,8 @@ public class App
 //    	oliver.setName("Oliver");
 //    	oliver.setPassword("1234");
 //    	oliver.setEmail("oliver.vahovsky@gmail.com");
-//        UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
-//        userDAO.addUser(oliver);
+        UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+ //       userDAO.addUser(oliver);
+        System.out.println(userDAO.getAll());
     }
 }
