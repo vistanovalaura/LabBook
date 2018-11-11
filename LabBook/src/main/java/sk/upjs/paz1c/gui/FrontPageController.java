@@ -54,7 +54,7 @@ public class FrontPageController {
 			@Override
 			public void handle(ActionEvent event) {
 				RegistrationController registrationController = new RegistrationController();
-				showModalWindow(registrationController, "/LabBook/src/main/resources/sk/upjs/paz1c/registration.fxml");
+				showModalWindow(registrationController, "registration.fxml");
 			}
 		});
 
@@ -63,7 +63,7 @@ public class FrontPageController {
 			@Override
 			public void handle(ActionEvent event) {
 				SelectProjectController selectProjectController = new SelectProjectController();
-				showModalWindow(selectProjectController, "/LabBook/src/main/resources/sk/upjs/paz1c/selectProject.fxml");
+				showModalWindow(selectProjectController, "selectProject.fxml");
 			}
 		});
 
@@ -72,7 +72,7 @@ public class FrontPageController {
 			@Override
 			public void handle(ActionEvent event) {
 				ForgottenPasswordController forgottenPasswordController = new ForgottenPasswordController();
-				showModalWindow(forgottenPasswordController, "/LabBook/src/main/resources/sk/upjs/paz1c/forgottenPassword.fxml");
+				showModalWindow(forgottenPasswordController, "forgottenPassword.fxml");
 			}
 		});
 
@@ -95,7 +95,7 @@ public class FrontPageController {
 	private void loginUser() {
 		SelectProjectController controller = new SelectProjectController();
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/LabBook/src/main/resources/sk/upjs/paz1c/selectProject.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("selectProject.fxml"));
 			loader.setController(controller);
 
 			Parent parentPane = loader.load();
