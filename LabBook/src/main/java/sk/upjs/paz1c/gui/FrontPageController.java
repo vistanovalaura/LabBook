@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.upjs.paz1c.entities.User;
@@ -20,7 +19,7 @@ import sk.upjs.paz1c.entities.User;
 public class FrontPageController {
 
 	private User user;
-	private UserFxModel userModel;
+	private SignInFxModel userModel;
 
 	@FXML
 	private PasswordField passwordTextField;
@@ -58,14 +57,13 @@ public class FrontPageController {
 			}
 		});
 
-		signInButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				SelectProjectController selectProjectController = new SelectProjectController();
-				showModalWindow(selectProjectController, "selectProject.fxml");
-			}
-		});
+		/*
+		 * signInButton.setOnAction(new EventHandler<ActionEvent>() {
+		 * 
+		 * @Override public void handle(ActionEvent event) { SelectProjectController
+		 * selectProjectController = new SelectProjectController();
+		 * showModalWindow(selectProjectController, "selectProject.fxml"); } });
+		 */
 
 		forgottenPasswordHyperlink.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -78,15 +76,25 @@ public class FrontPageController {
 
 		signInButton.setOnAction(eh -> {
 			loginUser();
-			/*
-			 * if (!UserIdentificationManager.setUser(loginFxModel.getEmail())) {
-			 * showWrongDataWindow(); } int typeOfUser =
-			 * UserIdentificationManager.getTypeOfUser(); if
-			 * (passwordManager.isCorrectPassword(loginFxModel.getPassword(), typeOfUser,
-			 * UserIdentificationManager.getId())) { if (typeOfUser == 1) { loginTeacher();
-			 * } if (typeOfUser == 2) { loginAdmin(); } if (typeOfUser == 3) {
-			 * loginSuperAdmin(); } } else { showWrongDataWindow(); }
-			 */
+
+			/*if (!UserIdentificationManager.setUser(loginFxModel.getEmail())) {
+				showWrongDataWindow();
+			}
+			int typeOfUser = UserIdentificationManager.getTypeOfUser();
+			if (passwordManager.isCorrectPassword(loginFxModel.getPassword(), typeOfUser,
+					UserIdentificationManager.getId())) {
+				if (typeOfUser == 1) {
+					loginTeacher();
+				}
+				if (typeOfUser == 2) {
+					loginAdmin();
+				}
+				if (typeOfUser == 3) {
+					loginSuperAdmin();
+				}
+			} else {
+				showWrongDataWindow();
+			}*/
 
 		});
 
