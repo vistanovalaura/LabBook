@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.upjs.paz1c.entities.User;
@@ -76,7 +77,7 @@ public class FrontPageController {
 
 		signInButton.setOnAction(eh -> {
 			loginUser();
-
+			//showWrongDataWindow();
 			/*if (!UserIdentificationManager.setUser(loginFxModel.getEmail())) {
 				showWrongDataWindow();
 			}
@@ -136,4 +137,26 @@ public class FrontPageController {
 			e.printStackTrace();
 		}
 	}
+	
+    private void showWrongDataWindow() {
+        AlertBoxFailToSignInController controller = new AlertBoxFailToSignInController();
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("alertBoxFailToSignIn.fxml"));
+            loader.setController(controller);
+
+            Parent parentPane = loader.load();
+            Scene scene = new Scene(parentPane);
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.setTitle("Fail to sign in");
+            stage.show();
+
+        } catch (IOException iOException) {
+            iOException.printStackTrace();
+        }
+    }
 }
