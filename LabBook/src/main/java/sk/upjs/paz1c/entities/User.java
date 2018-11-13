@@ -10,6 +10,17 @@ public class User {
 	private List<Project> projects;
 	private List<Task> tasks;
 	private String email;
+	
+	public User() {
+		
+	}
+
+	public User(String name, String password, String email) {
+		super();
+		this.name = name;
+		this.password = password;
+		this.email = email;
+	}
 
 	public Long getUserID() {
 		return userID;
