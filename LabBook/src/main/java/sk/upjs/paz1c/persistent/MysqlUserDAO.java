@@ -19,21 +19,16 @@ public class MysqlUserDAO implements UserDAO {
 	public MysqlUserDAO(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-	
-	public void addUserOld(User user) {
-		String sql = "INSERT INTO user(login, password, email) VALUES(?,?,?)";
-		jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getEmail());
-	}
 
 	@Override
 	public void addUser(User user) {
 		SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);
 		insert.withTableName("user");
 		insert.usingGeneratedKeyColumns("id_user");
-		insert.usingColumns("login", "password", "email");
+		insert.usingColumns("name", "password", "email");
 
 		Map<String, Object> values = new HashMap<>();
-		values.put("login", user.getName());
+		values.put("name", user.getName());
 		values.put("password", user.getPassword());
 		values.put("email", user.getEmail());
 
@@ -42,7 +37,7 @@ public class MysqlUserDAO implements UserDAO {
 
 	@Override
 	public List<User> getAll() {
-		String sql = "SELECT id_user, login, password, email "
+		String sql = "SELECT id_user, name, password, email "
 				+ "FROM user";
 		return jdbcTemplate.query(sql, new RowMapper<User>() {
 
@@ -50,7 +45,7 @@ public class MysqlUserDAO implements UserDAO {
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 				User user = new User();
 				user.setUserID(rs.getLong("id_user"));
-				user.setName(rs.getString("login"));
+				user.setName(rs.getString("name"));
 				user.setPassword(rs.getString("password"));
 				user.setEmail(rs.getString("email"));
 				return user;

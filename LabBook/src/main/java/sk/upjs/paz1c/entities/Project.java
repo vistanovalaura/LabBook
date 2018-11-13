@@ -8,8 +8,8 @@ public class Project {
 	private Long projectID;
 	private String name;
 	private boolean active;
-	private LocalDate from;
-	private LocalDate until;
+	private LocalDate dateFrom;
+	private LocalDate dateUntil;
 	private List<Task> tasks;
 	private List<Item> items;
 	private boolean allItemsAvailable;
@@ -40,20 +40,20 @@ public class Project {
 		this.active = active;
 	}
 
-	public LocalDate getFrom() {
-		return from;
+	public LocalDate getDateFrom() {
+		return dateFrom;
 	}
 
-	public void setFrom(LocalDate from) {
-		this.from = from;
+	public void setDateFrom(LocalDate from) {
+		this.dateFrom = from;
 	}
 
-	public LocalDate getUntil() {
-		return until;
+	public LocalDate getDateUntil() {
+		return dateUntil;
 	}
 
-	public void setUntil(LocalDate until) {
-		this.until = until;
+	public void setDateUntil(LocalDate until) {
+		this.dateUntil = until;
 	}
 
 	public List<Task> getTasks() {
@@ -95,5 +95,14 @@ public class Project {
 	public void setCompletedBy(List<User> completedBy) {
 		this.completedBy = completedBy;
 	}
+
+	@Override
+	public String toString() {
+		return "Project [projectID=" + projectID + ", name=" + name + ", active=" + active + ", dateFrom=" + dateFrom
+				+ ", dateUntil=" + dateUntil + ", tasks=" + tasks + ", items=" + items + ", allItemsAvailable="
+				+ allItemsAvailable + ", createdBy=" + createdBy + ", completedBy=" + completedBy + "]";
+	}
+	
+	
 
 }

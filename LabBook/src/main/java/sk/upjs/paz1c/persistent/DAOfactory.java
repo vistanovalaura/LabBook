@@ -4,8 +4,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
-import sk.upjs.paz1c.entities.Project;
-
 public enum DAOfactory {
 
 	INSTANCE;
