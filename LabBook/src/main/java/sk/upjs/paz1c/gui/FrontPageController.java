@@ -1,7 +1,9 @@
 package sk.upjs.paz1c.gui;
 
 import java.io.IOException;
-
+import java.util.List;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,14 +14,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.upjs.paz1c.entities.User;
+import sk.upjs.paz1c.persistent.DAOfactory;
+import sk.upjs.paz1c.persistent.MysqlUserDAO;
+import sk.upjs.paz1c.persistent.UserDAO;
 
 public class FrontPageController {
 
 	private User user;
-	private SignInFxModel userModel;
+	private SignInFxModel signInFxModel;
 
 	@FXML
 	private PasswordField passwordTextField;
@@ -75,26 +81,35 @@ public class FrontPageController {
 		});
 
 		signInButton.setOnAction(eh -> {
-			loginUser();
-
-			/*if (!UserIdentificationManager.setUser(loginFxModel.getEmail())) {
-				showWrongDataWindow();
-			}
-			int typeOfUser = UserIdentificationManager.getTypeOfUser();
-			if (passwordManager.isCorrectPassword(loginFxModel.getPassword(), typeOfUser,
-					UserIdentificationManager.getId())) {
-				if (typeOfUser == 1) {
-					loginTeacher();
+			String login = loginTextField.getText();
+			String password = passwordTextField.getText();
+			
+			/*UserDAO userDao = new DAOfactory.INSTANCE.getUserDAO();
+			List<User> users = userDao.getAll();
+			for (User u : users) {
+				if (loginTextField.getText().equals(login) && passwordTextField.getText().equals(password)) {
+					loginUser();
+				} else {
+					showWrongDataWindow();
 				}
-				if (typeOfUser == 2) {
-					loginAdmin();
-				}
-				if (typeOfUser == 3) {
-					loginSuperAdmin();
-				}
+			}*/
+			
+			if (loginTextField.getText().equals("Laura") && passwordTextField.getText().equals("laura")) {
+				loginUser();
 			} else {
 				showWrongDataWindow();
-			}*/
+			}
+			
+			
+			/*
+			 * if (!UserIdentificationManager.setUser(loginFxModel.getEmail())) {
+			 * showWrongDataWindow(); } int typeOfUser =
+			 * UserIdentificationManager.getTypeOfUser(); if
+			 * (passwordManager.isCorrectPassword(loginFxModel.getPassword(), typeOfUser,
+			 * UserIdentificationManager.getId())) { if (typeOfUser == 1) { loginTeacher();
+			 * } if (typeOfUser == 2) { loginAdmin(); } if (typeOfUser == 3) {
+			 * loginSuperAdmin(); } } else { showWrongDataWindow(); }
+			 */
 
 		});
 
@@ -134,6 +149,27 @@ public class FrontPageController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	private void showWrongDataWindow() {
+		AlertBoxFailToSignInController controller = new AlertBoxFailToSignInController();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("alertBoxFailToSignIn.fxml"));
+			loader.setController(controller);
+
+			Parent parentPane = loader.load();
+			Scene scene = new Scene(parentPane);
+
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setResizable(false);
+			stage.setTitle("Fail to sign in");
+			stage.show();
+
+		} catch (IOException iOException) {
+			iOException.printStackTrace();
 		}
 	}
 }
