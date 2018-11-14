@@ -6,7 +6,7 @@ import sk.upjs.paz1c.entities.Project;
 
 public interface ProjectDAO {
 	
-	void addProject(Project project);
+	void addProject(Project project); // komentar
 	
 	List<Project> getAll();
 
