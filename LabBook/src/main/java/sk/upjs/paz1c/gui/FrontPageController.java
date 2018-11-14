@@ -83,7 +83,7 @@ public class FrontPageController {
 		signInButton.setOnAction(eh -> {
 			String login = loginTextField.getText();
 			String password = passwordTextField.getText();
-			
+			loginUser();
 			/*UserDAO userDao = new DAOfactory.INSTANCE.getUserDAO();
 			List<User> users = userDao.getAll();
 			for (User u : users) {
@@ -94,11 +94,11 @@ public class FrontPageController {
 				}
 			}*/
 			
-			if (loginTextField.getText().equals("Laura") && passwordTextField.getText().equals("laura")) {
+			/*if (loginTextField.getText().equals("Laura") && passwordTextField.getText().equals("laura")) {
 				loginUser();
 			} else {
 				showWrongDataWindow();
-			}
+			}*/
 			
 			
 			/*
