@@ -27,8 +27,8 @@ public class ProjectFxModel {
 
 	public void setProject(Project project) {
 		setName(project.getName());
-		setFrom(project.getFrom());
-		setUntil(project.getUntil());
+		setFrom(project.getDateFrom());
+		setUntil(project.getDateUntil());
 		setCreatedBy(project.getCreatedBy());
 		setCompletedBy(project.getCompletedBy());
 	}
@@ -36,8 +36,8 @@ public class ProjectFxModel {
 	public Project getProject() {
 		Project p = new Project();
 		p.setName(getName());
-		p.setFrom(getFrom());
-		p.setUntil(getUntil());
+		p.setDateFrom(getFrom());
+		p.setDateUntil(getUntil());
 		p.setCreatedBy(getCreatedBy());
 		p.setCompletedBy(getCompletedBy());
 		return p;
