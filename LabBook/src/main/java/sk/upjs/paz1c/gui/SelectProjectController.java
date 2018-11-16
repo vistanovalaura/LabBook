@@ -71,6 +71,15 @@ public class SelectProjectController {
 				// showModalWindow(noteController, "selectNotes.fxml");
 			}
 		});
+		
+		newProjectButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				NewProjectController newProjectController = new NewProjectController();
+				showModalWindow(newProjectController, "newProject.fxml");
+			}
+		});
 
 		TableColumn<Project, String> nameCol = new TableColumn<>("Name");
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
