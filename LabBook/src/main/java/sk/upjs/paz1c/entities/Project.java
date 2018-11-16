@@ -15,6 +15,18 @@ public class Project {
 	private boolean allItemsAvailable;
 	private User createdBy;
 	private List<User> completedBy;
+	
+	public Project() {
+		
+	}
+
+	public Project(String name, LocalDate dateFrom, LocalDate dateUntil, boolean active) {
+		super();
+		this.name = name;
+		this.dateFrom = dateFrom;
+		this.dateUntil = dateUntil;
+		this.active = true;
+	}
 
 	public Long getProjectID() {
 		return projectID;

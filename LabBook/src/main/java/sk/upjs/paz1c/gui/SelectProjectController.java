@@ -50,6 +50,12 @@ public class SelectProjectController {
 	private Button newProjectButton;
 
 	@FXML
+	private Button deleteButton;
+
+	@FXML
+	private Button signOutButton;
+
+	@FXML
 	void initialize() {
 		projectsModel = FXCollections.observableArrayList(projectDao.getAll());
 
@@ -71,13 +77,31 @@ public class SelectProjectController {
 				// showModalWindow(noteController, "selectNotes.fxml");
 			}
 		});
-		
+
+		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				DeleteProjectController deleteProjectController = new DeleteProjectController();
+				showModalWindow(deleteProjectController, "deleteProject.fxml");
+
+			}
+		});
+
+		signOutButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				signOutButton.getScene().getWindow().hide();				
+			}
+		});
 		newProjectButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				NewProjectController newProjectController = new NewProjectController();
 				showModalWindow(newProjectController, "newProject.fxml");
+				projectsModel.setAll(projectDao.getAll());
 			}
 		});
 
@@ -86,10 +110,10 @@ public class SelectProjectController {
 		projectsTableView.getColumns().add(nameCol);
 		columnsVisibility.put("ID", nameCol.visibleProperty());
 
-		TableColumn<Project, String> createdByCol = new TableColumn<>("Created by");
-		createdByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
-		projectsTableView.getColumns().add(createdByCol);
-		columnsVisibility.put("createdBy", createdByCol.visibleProperty());
+//		TableColumn<Project, String> createdByCol = new TableColumn<>("Created by");
+//		createdByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
+//		projectsTableView.getColumns().add(createdByCol);
+//		columnsVisibility.put("createdBy", createdByCol.visibleProperty());
 
 		TableColumn<Project, Boolean> activeCol = new TableColumn<>("Active");
 		activeCol.setCellValueFactory(new PropertyValueFactory<>("active"));
@@ -97,16 +121,16 @@ public class SelectProjectController {
 		columnsVisibility.put("active", activeCol.visibleProperty());
 
 		projectsTableView.setItems(projectsModel);
-    	projectsTableView.setEditable(true);
-    	
-    	ContextMenu contextMenu = new ContextMenu();
-    	for (Entry<String, BooleanProperty> entry: columnsVisibility.entrySet()) {
-	    	CheckMenuItem menuItem = new CheckMenuItem(entry.getKey());
-	    	menuItem.selectedProperty().bindBidirectional(entry.getValue());
-	    	contextMenu.getItems().add(menuItem);
-    	}
-    	projectsTableView.setContextMenu(contextMenu);
-    	
+		projectsTableView.setEditable(true);
+
+		ContextMenu contextMenu = new ContextMenu();
+		for (Entry<String, BooleanProperty> entry : columnsVisibility.entrySet()) {
+			CheckMenuItem menuItem = new CheckMenuItem(entry.getKey());
+			menuItem.selectedProperty().bindBidirectional(entry.getValue());
+			contextMenu.getItems().add(menuItem);
+		}
+		projectsTableView.setContextMenu(contextMenu);
+
 		projectsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Project>() {
 
 			@Override
@@ -117,7 +141,7 @@ public class SelectProjectController {
 					editButton.setDisable(false);
 				}
 				selectedProject.set(newValue);
-				}
+			}
 		});
 	}
 

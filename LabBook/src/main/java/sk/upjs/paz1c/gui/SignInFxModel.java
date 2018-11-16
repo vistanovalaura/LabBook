@@ -9,6 +9,10 @@ public class SignInFxModel {
 	private StringProperty name;
 	private StringProperty password;
 
+	public SignInFxModel() {
+
+	}
+
 	public SignInFxModel(User user) {
 		this.user = user;
 		setName(user.getName());

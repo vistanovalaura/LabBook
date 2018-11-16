@@ -5,6 +5,7 @@ public class Admin {
 	private Long adminID;
 	private String name;
 	private String password;
+	
 	public Long getAdminID() {
 		return adminID;
 	}

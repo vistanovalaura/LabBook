@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.User;
 import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.MysqlUserDAO;
@@ -25,7 +26,8 @@ import sk.upjs.paz1c.persistent.UserDAO;
 public class FrontPageController {
 
 	private User user;
-	private SignInFxModel signInFxModel;
+	private SignInFxModel signInFxModel = new SignInFxModel();
+	private sk.upjs.paz1c.business.PasswordManager passwordManager = new sk.upjs.paz1c.business.PasswordManager();
 
 	@FXML
 	private PasswordField passwordTextField;
@@ -54,6 +56,10 @@ public class FrontPageController {
 	@FXML
 	void initialize() {
 
+		loginTextField.textProperty().bindBidirectional(signInFxModel.nameProperty());
+
+		passwordTextField.textProperty().bindBidirectional(signInFxModel.passwordProperty());
+
 		registerButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -81,38 +87,72 @@ public class FrontPageController {
 		});
 
 		signInButton.setOnAction(eh -> {
-			String login = loginTextField.getText();
-			String password = passwordTextField.getText();
-			loginUser();
-			/*UserDAO userDao = new DAOfactory.INSTANCE.getUserDAO();
-			List<User> users = userDao.getAll();
-			for (User u : users) {
-				if (loginTextField.getText().equals(login) && passwordTextField.getText().equals(password)) {
-					loginUser();
-				} else {
-					showWrongDataWindow();
-				}
-			}*/
+//			String login = loginTextField.getText();
+//			String password = passwordTextField.getText();
+//			loginUser();
+//			UserDAO userDao = new DAOfactory.INSTANCE.getUserDAO();
+//			List<User> users = userDao.getAll();
+//			for (User u : users) {
+//				if (loginTextField.getText().equals(login) && passwordTextField.getText().equals(password)) {
+//					loginUser();
+//				} else {
+//					showWrongDataWindow();
+//				}
+
+//			if (!UserIdentificationManager.setUser(signInFxModel.getName())) {
+//				showWrongDataWindow();
+//			}
+//			int typeOfUser = UserIdentificationManager.getTypeOfUser();
+//			if (passwordManager.isCorrectPassword(signInFxModel.getPassword(), UserIdentificationManager.getId(),
+//					typeOfUser)) {
+//				if (typeOfUser == 1) {
+//					loginUser();
+//				}
+//				if (typeOfUser == 2) {
+//					loginAdmin();
+//				}
+//			} else {
+//				showWrongDataWindow();
+//			}
 			
-			/*if (loginTextField.getText().equals("Laura") && passwordTextField.getText().equals("laura")) {
-				loginUser();
+			if (!UserIdentificationManager.setUser(loginTextField.getText())) {
+				showWrongDataWindow();
+			}
+			int typeOfUser = UserIdentificationManager.getTypeOfUser();
+			if (passwordManager.isCorrectPassword(signInFxModel.getPassword(), UserIdentificationManager.getId(),
+					typeOfUser)) {
+				if (typeOfUser == 1) {
+					loginUser();
+				}
+				if (typeOfUser == 2) {
+					loginAdmin();
+				}
 			} else {
 				showWrongDataWindow();
-			}*/
-			
-			
-			/*
-			 * if (!UserIdentificationManager.setUser(loginFxModel.getEmail())) {
-			 * showWrongDataWindow(); } int typeOfUser =
-			 * UserIdentificationManager.getTypeOfUser(); if
-			 * (passwordManager.isCorrectPassword(loginFxModel.getPassword(), typeOfUser,
-			 * UserIdentificationManager.getId())) { if (typeOfUser == 1) { loginTeacher();
-			 * } if (typeOfUser == 2) { loginAdmin(); } if (typeOfUser == 3) {
-			 * loginSuperAdmin(); } } else { showWrongDataWindow(); }
-			 */
+			}
 
 		});
 
+	}
+
+	private void loginAdmin() {
+		SelectProjectController controller = new SelectProjectController();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("selectProject.fxml"));
+			loader.setController(controller);
+
+			Parent parentPane = loader.load();
+			Scene scene = new Scene(parentPane);
+
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("Projects");
+			stage.show();
+			signInButton.getScene().getWindow().hide();
+
+		} catch (IOException iOException) {
+			iOException.printStackTrace();
+		}
 	}
 
 	private void loginUser() {

@@ -14,12 +14,12 @@
          </font>
       </Label>
       <TableView fx:id="projectsTableView" layoutX="16.0" layoutY="175.0" prefHeight="273.0" prefWidth="415.0" />
-      <Button fx:id="openButton" layoutX="68.0" layoutY="474.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="127.0" text="Open">
+      <Button fx:id="openButton" layoutX="17.0" layoutY="474.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="127.0" text="Open">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="editButton" layoutX="252.0" layoutY="474.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="127.0" text="Edit">
+      <Button fx:id="editButton" layoutX="161.0" layoutY="474.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="127.0" text="Edit">
          <font>
             <Font size="18.0" />
          </font>
@@ -29,5 +29,11 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <Button fx:id="deleteButton" layoutX="305.0" layoutY="474.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="127.0" text="Delete">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="signOutButton" layoutX="17.0" layoutY="14.0" mnemonicParsing="false" text="Sign out" />
    </children>
 </AnchorPane>
