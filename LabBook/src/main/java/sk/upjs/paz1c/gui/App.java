@@ -37,24 +37,25 @@ public class App extends Application {
     	UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
     	userDAO.addUser(oliver);
     	System.out.println(userDAO.getAll());
-//
-//
-//		Project project = new Project();
-//		project.setName("spravenie getAll");
-//		project.setActive(true);
-//		project.setDateFrom(LocalDate.now());
-//		project.setDateUntil(LocalDate.now());
-//		project.setAllItemsAvailable(true);
-//		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
-//		projectDAO.addProject(project);
-//		
-//		project = new Project();
-//		project.setName("nezaspat");
-//		project.setActive(true);
-//		project.setDateFrom(LocalDate.now());
-//		project.setAllItemsAvailable(false);
-//		projectDAO.addProject(project);
-//		System.out.println(projectDAO.getAll());
+
+
+		Project project = new Project();
+		project.setName("spravenie getAll");
+		project.setActive(true);
+		project.setDateFrom(LocalDate.now());
+		project.setDateUntil(LocalDate.now());
+		project.setAllItemsAvailable(true);
+		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
+		projectDAO.addProject(project);
+	
+		project = new Project();
+		project.setName("nezaspat");
+		project.setActive(true);
+		project.setDateFrom(LocalDate.now());
+		project.setAllItemsAvailable(false);
+		projectDAO.addProject(project);
+		System.out.println(projectDAO.getAll());
 	}
+
 
 }

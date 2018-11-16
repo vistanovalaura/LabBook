@@ -51,7 +51,7 @@ public class SelectProjectController {
 
 	@FXML
 	void initialize() {
-		// projectsModel = FXCollections.observableArrayList(projectDao.getAll());
+		projectsModel = FXCollections.observableArrayList(projectDao.getAll());
 
 		editButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -59,7 +59,7 @@ public class SelectProjectController {
 			public void handle(ActionEvent event) {
 				EditProjectController editController = new EditProjectController(selectedProject.get());
 				showModalWindow(editController, "editProject.fxml");
-				//projectsModel.setAll(projectDao.getAll());
+				projectsModel.setAll(projectDao.getAll());
 			}
 		});
 
