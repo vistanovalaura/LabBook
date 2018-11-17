@@ -1,6 +1,7 @@
 package sk.upjs.paz1c.gui;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -82,9 +83,9 @@ public class SelectProjectController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				DeleteProjectController deleteProjectController = new DeleteProjectController();
+				DeleteProjectController deleteProjectController = new DeleteProjectController(selectedProject.get());
 				showModalWindow(deleteProjectController, "deleteProject.fxml");
-
+				projectsModel.setAll(projectDao.getAll());
 			}
 		});
 
@@ -92,7 +93,7 @@ public class SelectProjectController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				signOutButton.getScene().getWindow().hide();				
+				signOutButton.getScene().getWindow().hide();
 			}
 		});
 		newProjectButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -110,10 +111,10 @@ public class SelectProjectController {
 		projectsTableView.getColumns().add(nameCol);
 		columnsVisibility.put("ID", nameCol.visibleProperty());
 
-//		TableColumn<Project, String> createdByCol = new TableColumn<>("Created by");
-//		createdByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
-//		projectsTableView.getColumns().add(createdByCol);
-//		columnsVisibility.put("createdBy", createdByCol.visibleProperty());
+//		TableColumn<Project, LocalDate> fromCol = new TableColumn<>("date_from");
+//		fromCol.setCellValueFactory(new PropertyValueFactory<>("from"));
+//		projectsTableView.getColumns().add(fromCol);
+//		columnsVisibility.put("from", fromCol.visibleProperty());
 
 		TableColumn<Project, Boolean> activeCol = new TableColumn<>("Active");
 		activeCol.setCellValueFactory(new PropertyValueFactory<>("active"));

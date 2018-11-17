@@ -84,19 +84,21 @@ public class FrontPageController {
 		});
 
 		signInButton.setOnAction(eh -> {
-			loginUser();
+			// loginUser();
+			// loginAdmin();
 
-//			String login = loginTextField.getText();
-//			String password = passwordTextField.getText();
-//			loginUser();
-//			UserDAO userDao = new DAOfactory.INSTANCE.getUserDAO();
-//			List<User> users = userDao.getAll();
-//			for (User u : users) {
-//				if (loginTextField.getText().equals(login) && passwordTextField.getText().equals(password)) {
-//					loginUser();
-//				} else {
-//					showWrongDataWindow();
-//				}
+			String login = loginTextField.getText();
+			String password = passwordTextField.getText();
+			loginUser();
+			UserDAO userDao = DAOfactory.INSTANCE.getUserDAO();
+
+			List<User> users = userDao.getAll();
+			for (User u : users) {
+				if (loginTextField.getText().equals(login) && passwordTextField.getText().equals(password)) {
+					loginUser();
+				} else {
+					showWrongDataWindow();
+				}
 
 //			if (!UserIdentificationManager.setUser(signInFxModel.getName())) {
 //				showWrongDataWindow();
@@ -130,6 +132,7 @@ public class FrontPageController {
 //				showWrongDataWindow();
 //			}
 
+			}
 		});
 
 	}
@@ -137,7 +140,7 @@ public class FrontPageController {
 	private void loginAdmin() {
 		SelectProjectController controller = new SelectProjectController();
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("selectProject.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("deleteUserAdmin.fxml"));
 			loader.setController(controller);
 
 			Parent parentPane = loader.load();
@@ -145,7 +148,7 @@ public class FrontPageController {
 
 			Stage stage = new Stage();
 			stage.setScene(scene);
-			stage.setTitle("Projects");
+			stage.setTitle("Admin Page");
 			stage.show();
 			signInButton.getScene().getWindow().hide();
 

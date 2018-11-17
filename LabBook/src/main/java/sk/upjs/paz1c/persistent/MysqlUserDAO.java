@@ -37,15 +37,15 @@ public class MysqlUserDAO implements UserDAO {
 
 	@Override
 	public List<User> getAll() {
-		String sql = "SELECT id_user, name, password, email "
-				+ "FROM user";
+		String sql = "SELECT id_user, login, password, email "
+				+ "FROM lab_book.user";
 		return jdbcTemplate.query(sql, new RowMapper<User>() {
 
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 				User user = new User();
 				user.setUserID(rs.getLong("id_user"));
-				user.setName(rs.getString("name"));
+				user.setName(rs.getString("login"));
 				user.setPassword(rs.getString("password"));
 				user.setEmail(rs.getString("email"));
 				return user;

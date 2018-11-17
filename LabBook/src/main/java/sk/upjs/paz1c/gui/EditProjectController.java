@@ -54,7 +54,7 @@ public class EditProjectController {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				//projectDao.save(projectModel.getProject());
+				projectDao.saveProject(projectModel.getProject());
 				saveButton.getScene().getWindow().hide();
 				
 			}
