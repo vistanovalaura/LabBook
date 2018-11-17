@@ -9,11 +9,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.User;
+import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.ProjectDAO;
 
 public class EditProjectController {
 	
-	private ProjectDAO projectDao;
+	private ProjectDAO projectDao = DAOfactory.INSTANCE.getProjectDAO();
 	private ProjectFxModel projectModel; 
 	private Project project; 
 
