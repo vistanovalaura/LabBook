@@ -1,4 +1,4 @@
-package sk.upjs.paz1c.gui;
+package sk.upjs.paz1c.fxmodels;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +14,7 @@ import sk.upjs.paz1c.entities.User;
 
 public class ProjectFxModel {
 
+	private Long projectId;
 	private StringProperty name = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> from = new SimpleObjectProperty<>();
 	private ObjectProperty<LocalDate> until = new SimpleObjectProperty<>();
@@ -23,6 +24,15 @@ public class ProjectFxModel {
 
 	public ProjectFxModel() {
 
+	}
+
+	public ProjectFxModel(Project project) {
+		this.project = project;
+		setName(project.getName());
+		setFrom(project.getDateFrom());
+		setUntil(project.getDateUntil());
+		setCompletedBy(project.getCompletedBy());
+		setProjectId(project.getProjectID());
 	}
 
 	public void setProject(Project project) {
@@ -40,7 +50,16 @@ public class ProjectFxModel {
 		p.setDateUntil(getUntil());
 		p.setCreatedBy(getCreatedBy());
 		p.setCompletedBy(getCompletedBy());
+		p.setProjectID(getProjectId());
 		return p;
+	}
+
+	public Long getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Long projectId) {
+		this.projectId = projectId;
 	}
 
 	public String getName() {

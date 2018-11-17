@@ -1,4 +1,4 @@
-package sk.upjs.paz1c.gui;
+package sk.upjs.paz1c.fxmodels;
 
 import javafx.beans.property.StringProperty;
 import sk.upjs.paz1c.entities.User;

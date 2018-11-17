@@ -9,6 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.User;
+import sk.upjs.paz1c.fxmodels.ProjectFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.ProjectDAO;
 
@@ -38,7 +39,7 @@ public class EditProjectController {
     
     public EditProjectController(Project project) {
     	this.project = project; 
-    	this.projectModel = new ProjectFxModel();
+    	this.projectModel = new ProjectFxModel(project);
     }
 
     @FXML
@@ -55,7 +56,6 @@ public class EditProjectController {
 			public void handle(ActionEvent event) {
 				//projectDao.save(projectModel.getProject());
 				saveButton.getScene().getWindow().hide();
-
 				
 			}
 		});

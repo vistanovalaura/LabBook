@@ -19,6 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.User;
+import sk.upjs.paz1c.fxmodels.SignInFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.MysqlUserDAO;
 import sk.upjs.paz1c.persistent.UserDAO;
@@ -56,10 +57,6 @@ public class FrontPageController {
 	@FXML
 	void initialize() {
 
-		loginTextField.textProperty().bindBidirectional(signInFxModel.nameProperty());
-
-		passwordTextField.textProperty().bindBidirectional(signInFxModel.passwordProperty());
-
 		registerButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -87,6 +84,8 @@ public class FrontPageController {
 		});
 
 		signInButton.setOnAction(eh -> {
+			loginUser();
+
 //			String login = loginTextField.getText();
 //			String password = passwordTextField.getText();
 //			loginUser();
@@ -114,22 +113,22 @@ public class FrontPageController {
 //			} else {
 //				showWrongDataWindow();
 //			}
-			
-			if (!UserIdentificationManager.setUser(loginTextField.getText())) {
-				showWrongDataWindow();
-			}
-			int typeOfUser = UserIdentificationManager.getTypeOfUser();
-			if (passwordManager.isCorrectPassword(signInFxModel.getPassword(), UserIdentificationManager.getId(),
-					typeOfUser)) {
-				if (typeOfUser == 1) {
-					loginUser();
-				}
-				if (typeOfUser == 2) {
-					loginAdmin();
-				}
-			} else {
-				showWrongDataWindow();
-			}
+
+//			if (!UserIdentificationManager.setUser(loginTextField.getText())) {
+//				showWrongDataWindow();
+//			}
+//			int typeOfUser = UserIdentificationManager.getTypeOfUser();
+//			if (passwordManager.isCorrectPassword(signInFxModel.getPassword(), UserIdentificationManager.getId(),
+//					typeOfUser)) {
+//				if (typeOfUser == 1) {
+//					loginUser();
+//				}
+//				if (typeOfUser == 2) {
+//					loginAdmin();
+//				}
+//			} else {
+//				showWrongDataWindow();
+//			}
 
 		});
 
