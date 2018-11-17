@@ -89,7 +89,6 @@ public class FrontPageController {
 
 			String login = loginTextField.getText();
 			String password = passwordTextField.getText();
-			loginUser();
 			UserDAO userDao = DAOfactory.INSTANCE.getUserDAO();
 
 			List<User> users = userDao.getAll();
