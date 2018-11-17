@@ -19,27 +19,25 @@ public class UserIdentificationManager {
         return id;
     }
 
-    //Teacher is 1
-    //Admin is 2
-    //SuperAdmin is 3
-    public static boolean setUser(String userName) {
+  
+    public static int setUser(String userName, String password) {
         List<User> users = DAOfactory.INSTANCE.getUserDAO().getAll();
         for (User user : users) {
-            if (user.getName().equals(userName)) {
+            if (user.getName().equals(userName) && user.getPassword().equals(password)) {
                 UserIdentificationManager.typeOfUser = 1;
                 UserIdentificationManager.id = user.getUserID();
-                return true;
+                return 1;
             }
         }
 //        List<Admin> admins = DaoFactory.INSTANCE.getAdminDao().getAll();
 //        for (Admin admin : admins) {
-//            if (admin.getName().equals(userName)) {
+//            if (admin.getName().equals(userName) && user.getPassword().equals(password)) {
 //                UserIdentificationManager.typeOfUser = 2;
 //                UserIdentificationManager.id = admin.getAdminID();
-//                return true;
+//                return 2;
 //            }
 //        }
-        return false;
+        return -1;
     }
 
     public static void logOut() {

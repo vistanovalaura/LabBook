@@ -74,8 +74,8 @@ public class SelectProjectController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// NotesController noteController = new NoteController();
-				// showModalWindow(noteController, "selectNotes.fxml");
+				 SelectTaskController taskController = new SelectTaskController();
+				 showModalWindow(taskController, "selectTask.fxml");
 			}
 		});
 

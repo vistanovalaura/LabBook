@@ -89,48 +89,13 @@ public class FrontPageController {
 
 			String login = loginTextField.getText();
 			String password = passwordTextField.getText();
-			UserDAO userDao = DAOfactory.INSTANCE.getUserDAO();
 
-			List<User> users = userDao.getAll();
-			for (User u : users) {
-				if (loginTextField.getText().equals(login) && passwordTextField.getText().equals(password)) {
-					loginUser();
-				} else {
-					showWrongDataWindow();
-				}
-
-//			if (!UserIdentificationManager.setUser(signInFxModel.getName())) {
-//				showWrongDataWindow();
-//			}
-//			int typeOfUser = UserIdentificationManager.getTypeOfUser();
-//			if (passwordManager.isCorrectPassword(signInFxModel.getPassword(), UserIdentificationManager.getId(),
-//					typeOfUser)) {
-//				if (typeOfUser == 1) {
-//					loginUser();
-//				}
-//				if (typeOfUser == 2) {
-//					loginAdmin();
-//				}
-//			} else {
-//				showWrongDataWindow();
-//			}
-
-//			if (!UserIdentificationManager.setUser(loginTextField.getText())) {
-//				showWrongDataWindow();
-//			}
-//			int typeOfUser = UserIdentificationManager.getTypeOfUser();
-//			if (passwordManager.isCorrectPassword(signInFxModel.getPassword(), UserIdentificationManager.getId(),
-//					typeOfUser)) {
-//				if (typeOfUser == 1) {
-//					loginUser();
-//				}
-//				if (typeOfUser == 2) {
-//					loginAdmin();
-//				}
-//			} else {
-//				showWrongDataWindow();
-//			}
-
+			if (UserIdentificationManager.setUser(login, password) == 1) {
+				loginUser();
+			} else if (UserIdentificationManager.setUser(login, password) == 2) {
+				loginAdmin();
+			} else {
+				showWrongDataWindow();
 			}
 		});
 
