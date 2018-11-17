@@ -12,7 +12,7 @@ public class Project {
 	private LocalDate dateUntil;
 	private List<Task> tasks;
 	private List<Item> items;
-	private boolean allItemsAvailable;
+	private boolean eachItemAvailable;
 	private User createdBy;
 	private List<User> completedBy;
 
@@ -72,12 +72,12 @@ public class Project {
 		this.items = items;
 	}
 
-	public boolean isAllItemsAvailable() {
-		return allItemsAvailable;
+	public boolean isEachItemAvailable() {
+		return eachItemAvailable;
 	}
 
-	public void setAllItemsAvailable(boolean allItemsAvailable) {
-		this.allItemsAvailable = allItemsAvailable;
+	public void setEachItemAvailable(boolean eachItemAvailable) {
+		this.eachItemAvailable = eachItemAvailable;
 	}
 
 	public User getCreatedBy() {
@@ -100,7 +100,7 @@ public class Project {
 	public String toString() {
 		return "Project [projectID=" + projectID + ", name=" + name + ", active=" + active + ", dateFrom=" + dateFrom
 				+ ", dateUntil=" + dateUntil + ", tasks=" + tasks + ", items=" + items + ", allItemsAvailable="
-				+ allItemsAvailable + ", createdBy=" + createdBy + ", completedBy=" + completedBy + "]";
+				+ eachItemAvailable + ", createdBy=" + createdBy + ", completedBy=" + completedBy + "]";
 	}
 	
 	
