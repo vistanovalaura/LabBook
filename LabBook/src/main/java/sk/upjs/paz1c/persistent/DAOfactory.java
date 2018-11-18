@@ -11,6 +11,7 @@ public enum DAOfactory {
 	private JdbcTemplate jdbcTemplate;
 	private UserDAO userDAO;
 	private ProjectDAO projectDAO;
+	private AdminDAO adminDAO;
 
 	public UserDAO getUserDAO() {
 		if (userDAO == null) {
@@ -24,6 +25,13 @@ public enum DAOfactory {
 			projectDAO = new MysqlProjectDAO(getJbdcTemplate());
 		}
 		return projectDAO;
+	}
+	
+	public AdminDAO getAdminDAO() {
+		if (adminDAO == null) {
+			adminDAO = new MysqlAdminDAO(getJbdcTemplate());
+		}
+		return adminDAO;
 	}
 	
 	private JdbcTemplate getJbdcTemplate() {
