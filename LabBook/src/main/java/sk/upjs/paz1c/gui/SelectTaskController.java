@@ -30,7 +30,7 @@ import sk.upjs.paz1c.persistent.ProjectDAO;
 
 public class SelectTaskController {
 
-	// private TaskDAO taskDao = DAOfactory.INSTANCE.getTaskDAO();
+	//private TaskDAO taskDao = DAOfactory.INSTANCE.getTaskDAO();
 	private ObservableList<Task> tasksModel;
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private ObjectProperty<Task> selectedTask = new SimpleObjectProperty<>();

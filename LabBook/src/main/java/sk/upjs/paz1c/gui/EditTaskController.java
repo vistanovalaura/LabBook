@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import sk.upjs.paz1c.entities.Item;
@@ -32,9 +33,15 @@ public class EditTaskController {
 
 	@FXML
 	private TableView<Item> itemsTableView;
+	
+	@FXML
+    private SplitMenuButton laboratorySplitMenuButton;
 
 	@FXML
-	private Button editButton;
+    private Button addButton;
+
+    @FXML
+    private Button removeButton;
 
 	@FXML
 	private Button saveButton;
@@ -55,7 +62,7 @@ public class EditTaskController {
 				
 				@Override
 				public void handle(ActionEvent event) {
-					//taskDao.saveProject(taskModel.getTask());
+					//taskDao.saveTask(taskModel.getTask());
 					saveButton.getScene().getWindow().hide();
 					
 				}
