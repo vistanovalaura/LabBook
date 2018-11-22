@@ -12,12 +12,20 @@ public enum DAOfactory {
 	private UserDAO userDAO;
 	private ProjectDAO projectDAO;
 	private AdminDAO adminDAO;
+	private TaskDAO taskDAO;
 
 	public UserDAO getUserDAO() {
 		if (userDAO == null) {
 			userDAO = new MysqlUserDAO(getJbdcTemplate());
 		}
 		return userDAO;
+	}
+	
+	public AdminDAO getAdminDAO() {
+		if (adminDAO == null) {
+			adminDAO = new MysqlAdminDAO(getJbdcTemplate());
+		}
+		return adminDAO;
 	}
 	
 	public ProjectDAO getProjectDAO() {
@@ -27,11 +35,11 @@ public enum DAOfactory {
 		return projectDAO;
 	}
 	
-	public AdminDAO getAdminDAO() {
-		if (adminDAO == null) {
-			adminDAO = new MysqlAdminDAO(getJbdcTemplate());
+	public TaskDAO getTaskDAO() {
+		if (taskDAO == null) {
+			taskDAO = new MysqlTaskDAO(getJbdcTemplate());
 		}
-		return adminDAO;
+		return taskDAO;
 	}
 	
 	private JdbcTemplate getJbdcTemplate() {

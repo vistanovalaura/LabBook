@@ -6,63 +6,94 @@ import java.util.List;
 public class Task {
 
 	private Long taskID;
-	private String name; 
-	private LocalDate from;
-	private LocalDate until;
-	private boolean allItemsAvailable;
+	private Long projectID;
+	private String name;
+	private boolean active;
+	private LocalDate dateTimeFrom;
+	private LocalDate dateTimeUntil;
+	private boolean eachItemAvailable;
 	private List<Item> items;
 	private User createdBy;
 	private List<User> completedBy;
-	
+
 	public Long getTaskID() {
 		return taskID;
 	}
+
 	public void setTaskID(Long taskID) {
 		this.taskID = taskID;
 	}
+
+	public Long getProjectID() {
+		return projectID;
+	}
+
+	public void setProjectID(Long projectID) {
+		this.projectID = projectID;
+	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public LocalDate getFrom() {
-		return from;
+
+	public boolean isActive() {
+		return active;
 	}
-	public void setFrom(LocalDate from) {
-		this.from = from;
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
-	public LocalDate getUntil() {
-		return until;
+
+	public LocalDate getDateTimeFrom() {
+		return dateTimeFrom;
 	}
-	public void setUntil(LocalDate until) {
-		this.until = until;
+
+	public void setDateTimeFrom(LocalDate dateTimeFrom) {
+		this.dateTimeFrom = dateTimeFrom;
 	}
-	public boolean isAllItemsAvailable() {
-		return allItemsAvailable;
+
+	public LocalDate getDateTimeUntil() {
+		return dateTimeUntil;
 	}
-	public void setAllItemsAvailable(boolean allItemsAvailable) {
-		this.allItemsAvailable = allItemsAvailable;
+
+	public void setDateTimeUntil(LocalDate dateTimeUntil) {
+		this.dateTimeUntil = dateTimeUntil;
 	}
+
+	public boolean isEachItemAvailable() {
+		return eachItemAvailable;
+	}
+
+	public void setEachItemAvailable(boolean eachItemAvailable) {
+		this.eachItemAvailable = eachItemAvailable;
+	}
+
 	public List<Item> getItems() {
 		return items;
 	}
+
 	public void setItems(List<Item> items) {
 		this.items = items;
 	}
+
 	public User getCreatedBy() {
 		return createdBy;
 	}
+
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
+
 	public List<User> getCompletedBy() {
 		return completedBy;
 	}
+
 	public void setCompletedBy(List<User> completedBy) {
 		this.completedBy = completedBy;
 	}
-	
-	
-	
+
 }
