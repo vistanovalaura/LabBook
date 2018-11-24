@@ -106,7 +106,6 @@ public class EditDataAdminController {
 				DeleteUserAdminController deleteController = new DeleteUserAdminController(selectedUserModel.getUser());
 				showModalWindow(deleteController, "deleteUserAdmin.fxml");
 				userModel.setAll(userDao.getAll());
-
 			}
 		});
 
