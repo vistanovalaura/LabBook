@@ -19,8 +19,10 @@ public class Task {
 
 	}
 
-	public Task(String name) {
+	public Task(String name, LocalDate from, LocalDate until) {
 		this.name = name;
+		this.from = from;
+		this.until = until;
 	}
 
 	public Long getTaskID() {

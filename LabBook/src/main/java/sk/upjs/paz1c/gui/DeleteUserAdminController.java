@@ -5,15 +5,23 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import sk.upjs.paz1c.entities.Project;
+import sk.upjs.paz1c.entities.User;
 import sk.upjs.paz1c.fxmodels.ProjectFxModel;
+import sk.upjs.paz1c.fxmodels.UserFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.ProjectDAO;
+import sk.upjs.paz1c.persistent.UserDAO;
 
-public class DeleteProjectController {
+public class DeleteUserAdminController {
+
+	private UserDAO userDao = DAOfactory.INSTANCE.getUserDAO();
+	private User user;
+
+	public DeleteUserAdminController(User user) {
+		System.out.println(user.getName());
+		this.user = user;
+	}
 	
-	private ProjectDAO projectDao = DAOfactory.INSTANCE.getProjectDAO();
-	private ProjectFxModel projectModel; 
-	private Project project; 
 
 	@FXML
 	private Button yesButton;
@@ -21,21 +29,14 @@ public class DeleteProjectController {
 	@FXML
 	private Button noButton;
 
-	public DeleteProjectController(Project project) {
-		this.project = project; 
-    	this.projectModel = new ProjectFxModel(project);
-	}
-	
 	@FXML
 	void initialize() {
-		
-		
 		yesButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				projectDao.deleteProject(projectModel.getProject());
-				//projectDao.saveProject(projectModel.getProject());
+				userDao.deleteUser(user);
+				//userDao.saveUser(userModel.getUser());
 				yesButton.getScene().getWindow().hide();
 			}
 		});

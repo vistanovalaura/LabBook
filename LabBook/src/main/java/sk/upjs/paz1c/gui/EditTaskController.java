@@ -68,6 +68,15 @@ public class EditTaskController {
 				}
 			});
 	    	
+//			removeButton.setOnAction(new EventHandler<ActionEvent>() {
+	    	//
+//	    				@Override
+//	    				public void handle(ActionEvent event) {
+//	    					RemoveItemController removeItemController = new RemoveItemController(selectedItem.get());
+//	    					showModalWindow(removeItemController, "removeItem.fxml");
+//	    					itemsModel.setAll(itemDao.getAll());
+//	    				}
+//	    			});
 	    	
 	    }
 }

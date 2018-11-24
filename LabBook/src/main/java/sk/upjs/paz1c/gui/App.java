@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sk.upjs.paz1c.entities.Admin;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.User;
 import sk.upjs.paz1c.persistent.DAOfactory;
@@ -30,7 +31,8 @@ public class App extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
-
+		
+		
 		// Project project = DAOfactory.INSTANCE.getProjectDAO().getByName("urobenie
 		// save");
 		// project.setName("urobenie_save");

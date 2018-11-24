@@ -11,7 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
@@ -40,7 +40,7 @@ public class NewTaskController {
 	    private DatePicker untilDatePicker;
 
 	    @FXML
-	    private SplitMenuButton laboratorySplitMenuButton;
+	    private MenuButton laboratoryMenuButton;
 
 	    @FXML
 	    private TableView<Item> itemsTableView;
@@ -62,11 +62,20 @@ public class NewTaskController {
 					if (name.isEmpty()) {
 						showWrongDataInputWindow();
 					} else {
-						Task task = new Task(name);
+						Task task = new Task(name, from, until);
 						//TaskDAO taskDao = DAOfactory.INSTANCE.getTaskDAO();
 						//taskDao.addProject(task);
 						saveButton.getScene().getWindow().hide();
 					}
+					
+				}
+			});
+	    	
+	    	laboratoryMenuButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					// TODO Auto-generated method stub
 					
 				}
 			});

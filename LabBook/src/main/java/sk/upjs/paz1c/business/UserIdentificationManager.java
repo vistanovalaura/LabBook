@@ -29,14 +29,14 @@ public class UserIdentificationManager {
                 return 1;
             }
         }
-//        List<Admin> admins = DaoFactory.INSTANCE.getAdminDao().getAll();
-//        for (Admin admin : admins) {
-//            if (admin.getName().equals(userName) && user.getPassword().equals(password)) {
-//                UserIdentificationManager.typeOfUser = 2;
-//                UserIdentificationManager.id = admin.getAdminID();
-//                return 2;
-//            }
-//        }
+        List<Admin> admins = DAOfactory.INSTANCE.getAdminDAO().getAll();
+        for (Admin admin : admins) {
+            if (admin.getName().equals(userName) && admin.getPassword().equals(password)) {
+                UserIdentificationManager.typeOfUser = 2;
+                UserIdentificationManager.id = admin.getAdminID();
+                return 2;
+            }
+        }
         return -1;
     }
 
