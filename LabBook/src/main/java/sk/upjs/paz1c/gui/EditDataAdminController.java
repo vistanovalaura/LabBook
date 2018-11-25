@@ -28,7 +28,7 @@ import sk.upjs.paz1c.persistent.UserDAO;
 public class EditDataAdminController {
 
 	private Admin admin;
-
+	
 	@FXML
 	private ComboBox<User> userComboBox;
 
@@ -105,7 +105,19 @@ public class EditDataAdminController {
 			public void handle(ActionEvent event) {
 				DeleteUserAdminController deleteController = new DeleteUserAdminController(selectedUserModel.getUser());
 				showModalWindow(deleteController, "deleteUserAdmin.fxml");
-				userModel.setAll(userDao.getAll());
+				List<User> users = userDao.getAll();
+		    	userComboBox.setItems(FXCollections.observableList(users));
+				//userModel.setAll(userDao.getAll());
+			}
+		});
+		
+		createButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				NewLaboratoryController laboratoryController = new NewLaboratoryController();
+				showModalWindow(laboratoryController, "newLaboratory.fxml");
+				
 			}
 		});
 

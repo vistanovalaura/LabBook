@@ -71,7 +71,7 @@ public class SelectTaskController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				 NotesController notesController = new NotesController();
+				 SelectNoteController notesController = new SelectNoteController(selectedTask.get());
 				 showModalWindow(notesController, "notes.fxml");
 			}
 		});
@@ -82,7 +82,7 @@ public class SelectTaskController {
 			public void handle(ActionEvent event) {
 				DeleteTaskController deleteTaskController = new DeleteTaskController(selectedTask.get());
 				showModalWindow(deleteTaskController, "deleteTask.fxml");
-				//tasksModel.setAll(taskDao.getAll());
+				//tasksModel.setAll(taskDAO.getAll());
 			}
 		});
 
