@@ -29,24 +29,24 @@ public class TaskFxModel {
 	public TaskFxModel(Task task) {
 		this.task = task;
 		setName(task.getName());
-		setFrom(task.getFrom());
-		setUntil(task.getUntil());
+		setFrom(task.getDateTimeFrom());
+		setUntil(task.getDateTimeUntil());
 		setTaskId(task.getTaskID());
 		setItems(task.getItems());
 	}
 
 	public void setTask(Task task) {
 		setName(task.getName());
-		setFrom(task.getFrom());
-		setUntil(task.getUntil());
+		setFrom(task.getDateTimeFrom());
+		setUntil(task.getDateTimeUntil());
 		setItems(task.getItems());
 	}
 
 	public Task getTask() {
 		Task t = new Task();
 		t.setName(getName());
-		t.setFrom(getFrom());
-		t.setUntil(getUntil());
+		t.setDateTimeFrom(getFrom());
+		t.setDateTimeUntil(getUntil());
 		t.setTaskID(getTaskId());
 		return t;
 	}

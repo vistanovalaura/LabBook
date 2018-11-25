@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.upjs.paz1c.entities.Project;
+import sk.upjs.paz1c.entities.Task;
 
 public class MysqlProjectDAO implements ProjectDAO {
 
@@ -77,31 +79,31 @@ public class MysqlProjectDAO implements ProjectDAO {
 		}
 	}
 
-//	@Override
-//	public Project getByName(String name) {
-//		String sql = "SELECT * " + "FROM project " + "WHERE name = '" + name + "'";
-//		Project project = jdbcTemplate.query(sql, new ResultSetExtractor<Project>() {
-//
-//			@Override
-//			public Project extractData(ResultSet rs) throws SQLException, DataAccessException {
-//				Project project = new Project();
-//				project.setProjectID(rs.getLong("id_project"));
-//				project.setName(rs.getString("name"));
-//				project.setActive(rs.getBoolean("active"));
-//				Timestamp timestamp = rs.getTimestamp("date_from");
-//				project.setDateFrom(timestamp.toLocalDateTime().toLocalDate());
-//				timestamp = rs.getTimestamp("date_until");
-//				if (timestamp != null) {
-//					project.setDateUntil(timestamp.toLocalDateTime().toLocalDate());
-//				}
-//				project.setEachItemAvailable(rs.getBoolean("each_item_available"));
-//				return project;
-//			}
-//		});
-//		return project;
-//	}
-	
-	
+	// @Override
+	// public Project getByName(String name) {
+	// String sql = "SELECT * " + "FROM project " + "WHERE name = '" + name + "'";
+	// Project project = jdbcTemplate.query(sql, new ResultSetExtractor<Project>() {
+	//
+	// @Override
+	// public Project extractData(ResultSet rs) throws SQLException,
+	// DataAccessException {
+	// Project project = new Project();
+	// project.setProjectID(rs.getLong("id_project"));
+	// project.setName(rs.getString("name"));
+	// project.setActive(rs.getBoolean("active"));
+	// Timestamp timestamp = rs.getTimestamp("date_from");
+	// project.setDateFrom(timestamp.toLocalDateTime().toLocalDate());
+	// timestamp = rs.getTimestamp("date_until");
+	// if (timestamp != null) {
+	// project.setDateUntil(timestamp.toLocalDateTime().toLocalDate());
+	// }
+	// project.setEachItemAvailable(rs.getBoolean("each_item_available"));
+	// return project;
+	// }
+	// });
+	// return project;
+	// }
+
 	@Override
 	public Project getByName(String name) {
 		String sql = "SELECT * " + "FROM project " + "WHERE name = '" + name + "'";
@@ -123,7 +125,7 @@ public class MysqlProjectDAO implements ProjectDAO {
 				return project;
 			}
 		});
-		if(projectList.size() == 0) {
+		if (projectList.size() == 0) {
 			return null;
 		} else {
 			return projectList.get(0);
@@ -134,5 +136,13 @@ public class MysqlProjectDAO implements ProjectDAO {
 	public void deleteProject(Project project) {
 		String sql = "DELETE FROM project WHERE id_project = " + project.getProjectID();
 		jdbcTemplate.update(sql);
+	}
+	
+	//FIXME urobit test 
+	@Override
+	public Project getByID(Long id) {
+		String sql = "SELECT name, active, date_from, date_until, each_item_available "
+				+ "FROM project " + "WHERE project_id = " + id;
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Project.class));
 	}
 }

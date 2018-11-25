@@ -7,12 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
+import sk.upjs.paz1c.entities.User;
 
 public class MysqlTaskDAO implements TaskDAO {
 
@@ -28,7 +30,8 @@ public class MysqlTaskDAO implements TaskDAO {
 		SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);
 		insert.withTableName("task");
 		insert.usingGeneratedKeyColumns("id_task");
-		insert.usingColumns("project_id_project", "name", "active", "date_time_from", "date_time_until", "each_item_available");
+		insert.usingColumns("project_id_project", "name", "active", "date_time_from", "date_time_until",
+				"each_item_available");
 
 		Map<String, Object> values = new HashMap<>();
 		values.put("project_id_project", task.getProjectID());
@@ -48,7 +51,8 @@ public class MysqlTaskDAO implements TaskDAO {
 		if (task.getTaskID() == null) { // CREATE
 			addTask(task);
 		} else { // UPDATE
-			String sql = "UPDATE task SET " + "project_id_project = ?, name = ?, active = ?, date_time_from = ?, date_time_until = ?, "
+			String sql = "UPDATE task SET "
+					+ "project_id_project = ?, name = ?, active = ?, date_time_from = ?, date_time_until = ?, "
 					+ "each_item_available = ? " + "WHERE id_task = ?";
 			jdbcTemplate.update(sql, task.getProjectID(), task.getName(), task.isActive(), task.getDateTimeFrom(),
 					task.getDateTimeUntil(), task.isEachItemAvailable(), task.getTaskID());
@@ -57,7 +61,8 @@ public class MysqlTaskDAO implements TaskDAO {
 
 	@Override
 	public List<Task> getAll() {
-		String sql = "SELECT id_task, project_id_project, name, active, date_time_from, date_time_until, each_item_available " + "FROM task";
+		String sql = "SELECT id_task, project_id_project, name, active, date_time_from, date_time_until, each_item_available "
+				+ "FROM task";
 		return jdbcTemplate.query(sql, new RowMapper<Task>() {
 
 			@Override
@@ -68,7 +73,7 @@ public class MysqlTaskDAO implements TaskDAO {
 				task.setName(rs.getString("name"));
 				task.setActive(rs.getBoolean("active"));
 				Timestamp timestamp = rs.getTimestamp("date_time_from");
-				if(timestamp != null) {
+				if (timestamp != null) {
 					task.setDateTimeFrom(timestamp.toLocalDateTime().toLocalDate());
 				}
 				timestamp = rs.getTimestamp("date_time_until");
@@ -85,6 +90,15 @@ public class MysqlTaskDAO implements TaskDAO {
 	public void deleteTask(Task task) {
 		String sql = "DELETE FROM task WHERE id_task = " + task.getTaskID();
 		jdbcTemplate.update(sql);
+	}
+
+	// FIXME - dorobit getByID tak, aby pridalo task aj s jeho listom itemov,
+	// FIXME - urobit test
+	@Override
+	public Task getByID(Long id) {
+		String sql = "SELECT project_id_project, name, active, date_time_from, date_time_until, each_item_available "
+				+ "FROM task " + "WHERE task_id = " + id;
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Task.class));
 	}
 
 }

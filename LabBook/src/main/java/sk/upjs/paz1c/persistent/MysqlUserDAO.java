@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -64,11 +65,20 @@ public class MysqlUserDAO implements UserDAO {
 			jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getEmail(), user.getUserID());
 		}
 	}
-	
+
 	@Override
 	public void deleteUser(User user) {
 		String sql = "DELETE FROM user WHERE id_user = " + user.getUserID();
 		jdbcTemplate.update(sql);
+	}
+
+	// FIXME - dorobit getByID tak, aby pridalo usera aj s jeho listom projektov a
+	// taskov
+	// FIXME - urobit test
+	@Override
+	public User getByID(Long id) {
+		String sql = "SELECT name, password, email " + "FROM user " + "WHERE user_id = " + id;
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class));
 	}
 
 }

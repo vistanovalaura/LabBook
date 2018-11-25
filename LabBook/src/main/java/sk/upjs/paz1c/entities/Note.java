@@ -9,6 +9,24 @@ public class Note {
 	private LocalDate timestamp;
 	private User author;
 	private Task task;
+	private Project project;
+	private Item item;
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
 
 	public Task getTask() {
 		return task;

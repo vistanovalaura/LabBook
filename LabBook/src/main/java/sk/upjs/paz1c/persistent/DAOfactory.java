@@ -13,6 +13,9 @@ public enum DAOfactory {
 	private ProjectDAO projectDAO;
 	private AdminDAO adminDAO;
 	private TaskDAO taskDAO;
+	private ItemDAO itemDAO;
+	private LaboratoryDAO laboratoryDAO;
+	private NoteDAO noteDAO;
 
 	public UserDAO getUserDAO() {
 		if (userDAO == null) {
@@ -42,6 +45,27 @@ public enum DAOfactory {
 		return taskDAO;
 	}
 	
+	public ItemDAO getItemDAO() {
+		if (itemDAO == null) {
+			itemDAO = new MysqlItemDAO(getJbdcTemplate());
+		}
+		return itemDAO;
+	}
+	
+	public LaboratoryDAO getLaboratoryDAO() {
+		if (laboratoryDAO == null) {
+			laboratoryDAO = new MysqlLaboratoryDAO(getJbdcTemplate());
+		}
+		return laboratoryDAO;
+	}
+	
+	public NoteDAO getNoteDAO() {
+		if (noteDAO == null) {
+			noteDAO = new MysqlNoteDAO(getJbdcTemplate());
+		}
+		return noteDAO;
+	}
+	
 	private JdbcTemplate getJbdcTemplate() {
 		if (jdbcTemplate == null) {
 			MysqlDataSource dataSource = new MysqlDataSource();
@@ -53,4 +77,5 @@ public enum DAOfactory {
 		}
 		return jdbcTemplate;
 	}
+	
 }

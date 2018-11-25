@@ -18,5 +18,8 @@ public interface TaskDAO {
 
 	// zmaze task
 	void deleteTask(Task task);
+	
+	// vrati Task podla id
+	Task getByID(Long id);
 
 }

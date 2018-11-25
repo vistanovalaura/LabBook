@@ -52,5 +52,28 @@ class MysqlAdminDAOTest {
 		}
 		assertTrue(successfullyDeleted);
 	}
+	
+	@Test
+	void testSave() {
+		Admin testAdmin = new Admin();
+		testAdmin.setName("tester");
+		testAdmin.setPassword("1234");
+		AdminDAO adminDAO = DAOfactory.INSTANCE.getAdminDAO();
+		// create
+		adminDAO.saveAdmin(testAdmin);
+		assertNotNull(testAdmin.getAdminID());
+		testAdmin.setName("tester_new");
+		// update
+		adminDAO.saveAdmin(testAdmin);
+		List<Admin> all = adminDAO.getAll();
+		for (Admin a : all) {
+			if (a.getAdminID() == testAdmin.getAdminID()) {
+				assertEquals("tester_new", a.getName());
+				adminDAO.deleteAdmin(a);
+				return;
+			}
+		}
+		assertTrue(false, "update sa nepodaril");
+	}
 
 }

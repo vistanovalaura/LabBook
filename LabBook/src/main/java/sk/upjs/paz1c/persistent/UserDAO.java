@@ -17,5 +17,8 @@ public interface UserDAO {
 
 	// vymazanie usera z databazy
 	void deleteUser(User user);
+	
+	// vrati usera podla id
+	User getByID(Long id);
 
 }
