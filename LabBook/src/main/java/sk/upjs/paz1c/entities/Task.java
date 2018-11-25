@@ -13,8 +13,19 @@ public class Task {
 	private LocalDate dateTimeUntil;
 	private boolean eachItemAvailable;
 	private List<Item> items;
+	private Laboratory laboratory;
 	private User createdBy;
 	private List<User> completedBy;
+
+	public Task() {
+
+	}
+
+	public Task(String name, LocalDate dateTimeFrom, LocalDate dateTimeUntil) {
+		this.name = name;
+		this.dateTimeFrom = dateTimeFrom;
+		this.dateTimeUntil = dateTimeUntil;
+	}
 
 	public Long getTaskID() {
 		return taskID;

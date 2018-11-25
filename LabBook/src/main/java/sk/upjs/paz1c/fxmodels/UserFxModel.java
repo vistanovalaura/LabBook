@@ -1,28 +1,50 @@
 package sk.upjs.paz1c.fxmodels;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.User;
 
-public class SignInFxModel {
+public class UserFxModel {
 
 	private User user;
-	private StringProperty name;
-	private StringProperty password;
+	private Long userID;
+	private StringProperty name = new SimpleStringProperty();
+	private StringProperty password = new SimpleStringProperty();
 
-	public SignInFxModel() {
+	public UserFxModel() {
 
 	}
 
-	public SignInFxModel(User user) {
+	public UserFxModel(User user) {
 		this.user = user;
 		setName(user.getName());
 		setPassword(user.getPassword());
+		System.out.println(user.getUserID());
+		setUserID(user.getUserID());
+	}
+	
+	public void setUser(User user) {
+		setName(user.getName());
+		setPassword(user.getPassword());
+		setUserID(user.getUserID());
 	}
 
 	public User getUser() {
+		User user = new User();
+		user.setUserID(getUserID());
 		user.setName(getName());
 		user.setPassword(getPassword());
 		return user;
+	}
+
+
+	public Long getUserID() {
+		return userID;
+	}
+
+	public void setUserID(Long userID) {
+		this.userID = userID;
 	}
 
 	public StringProperty nameProperty() {

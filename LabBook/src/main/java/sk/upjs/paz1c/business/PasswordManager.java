@@ -17,12 +17,12 @@ public class PasswordManager {
 				}
 			}
 		} else {
-//			List<Admin> admins = DAOfactory.INSTANCE.getAdminDAO().getAll();
-//            for (Admin admin : admins) {
-//                if (admin.getAdminID().equals(id)) {
-//                    return password.equals(admin.getPassword());
-//                }
-//            }
+			List<Admin> admins = DAOfactory.INSTANCE.getAdminDAO().getAll();
+            for (Admin admin : admins) {
+                if (admin.getAdminID().equals(id)) {
+                    return password.equals(admin.getPassword());
+                }
+            }
 		}
 
 		return false;

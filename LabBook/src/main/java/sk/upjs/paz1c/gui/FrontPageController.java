@@ -18,8 +18,9 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.upjs.paz1c.business.UserIdentificationManager;
+import sk.upjs.paz1c.entities.Admin;
 import sk.upjs.paz1c.entities.User;
-import sk.upjs.paz1c.fxmodels.SignInFxModel;
+import sk.upjs.paz1c.fxmodels.UserFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.MysqlUserDAO;
 import sk.upjs.paz1c.persistent.UserDAO;
@@ -27,7 +28,8 @@ import sk.upjs.paz1c.persistent.UserDAO;
 public class FrontPageController {
 
 	private User user;
-	private SignInFxModel signInFxModel = new SignInFxModel();
+	private Admin admin; 
+	private UserFxModel signInFxModel = new UserFxModel();
 	private sk.upjs.paz1c.business.PasswordManager passwordManager = new sk.upjs.paz1c.business.PasswordManager();
 
 	@FXML
@@ -49,10 +51,10 @@ public class FrontPageController {
 
 	}
 
-	// public FrontPageController(User user) {
-	// this.user = user;
-	// this.userModel = new UserFxModel(user);
-	// }
+//	 public FrontPageController(User user) {
+//	 this.user = user;
+//	 this.userModel = new UserFxModel(user);
+//	 }
 
 	@FXML
 	void initialize() {
@@ -84,8 +86,6 @@ public class FrontPageController {
 		});
 
 		signInButton.setOnAction(eh -> {
-			// loginUser();
-			// loginAdmin();
 
 			String login = loginTextField.getText();
 			String password = passwordTextField.getText();
@@ -93,6 +93,7 @@ public class FrontPageController {
 			if (UserIdentificationManager.setUser(login, password) == 1) {
 				loginUser();
 			} else if (UserIdentificationManager.setUser(login, password) == 2) {
+				admin = findByName(login);
 				loginAdmin();
 			} else {
 				showWrongDataWindow();
@@ -102,9 +103,9 @@ public class FrontPageController {
 	}
 
 	private void loginAdmin() {
-		SelectProjectController controller = new SelectProjectController();
+		EditDataAdminController controller = new EditDataAdminController(admin);
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("deleteUserAdmin.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("editDataAdmin.fxml"));
 			loader.setController(controller);
 
 			Parent parentPane = loader.load();
@@ -177,5 +178,16 @@ public class FrontPageController {
 		} catch (IOException iOException) {
 			iOException.printStackTrace();
 		}
+	}
+	
+	public Admin findByName(String name) {
+		List<Admin> admins = DAOfactory.INSTANCE.getAdminDAO().getAll();
+		for (Admin a : admins) {
+			if (a.getName().equals(name)) {
+				return a;
+			}
+		}
+		return null;
+		
 	}
 }

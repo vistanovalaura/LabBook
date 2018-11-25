@@ -8,13 +8,25 @@ public class Laboratory {
 	private String name;
 	private String location;
 	private List<Item> items;
-	
+
 	public Long getLaboratoryID() {
 		return laboratoryID;
 	}
 
 	public void setLaboratoryID(Long laboratoryID) {
 		this.laboratoryID = laboratoryID;
+	}
+
+	public Laboratory() {
+
+	}
+
+	public Laboratory(String name, String location, List<Item> items) {
+		this.name = name;
+		this.location = location;
+		if (items != null) {
+			this.items = items;
+		}
 	}
 
 	public String getName() {

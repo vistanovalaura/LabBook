@@ -57,6 +57,7 @@ public class MysqlAdminDAO implements AdminDAO {
 			return;
 		if (admin.getAdminID() == null) { // CREATE
 			addAdmin(admin);
+			System.out.println("pridavam noveho admina");
 		} else { // UPDATE
 			String sql = "UPDATE admin SET " + "name = ?, password = ? " + "WHERE id_admin = ?";
 			jdbcTemplate.update(sql, admin.getName(), admin.getPassword(), admin.getAdminID());

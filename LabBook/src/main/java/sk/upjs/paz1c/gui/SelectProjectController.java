@@ -74,8 +74,7 @@ public class SelectProjectController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				 SelectTaskController taskController = new SelectTaskController();
-				 showModalWindow(taskController, "selectTask.fxml");
+				openTasks();
 			}
 		});
 
@@ -93,7 +92,7 @@ public class SelectProjectController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				signOutButton.getScene().getWindow().hide();
+				signOut();
 			}
 		});
 		newProjectButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -160,6 +159,46 @@ public class SelectProjectController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	public void openTasks() {
+		SelectTaskController controller = new SelectTaskController();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("selectTask.fxml"));
+			loader.setController(controller);
+
+			Parent parentPane = loader.load();
+			Scene scene = new Scene(parentPane);
+
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("Tasks");
+			stage.show();
+			openButton.getScene().getWindow().hide();
+
+		} catch (IOException iOException) {
+			iOException.printStackTrace();
+		}
+	}
+
+	public void signOut() {
+		FrontPageController controller = new FrontPageController();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("frontPage.fxml"));
+			loader.setController(controller);
+
+			Parent parentPane = loader.load();
+			Scene scene = new Scene(parentPane);
+
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("LabBook login");
+			stage.show();
+			signOutButton.getScene().getWindow().hide();
+
+		} catch (IOException iOException) {
+			iOException.printStackTrace();
 		}
 	}
 }

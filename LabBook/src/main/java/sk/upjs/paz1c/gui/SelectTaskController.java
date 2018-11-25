@@ -30,7 +30,7 @@ import sk.upjs.paz1c.persistent.ProjectDAO;
 
 public class SelectTaskController {
 
-	// private TaskDAO taskDao = DAOfactory.INSTANCE.getTaskDAO();
+	//private TaskDAO taskDao = DAOfactory.INSTANCE.getTaskDAO();
 	private ObservableList<Task> tasksModel;
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private ObjectProperty<Task> selectedTask = new SimpleObjectProperty<>();
@@ -49,6 +49,9 @@ public class SelectTaskController {
 
 	@FXML
 	private Button deleteButton;
+	
+	@FXML 
+	private Button projectsButton; 
 
 	@FXML
 	void initialize() {
@@ -64,34 +67,34 @@ public class SelectTaskController {
 			}
 		});
 
-//		openButton.setOnAction(new EventHandler<ActionEvent>() {
-//
-//			@Override
-//			public void handle(ActionEvent event) {
-//				 NotesController notesController = new NotesController();
-//				 showModalWindow(notesController, "notes.fxml");
-//			}
-//		});
+		openButton.setOnAction(new EventHandler<ActionEvent>() {
 
-//		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
-//
-//			@Override
-//			public void handle(ActionEvent event) {
-//				DeleteTaskController deleteTaskController = new DeleteTaskController(selectedPTask.get());
-//				showModalWindow(deleteTaskController, "deleteTask.fxml");
-//				tasksModel.setAll(taskDao.getAll());
-//			}
-//		});
+			@Override
+			public void handle(ActionEvent event) {
+				 SelectNoteController notesController = new SelectNoteController(selectedTask.get());
+				 showModalWindow(notesController, "notes.fxml");
+			}
+		});
 
-//		newTaskButton.setOnAction(new EventHandler<ActionEvent>() {
-//
-//			@Override
-//			public void handle(ActionEvent event) {
-//				NewTaskController newTaskController = new NewTaskController();
-//				showModalWindow(newTaskController, "newTask.fxml");
-//				tasksModel.setAll(taskDao.getAll());
-//			}
-//		});
+		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				DeleteTaskController deleteTaskController = new DeleteTaskController(selectedTask.get());
+				showModalWindow(deleteTaskController, "deleteTask.fxml");
+				//tasksModel.setAll(taskDAO.getAll());
+			}
+		});
+
+		newTaskButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				NewTaskController newTaskController = new NewTaskController();
+				showModalWindow(newTaskController, "newTask.fxml");
+				//tasksModel.setAll(taskDao.getAll());
+			}
+		});
 
 //		TableColumn<Task, String> nameCol = new TableColumn<>("Name");
 //		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -116,6 +119,30 @@ public class SelectTaskController {
 					editButton.setDisable(false);
 				}
 				selectedTask.set(newValue);
+			}
+		});
+		
+		projectsButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				SelectProjectController controller = new SelectProjectController();
+				try {
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("selectProject.fxml"));
+					loader.setController(controller);
+
+					Parent parentPane = loader.load();
+					Scene scene = new Scene(parentPane);
+
+					Stage stage = new Stage();
+					stage.setScene(scene);
+					stage.setTitle("Projects");
+					stage.show();
+					projectsButton.getScene().getWindow().hide();
+
+				} catch (IOException iOException) {
+					iOException.printStackTrace();
+				}
 			}
 		});
 	}

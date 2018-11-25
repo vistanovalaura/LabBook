@@ -6,6 +6,15 @@ public class Admin {
 	private String name;
 	private String password;
 	
+	public Admin() {
+		
+	}
+	
+	public Admin(String name, String password) {
+		this.name = name;
+		this.password = password;
+	}
+	
 	public Long getAdminID() {
 		return adminID;
 	}
@@ -24,6 +33,13 @@ public class Admin {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	@Override
+	public String toString() {
+		return "Admin [adminID=" + adminID + ", name=" + name + ", password=" + password + "]";
+	}
+	
+	
 	
 	
 }
