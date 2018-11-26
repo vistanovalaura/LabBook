@@ -5,17 +5,17 @@ import java.util.List;
 import sk.upjs.paz1c.entities.Note;
 
 public interface NoteDAO {
-	
-	// pridanie admina do databazy
-		void addNote(Note note);
 
-		// vrati vsetkych adminov z databazy
-		List<Note> getAll();
+	// pridanie note do databazy
+	void addNote(Note note);
 
-		// zmena admina v databaze
-		void saveNote(Note note);
+	// vrati vsetky note z databazy
+	List<Note> getAll();
 
-		// vymazanie admina z databazy
-		void deleteNote(Note note);
+	// zmena note v databaze
+	void saveNote(Note note);
+
+	// vymazanie note z databazy
+	void deleteNote(Note note);
 
 }

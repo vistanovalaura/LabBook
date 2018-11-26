@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.upjs.paz1c.entities.Note;
 
-//FIXME urobit testy ku vsetkym metodam
 public class MysqlNoteDAO implements NoteDAO {
 
 	private JdbcTemplate jdbcTemplate;
@@ -61,9 +60,24 @@ public class MysqlNoteDAO implements NoteDAO {
 				note.setText(rs.getString("text"));
 				note.setTimestamp(rs.getTimestamp("timestamp").toLocalDateTime().toLocalDate());
 				note.setAuthor(DAOfactory.INSTANCE.getUserDAO().getByID(rs.getLong("user_id_user")));
-				note.setTask(DAOfactory.INSTANCE.getTaskDAO().getByID(rs.getLong("task_id_task")));
-				note.setProject(DAOfactory.INSTANCE.getProjectDAO().getByID(rs.getLong("project_id_project")));
-				note.setItem(DAOfactory.INSTANCE.getItemDAO().getByID(rs.getLong("item_id_item")));
+				// ak note nema nastavene napr. task, teda nie je to poznamka k tasku, tak
+				// task_id_task je null, getByID potom nenajde taky riadok v databaze, lebo
+				// ziadny task nema primarny kluc = null, lenze getByID je cez queryForObject a
+				// musi preto vratit prave jeden riadok
+				if (rs.getObject("task_id_task") != null)
+					note.setTask(DAOfactory.INSTANCE.getTaskDAO().getByID(rs.getLong("task_id_task")));
+				else
+					note.setTask(null);
+
+				if (rs.getObject("project_id_project") != null)
+					note.setProject(DAOfactory.INSTANCE.getProjectDAO().getByID(rs.getLong("project_id_project")));
+				else
+					note.setProject(null);
+
+				if (rs.getObject("item_id_item") != null)
+					note.setItem(DAOfactory.INSTANCE.getItemDAO().getByID(rs.getLong("item_id_item")));
+				else
+					note.setItem(null);
 				return note;
 			}
 		});
@@ -78,9 +92,21 @@ public class MysqlNoteDAO implements NoteDAO {
 		} else { // UPDATE
 			String sql = "UPDATE note SET " + "text = ?, timestamp = ?, user_id_user = ?, "
 					+ "task_id_task = ?, project_id_project = ?, item_id_item = ? " + "WHERE id_note = ?";
-			jdbcTemplate.update(sql, note.getText(), note.getTimestamp(), note.getAuthor().getUserID(),
-					note.getTask().getTaskID(), note.getProject().getProjectID(), note.getItem().getItemID(),
-					note.getNoteID());
+
+			Long taskID = null;
+			if (note.getTask() != null)
+				taskID = note.getTask().getTaskID();
+
+			Long projectID = null;
+			if (note.getProject() != null)
+				projectID = note.getProject().getProjectID();
+
+			Long itemID = null;
+			if (note.getItem() != null)
+				itemID = note.getItem().getItemID();
+
+			jdbcTemplate.update(sql, note.getText(), note.getTimestamp(), note.getAuthor().getUserID(), taskID,
+					projectID, itemID, note.getNoteID());
 		}
 	}
 

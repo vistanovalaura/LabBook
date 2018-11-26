@@ -6,16 +6,16 @@ import sk.upjs.paz1c.entities.Laboratory;
 
 public interface LaboratoryDAO {
 
-	// pridanie admina do databazy
+	// pridanie laboratory do databazy
 	void addLaboratory(Laboratory laboratory);
 
-	// vrati vsetkych adminov z databazy
+	// vrati vsetky laboratory z databazy
 	List<Laboratory> getAll();
 
-	// zmena admina v databaze
+	// zmena laboratory v databaze
 	void saveLaboratory(Laboratory laboratory);
 
-	// vymazanie admina z databazy
+	// vymazanie laboratory z databazy
 	void deleteLaboratory(Laboratory laboratory);
 
 }

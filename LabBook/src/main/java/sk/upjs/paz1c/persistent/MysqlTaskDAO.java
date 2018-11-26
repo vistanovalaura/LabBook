@@ -97,7 +97,7 @@ public class MysqlTaskDAO implements TaskDAO {
 	@Override
 	public Task getByID(Long id) {
 		String sql = "SELECT project_id_project, name, active, date_time_from, date_time_until, each_item_available "
-				+ "FROM task " + "WHERE task_id = " + id;
+				+ "FROM task " + "WHERE id_task = " + id;
 		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Task.class));
 	}
 

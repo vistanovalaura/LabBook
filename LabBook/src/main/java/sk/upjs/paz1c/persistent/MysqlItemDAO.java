@@ -80,7 +80,7 @@ public class MysqlItemDAO implements ItemDAO {
 	@Override
 	public Item getByID(Long id) {
 		String sql = "SELECT name, quantity, available, laboratory_id_laboratory " + "FROM item "
-				+ "WHERE item_id = " + id;
+				+ "WHERE id_item = " + id;
 		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Item.class));
 	}
 

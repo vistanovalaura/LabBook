@@ -142,7 +142,7 @@ public class MysqlProjectDAO implements ProjectDAO {
 	@Override
 	public Project getByID(Long id) {
 		String sql = "SELECT name, active, date_from, date_until, each_item_available "
-				+ "FROM project " + "WHERE project_id = " + id;
+				+ "FROM project " + "WHERE id_project = " + id;
 		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Project.class));
 	}
 }
