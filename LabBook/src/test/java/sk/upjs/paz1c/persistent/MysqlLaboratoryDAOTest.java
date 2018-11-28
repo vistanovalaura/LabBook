@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Laboratory;
 
 public class MysqlLaboratoryDAOTest {
@@ -35,6 +36,15 @@ public class MysqlLaboratoryDAOTest {
 		assertTrue(notThere);
 
 		laboratoryDAO.addLaboratory(testLaboratory);
+		
+		Item testItem = new Item();
+		testItem.setName("test_item");
+		testItem.setQuantity(10);
+		testItem.setAvailable(true);
+		testItem.setLaboratory(testLaboratory);
+		ItemDAO itemDAO = DAOfactory.INSTANCE.getItemDAO();
+		itemDAO.addItem(testItem);
+		
 		all = laboratoryDAO.getAll();
 		boolean succesfullyAdded = false;
 		for (Laboratory l : all) {
@@ -53,6 +63,7 @@ public class MysqlLaboratoryDAOTest {
 			}
 		}
 		assertTrue(successfullyDeleted);
+		itemDAO.deleteItem(testItem);
 	}
 	
 	@Test

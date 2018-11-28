@@ -15,9 +15,6 @@ public interface ProjectDAO {
 	// vrati zoznam projektov v databaze
 	List<Project> getAll();
 
-	// vrati projekt s danym menom ak sa nachadza v databaze
-	Project getByName(String name);
-
 	// zmaze projekt
 	void deleteProject(Project project);
 

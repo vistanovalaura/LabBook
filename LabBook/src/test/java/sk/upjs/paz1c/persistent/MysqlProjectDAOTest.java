@@ -7,7 +7,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import sk.upjs.paz1c.entities.Note;
 import sk.upjs.paz1c.entities.Project;
+import sk.upjs.paz1c.entities.User;
 
 public class MysqlProjectDAOTest {
 
@@ -34,8 +36,23 @@ public class MysqlProjectDAOTest {
 			}
 		}
 		assertTrue(notThere);
-
 		projectDAO.addProject(project);
+
+		User testUser = new User();
+		testUser.setName("tester");
+		testUser.setPassword("1234");
+		testUser.setEmail("tester.testovaci@test.com");
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		userDAO.addUser(testUser);
+		
+		Note note = new Note();
+		note.setText("testovaci text");
+		note.setTimestamp(LocalDate.now());
+		note.setAuthor(testUser);
+		note.setProject(project);
+		NoteDAO noteDAO = DAOfactory.INSTANCE.getNoteDAO();
+		noteDAO.addNote(note);
+		
 		all = projectDAO.getAll();
 		boolean succesfullyAdded = false;
 		for (Project p : all) {
@@ -44,8 +61,8 @@ public class MysqlProjectDAOTest {
 			}
 		}
 		assertTrue(succesfullyAdded);
-
 		projectDAO.deleteProject(project);
+		userDAO.deleteUser(testUser);
 		all = projectDAO.getAll();
 		boolean successfullyDeleted = true;
 		for (Project p : all) {
@@ -54,21 +71,6 @@ public class MysqlProjectDAOTest {
 			}
 		}
 		assertTrue(successfullyDeleted);
-	}
-
-	@Test
-	void testGetByName() {
-		Project project = new Project();
-		project.setName("testovaci_projekt");
-		project.setActive(true);
-		project.setDateFrom(LocalDate.now());
-		project.setEachItemAvailable(false);
-		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
-		projectDAO.addProject(project);
-		assertNotNull(projectDAO.getByName("testovaci_projekt"));
-
-		projectDAO.deleteProject(project);
-		assertNull(projectDAO.getByName("testovaci_projekt"));
 	}
 
 	@Test
@@ -94,6 +96,20 @@ public class MysqlProjectDAOTest {
 			}
 		}
 		assertTrue(false, "update sa nepodaril");
+	}
+	
+	@Test
+	void testGetByID() {
+		Project project = new Project();
+		project.setName("testovaci_projekt");
+		project.setActive(true);
+		project.setDateFrom(LocalDate.now());
+		project.setEachItemAvailable(false);
+		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
+		projectDAO.addProject(project);
+		long id = project.getProjectID();
+		assertTrue(id == projectDAO.getByID(id).getProjectID());
+		projectDAO.deleteProject(project);
 	}
 
 }

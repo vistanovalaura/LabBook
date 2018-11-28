@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Project;
+import sk.upjs.paz1c.entities.Task;
 
 public class MysqlItemDAO implements ItemDAO {
 
@@ -33,11 +34,14 @@ public class MysqlItemDAO implements ItemDAO {
 		values.put("name", item.getName());
 		values.put("quantity", item.getQuantity());
 		values.put("available", item.isAvailable());
-		values.put("laboratory_id_laboratory", item.getLaboratoryID());
-
+		if (item.getLaboratory() != null)
+			values.put("laboratory_id_laboratory", item.getLaboratory().getLaboratoryID());
+		else 
+			values.put("laboratory_id_laboratory", null);
 		item.setItemID(insert.executeAndReturnKey(values).longValue());
 	}
 
+	//FIXME nullpointer na getLaboratory().getLaboratoryID()
 	@Override
 	public void saveItem(Item item) {
 		if (item == null)
@@ -47,8 +51,8 @@ public class MysqlItemDAO implements ItemDAO {
 		} else { // UPDATE
 			String sql = "UPDATE item SET " + "name = ?, quantity = ?, available = ?, laboratory_id_laboratory = ? "
 					+ "WHERE id_item = ?";
-			jdbcTemplate.update(sql, item.getName(), item.getQuantity(), item.isAvailable(), item.getLaboratoryID(),
-					item.getItemID());
+			jdbcTemplate.update(sql, item.getName(), item.getQuantity(), item.isAvailable(),
+					item.getLaboratory().getLaboratoryID(), item.getItemID());
 		}
 	}
 
@@ -64,7 +68,9 @@ public class MysqlItemDAO implements ItemDAO {
 				item.setName(rs.getString("name"));
 				item.setQuantity(rs.getInt("quantity"));
 				item.setAvailable(rs.getBoolean("available"));
-				item.setLaboratoryID(rs.getLong("laboratory_id_laboratory"));
+				if (item.getLaboratory() != null)
+					item.setLaboratory(DAOfactory.INSTANCE.getLaboratoryDAO()
+							.getLaboratoryByID(rs.getLong("laboratory_id_laboratory")));
 				return item;
 			}
 		});
@@ -79,9 +85,18 @@ public class MysqlItemDAO implements ItemDAO {
 	// FIXME urobit test
 	@Override
 	public Item getByID(Long id) {
-		String sql = "SELECT name, quantity, available, laboratory_id_laboratory " + "FROM item "
-				+ "WHERE id_item = " + id;
-		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Item.class));
+		// String sql = "SELECT name, quantity, available, laboratory_id_laboratory " +
+		// "FROM item "
+		// + "WHERE id_item = " + id;
+		// return jdbcTemplate.queryForObject(sql, new
+		// BeanPropertyRowMapper<>(Item.class));
+		List<Item> items = DAOfactory.INSTANCE.getItemDAO().getAll();
+		for (Item item : items) {
+			if (item.getItemID() == id) {
+				return item;
+			}
+		}
+		return null;
 	}
 
 }

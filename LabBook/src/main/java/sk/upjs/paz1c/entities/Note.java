@@ -68,4 +68,10 @@ public class Note {
 		this.author = author;
 	}
 
+	@Override
+	public String toString() {
+		return "Note [noteID=" + noteID + ", text=" + text + ", timestamp=" + timestamp + ", author=" + author
+				+ ", task=" + task + ", project=" + project + ", item=" + item + "]";
+	}
+
 }

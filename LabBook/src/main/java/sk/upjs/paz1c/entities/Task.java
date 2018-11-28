@@ -107,4 +107,9 @@ public class Task {
 		this.completedBy = completedBy;
 	}
 
+	@Override
+	public String toString() {
+		return "Task [taskID=" + taskID + ", projectID=" + projectID + ", name=" + name + "]";
+	}
+
 }
