@@ -16,15 +16,17 @@ public class Task {
 	private Laboratory laboratory;
 	private User createdBy;
 	private List<User> completedBy;
+	private Project project;
 
 	public Task() {
 
 	}
 
-	public Task(String name, LocalDate dateTimeFrom, LocalDate dateTimeUntil) {
+	public Task(String name, LocalDate dateTimeFrom, LocalDate dateTimeUntil, Project project) {
 		this.name = name;
 		this.dateTimeFrom = dateTimeFrom;
 		this.dateTimeUntil = dateTimeUntil;
+		this.projectID = project.getProjectID();
 	}
 
 	public Long getTaskID() {
@@ -106,5 +108,22 @@ public class Task {
 	public void setCompletedBy(List<User> completedBy) {
 		this.completedBy = completedBy;
 	}
+
+	public Laboratory getLaboratory() {
+		return laboratory;
+	}
+
+	public void setLaboratory(Laboratory laboratory) {
+		this.laboratory = laboratory;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+	
 
 }

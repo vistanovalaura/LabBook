@@ -9,10 +9,11 @@ import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.fxmodels.ProjectFxModel;
 import sk.upjs.paz1c.fxmodels.TaskFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
+import sk.upjs.paz1c.persistent.TaskDAO;
 
 public class DeleteTaskController {
 	
-	//private TaskDAO taskDao = DAOfactory.INSTANCE.getTaskDAO();
+	private TaskDAO taskDao = DAOfactory.INSTANCE.getTaskDAO();
 	private TaskFxModel taskModel; 
 	private Task task; 
 
@@ -35,8 +36,8 @@ public class DeleteTaskController {
 
 			@Override
 			public void handle(ActionEvent event) {
-//				taskDao.deleteTask(taskModel.getTask());
-//				taskDao.saveTask(taskModel.getTask());
+				taskDao.deleteTask(taskModel.getTask());
+				taskDao.saveTask(taskModel.getTask());
 				yesButton.getScene().getWindow().hide();
 			}
 		});

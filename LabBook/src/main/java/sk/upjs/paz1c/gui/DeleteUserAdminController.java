@@ -18,7 +18,6 @@ public class DeleteUserAdminController {
 	private User user;
 
 	public DeleteUserAdminController(User user) {
-		System.out.println(user.getName());
 		this.user = user;
 	}
 	

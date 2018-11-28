@@ -4,37 +4,40 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import sk.upjs.paz1c.entities.Item;
+import sk.upjs.paz1c.entities.Note;
 import sk.upjs.paz1c.entities.Task;
+import sk.upjs.paz1c.fxmodels.NoteFxModel;
 import sk.upjs.paz1c.fxmodels.TaskFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
-import sk.upjs.paz1c.persistent.ItemDAO;
+import sk.upjs.paz1c.persistent.NoteDAO;
+import sk.upjs.paz1c.persistent.TaskDAO;
 
-public class RemoveItemController {
+public class DeleteNoteController {
+	private NoteDAO noteDao = DAOfactory.INSTANCE.getNoteDAO();
+	private NoteFxModel noteModel; 
+	private Note note; 
 
-	private 	ItemDAO itemDao = DAOfactory.INSTANCE.getItemDAO();
-		//private ItemFxModel itemModel; 
-		private Item item; 
-		
 	@FXML
     private Button yesButton;
 
     @FXML
     private Button noButton;
-
-    public RemoveItemController(Item item) {
-		this.item = item; 
-    //	this.itemModel = new ItemFxModel(item);
+    
+    public DeleteNoteController(Note note) {
+		this.note = note; 
+    	this.noteModel = new NoteFxModel(note);
 	}
     
-    @FXML
-    void initialize() {
-    	yesButton.setOnAction(new EventHandler<ActionEvent>() {
+	@FXML
+	void initialize() {
+		
+		
+		yesButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-//				itemDao.deleteItem(itemModel.getItem());
-//				itemDao.saveItem(itemModel.getItem());
+				noteDao.deleteNote(noteModel.getNote());
+				noteDao.saveNote(noteModel.getNote());
 				yesButton.getScene().getWindow().hide();
 			}
 		});
@@ -46,5 +49,5 @@ public class RemoveItemController {
 				noButton.getScene().getWindow().hide();
 			}
 		});
-    }
+	}
 }

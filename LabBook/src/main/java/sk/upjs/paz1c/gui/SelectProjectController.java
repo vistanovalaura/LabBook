@@ -163,7 +163,7 @@ public class SelectProjectController {
 	}
 
 	public void openTasks() {
-		SelectTaskController controller = new SelectTaskController();
+		SelectTaskController controller = new SelectTaskController(selectedProject.get());
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("selectTask.fxml"));
 			loader.setController(controller);

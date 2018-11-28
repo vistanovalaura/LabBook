@@ -19,6 +19,7 @@ import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Laboratory;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.persistent.DAOfactory;
+import sk.upjs.paz1c.persistent.LaboratoryDAO;
 import sk.upjs.paz1c.persistent.ProjectDAO;
 
 public class NewLaboratoryController {
@@ -55,8 +56,8 @@ public class NewLaboratoryController {
 					showWrongDataInputWindow();
 				} else {
 					Laboratory laboratory = new Laboratory(name, location, items);
-					//LaboratoryDAO laboratoryDao = DAOfactory.INSTANCE.getLaboratoryDAO();
-					//laboratoryDao.addLaboratory(laboratory);
+					LaboratoryDAO laboratoryDao = DAOfactory.INSTANCE.getLaboratoryDAO();
+					laboratoryDao.addLaboratory(laboratory);
 					saveButton.getScene().getWindow().hide();
 				}
 				

@@ -107,7 +107,7 @@ public class EditDataAdminController {
 				showModalWindow(deleteController, "deleteUserAdmin.fxml");
 				List<User> users = userDao.getAll();
 		    	userComboBox.setItems(FXCollections.observableList(users));
-				//userModel.setAll(userDao.getAll());
+				userModel.setAll(userDao.getAll());
 			}
 		});
 		

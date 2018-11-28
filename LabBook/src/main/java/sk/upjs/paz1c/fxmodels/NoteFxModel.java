@@ -14,6 +14,13 @@ public class NoteFxModel {
 		setText(note.getText());
 	}
 
+	public Note getNote() {
+		Note n = new Note();
+		n.setNoteID(getNoteID());
+		n.setText(getText());
+		return n;
+	}
+
 	public Long getNoteID() {
 		return noteID;
 	}

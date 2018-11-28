@@ -24,7 +24,7 @@ public class EditProjectController {
 	
 	private ProjectDAO projectDao = DAOfactory.INSTANCE.getProjectDAO();
 	private ProjectFxModel projectModel; 
-	private Project project; 
+	//private Project project; 
 
     @FXML
     private TextField nameTextField;
@@ -45,7 +45,7 @@ public class EditProjectController {
     private Button saveButton;
     
     public EditProjectController(Project project) {
-    	this.project = project; 
+    	//this.project = project; 
     	this.projectModel = new ProjectFxModel(project);
     }
 
