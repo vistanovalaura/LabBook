@@ -17,5 +17,7 @@ public interface LaboratoryDAO {
 
 	// vymazanie laboratory z databazy
 	void deleteLaboratory(Laboratory laboratory);
+	
+	Laboratory getLaboratoryByID(Long id);
 
 }

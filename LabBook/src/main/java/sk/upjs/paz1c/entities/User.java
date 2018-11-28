@@ -77,15 +77,17 @@ public class User {
 		this.email = email;
 	}
 
+	@Override
+	public String toString() {
+		return "User [userID=" + userID + ", name=" + name + ", password=" + password + "]";
+	}
+
 //	@Override
 //	public String toString() {
 //		return "User [userID=" + userID + ", name=" + name + ", password=" + password + ", projects=" + projects
 //				+ ", tasks=" + tasks + ", email=" + email + "]";
 //	}
 	
-	@Override 
-	public String toString() {
-		return name + "-" + email; 
-	}
+	
 
 }

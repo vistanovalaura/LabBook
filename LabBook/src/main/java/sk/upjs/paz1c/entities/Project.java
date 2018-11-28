@@ -110,9 +110,7 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return "Project [projectID=" + projectID + ", name=" + name + ", active=" + active + ", dateFrom=" + dateFrom
-				+ ", dateUntil=" + dateUntil + ", tasks=" + tasks + ", items=" + items + ", allItemsAvailable="
-				+ eachItemAvailable + ", createdBy=" + createdBy + ", completedBy=" + completedBy + "]";
+		return "Project [projectID=" + projectID + ", name=" + name + "]";
 	}
 	
 	

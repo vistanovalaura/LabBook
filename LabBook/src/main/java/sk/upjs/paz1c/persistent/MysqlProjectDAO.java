@@ -14,6 +14,8 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
+import sk.upjs.paz1c.entities.Item;
+import sk.upjs.paz1c.entities.Note;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
 
@@ -105,44 +107,35 @@ public class MysqlProjectDAO implements ProjectDAO {
 	// }
 
 	@Override
-	public Project getByName(String name) {
-		String sql = "SELECT * " + "FROM project " + "WHERE name = '" + name + "'";
-		List<Project> projectList = jdbcTemplate.query(sql, new RowMapper<Project>() {
-
-			@Override
-			public Project mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Project project = new Project();
-				project.setProjectID(rs.getLong("id_project"));
-				project.setName(rs.getString("name"));
-				project.setActive(rs.getBoolean("active"));
-				Timestamp timestamp = rs.getTimestamp("date_from");
-				project.setDateFrom(timestamp.toLocalDateTime().toLocalDate());
-				timestamp = rs.getTimestamp("date_until");
-				if (timestamp != null) {
-					project.setDateUntil(timestamp.toLocalDateTime().toLocalDate());
-				}
-				project.setEachItemAvailable(rs.getBoolean("each_item_available"));
-				return project;
-			}
-		});
-		if (projectList.size() == 0) {
-			return null;
-		} else {
-			return projectList.get(0);
-		}
-	}
-
-	@Override
 	public void deleteProject(Project project) {
+		// vymaze vsetky note, ktore patrili k danemu projektu
+		NoteDAO noteDao = DAOfactory.INSTANCE.getNoteDAO();
+		List<Note> notes = noteDao.getAll();
+		for (Note note : notes) {
+			if (note.getProject() != null) {
+				//System.out.println(note.getProject().getProjectID() + " vs " + project.getProjectID());
+				if (note.getProject().getProjectID() == project.getProjectID()) {
+					noteDao.deleteNote(note);
+				}
+			}
+		}
+
 		String sql = "DELETE FROM project WHERE id_project = " + project.getProjectID();
 		jdbcTemplate.update(sql);
 	}
-	
-	//FIXME urobit test 
+
+	// FIXME urobit test
 	@Override
 	public Project getByID(Long id) {
-		String sql = "SELECT name, active, date_from, date_until, each_item_available "
-				+ "FROM project " + "WHERE id_project = " + id;
-		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Project.class));
+//		String sql = "SELECT id_project, name, active, date_from, date_until, each_item_available " + "FROM project "
+//				+ "WHERE id_project = " + id;
+//		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Project.class));
+		List<Project> projects = DAOfactory.INSTANCE.getProjectDAO().getAll();
+		for(Project project: projects) {
+			if(project.getProjectID() == id) {
+				return project;
+			}
+		}
+		return null;
 	}
 }

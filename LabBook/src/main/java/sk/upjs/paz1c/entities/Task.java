@@ -109,6 +109,7 @@ public class Task {
 		this.completedBy = completedBy;
 	}
 
+//<<<<<<< HEAD
 	public Laboratory getLaboratory() {
 		return laboratory;
 	}
@@ -125,5 +126,11 @@ public class Task {
 		this.project = project;
 	}
 	
+//=======
+	@Override
+	public String toString() {
+		return "Task [taskID=" + taskID + ", projectID=" + projectID + ", name=" + name + "]";
+	}
+//>>>>>>> branch 'zakladne_gui_+_dao' of https://github.com/vistanovalaura/LabBook.git
 
 }

@@ -8,7 +8,7 @@ public class Item {
 	private String name;
 	private int quantity;
 	private boolean available;
-	private Long laboratoryID;
+	private Laboratory laboratory;
 	private List<Project> usedInProjects;
 	private List<Task> usedInTasks;
 
@@ -60,12 +60,12 @@ public class Item {
 		this.usedInTasks = usedInTasks;
 	}
 
-	public Long getLaboratoryID() {
-		return laboratoryID;
+	public Laboratory getLaboratory() {
+		return laboratory;
 	}
 
-	public void setLaboratoryID(Long laboratoryID) {
-		this.laboratoryID = laboratoryID;
+	public void setLaboratory(Laboratory laboratory) {
+		this.laboratory = laboratory;
 	}
 
 }

@@ -96,9 +96,16 @@ public class MysqlTaskDAO implements TaskDAO {
 	// FIXME - urobit test
 	@Override
 	public Task getByID(Long id) {
-		String sql = "SELECT project_id_project, name, active, date_time_from, date_time_until, each_item_available "
-				+ "FROM task " + "WHERE id_task = " + id;
-		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Task.class));
+//		String sql = "SELECT project_id_project, name, active, date_time_from, date_time_until, each_item_available "
+//				+ "FROM task " + "WHERE id_task = " + id;
+//		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Task.class));
+		List<Task> tasks = DAOfactory.INSTANCE.getTaskDAO().getAll();
+		for(Task task: tasks) {
+			if(task.getTaskID() == id) {
+				return task;
+			}
+		}
+		return null;
 	}
 
 }
