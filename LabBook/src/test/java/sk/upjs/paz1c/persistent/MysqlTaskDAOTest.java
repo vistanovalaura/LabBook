@@ -32,7 +32,7 @@ public class MysqlTaskDAOTest {
 		projectDAO.addProject(project);
 		
 		Task task = new Task();
-		task.setProjectID(project.getProjectID());
+		task.setProject(project);
 		task.setName("testTask");
 		task.setActive(true);
 		task.setDateTimeFrom(LocalDate.now());
@@ -70,7 +70,7 @@ public class MysqlTaskDAOTest {
 		projectDAO.addProject(project);
 		
 		Task task = new Task();
-		task.setProjectID(project.getProjectID());
+		task.setProject(project);
 		task.setName("testTask");
 		task.setActive(true);
 		task.setDateTimeFrom(LocalDate.now());

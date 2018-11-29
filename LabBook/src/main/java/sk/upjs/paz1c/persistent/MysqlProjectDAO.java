@@ -109,17 +109,10 @@ public class MysqlProjectDAO implements ProjectDAO {
 	@Override
 	public void deleteProject(Project project) {
 		// vymaze vsetky note, ktore patrili k danemu projektu
-		NoteDAO noteDao = DAOfactory.INSTANCE.getNoteDAO();
-		List<Note> notes = noteDao.getAll();
-		for (Note note : notes) {
-			if (note.getProject() != null) {
-				//System.out.println(note.getProject().getProjectID() + " vs " + project.getProjectID());
-				if (note.getProject().getProjectID() == project.getProjectID()) {
-					noteDao.deleteNote(note);
-				}
-			}
-		}
-
+		jdbcTemplate.update("DELETE FROM note WHERE project_id_project = ?", project.getProjectID());
+		// vymaze vsetky tasky, ktore patrili k danemu projektu
+		jdbcTemplate.update("DELETE FROM task WHERE project_id_project = ?", project.getProjectID());
+		// vymaze projekt
 		String sql = "DELETE FROM project WHERE id_project = " + project.getProjectID();
 		jdbcTemplate.update(sql);
 	}
@@ -127,15 +120,8 @@ public class MysqlProjectDAO implements ProjectDAO {
 	// FIXME urobit test
 	@Override
 	public Project getByID(Long id) {
-//		String sql = "SELECT id_project, name, active, date_from, date_until, each_item_available " + "FROM project "
-//				+ "WHERE id_project = " + id;
-//		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Project.class));
-		List<Project> projects = DAOfactory.INSTANCE.getProjectDAO().getAll();
-		for(Project project: projects) {
-			if(project.getProjectID() == id) {
-				return project;
-			}
-		}
-		return null;
+		String sql = "SELECT id_project AS projectID, name, active, date_from, date_until, each_item_available "
+				+ "FROM project " + "WHERE id_project = " + id;
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Project.class));
 	}
 }

@@ -178,7 +178,7 @@ public class SelectTaskController {
 		List<Task> tasks = new ArrayList<>();
 		List<Task> allTasks = taskDao.getAll();
 		for (Task t : allTasks) {
-			if (t.getProjectID() == projectModel.getProjectId()) {
+			if (t.getProject().getProjectID() == projectModel.getProjectId()) {
 				tasks.add(t);
 			}
 		}
