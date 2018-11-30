@@ -76,11 +76,16 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	@Override
+	
+	@Override 
 	public String toString() {
-		return "User [userID=" + userID + ", name=" + name + ", password=" + password + "]";
+		return name + "-" + email; 
 	}
+
+//	@Override
+//	public String toString() {
+//		return "User [userID=" + userID + ", name=" + name + ", password=" + password + "]";
+//	}
 
 //	@Override
 //	public String toString() {

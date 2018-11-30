@@ -1,7 +1,6 @@
 package sk.upjs.paz1c.gui;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 
 import javafx.event.ActionEvent;
@@ -11,39 +10,38 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.upjs.paz1c.entities.Admin;
-import sk.upjs.paz1c.entities.Item;
-import sk.upjs.paz1c.entities.Laboratory;
-import sk.upjs.paz1c.entities.Project;
+import sk.upjs.paz1c.entities.User;
+import sk.upjs.paz1c.persistent.AdminDAO;
 import sk.upjs.paz1c.persistent.DAOfactory;
-import sk.upjs.paz1c.persistent.LaboratoryDAO;
-import sk.upjs.paz1c.persistent.ProjectDAO;
+import sk.upjs.paz1c.persistent.UserDAO;
 
-public class NewLaboratoryController {
+public class NewAdminController {
 
 	@FXML
 	private Button saveButton;
 
 	@FXML
-	private TableView<Item> itemsTableView;
+	private PasswordField passwordPasswordField;
 
 	@FXML
-	private Button addButton;
+	private PasswordField confirmPasswordPasswordField;
 
 	@FXML
-	private Button deleteButton;
+	private TextField emailTextField;
 
 	@FXML
 	private TextField nameTextField;
 
-	@FXML
-	private TextField locationTextField;
+	private AdminDAO adminDao = DAOfactory.INSTANCE.getAdminDAO();
 
-	private LaboratoryDAO laboratoryDao = DAOfactory.INSTANCE.getLaboratoryDAO();
+	public NewAdminController() {
+
+	}
 
 	@FXML
 	void initialize() {
@@ -52,23 +50,29 @@ public class NewLaboratoryController {
 			@Override
 			public void handle(ActionEvent event) {
 				String name = nameTextField.getText();
-				String location = locationTextField.getText();
-				List<Item> items = itemsTableView.getItems();
-
-				if (name.isEmpty() || location.isEmpty()) {
+				String email = emailTextField.getText();
+				String password1 = passwordPasswordField.getText();
+				String password2 = confirmPasswordPasswordField.getText();
+				if (name.isEmpty() || email.isEmpty() || password1.isEmpty()) {
 					showWrongDataInputWindow();
 				} else if (!isAvailable(name)) {
 					showTakenNameWindow();
 				} else {
-					Laboratory laboratory = new Laboratory(name, location, items);
-					LaboratoryDAO laboratoryDao = DAOfactory.INSTANCE.getLaboratoryDAO();
-					laboratoryDao.addLaboratory(laboratory);
-					saveButton.getScene().getWindow().hide();
-				}
+					if (password1.equals(password2)) {
+						Admin admin = new Admin();
+						admin.setName(name);
+						admin.setEmail(email);
+						admin.setPassword(password1);
+						AdminDAO adminDao = DAOfactory.INSTANCE.getAdminDAO();
+						adminDao.addAdmin(admin);
+						saveButton.getScene().getWindow().hide();
+					} else {
+						showWrongDataInputWindow();
+					}
 
+				}
 			}
 		});
-
 	}
 
 	private void showWrongDataInputWindow() {
@@ -91,7 +95,7 @@ public class NewLaboratoryController {
 			iOException.printStackTrace();
 		}
 	}
-
+	
 	private void showTakenNameWindow() {
 		TakenNameController controller = new TakenNameController();
 		try {
@@ -113,14 +117,14 @@ public class NewLaboratoryController {
 		}
 	}
 
+
 	private boolean isAvailable(String name) {
-		List<Laboratory> labs = laboratoryDao.getAll();
-		for (Laboratory l : labs) {
-			if (l.getName().equals(name)) {
+		List<Admin> admins = adminDao.getAll();
+		for (Admin a : admins) {
+			if (a.getName().equals(name)) {
 				return false;
 			}
 		}
 		return true;
 	}
-
 }

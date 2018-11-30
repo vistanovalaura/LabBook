@@ -1,7 +1,7 @@
 package sk.upjs.paz1c.gui;
 
 import java.io.IOException;
-import java.time.LocalDate;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,35 +9,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sk.upjs.paz1c.entities.Project;
-import sk.upjs.paz1c.entities.User;
-import sk.upjs.paz1c.fxmodels.UserFxModel;
+import sk.upjs.paz1c.entities.Note;
+import sk.upjs.paz1c.entities.Task;
+import sk.upjs.paz1c.fxmodels.TaskFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
-import sk.upjs.paz1c.persistent.ProjectDAO;
-import sk.upjs.paz1c.persistent.UserDAO;
+import sk.upjs.paz1c.persistent.NoteDAO;
+import sk.upjs.paz1c.persistent.TaskDAO;
 
-public class NewProjectController {
+public class NewNoteController {
+
+	@FXML
+	private TextArea noteTextArea;
 
 	@FXML
 	private Button saveButton;
 
-	@FXML
-	private TextField nameTextField;
+	private TaskFxModel taskModel;
 
-	@FXML
-	private DatePicker fromDatePicker;
-
-	@FXML
-	private DatePicker untilDatePicker;
-	
-	private UserFxModel userModel;
-	
-	public NewProjectController(User user) {
-		userModel = new UserFxModel(user);
+	public NewNoteController(Task task) {
+		this.taskModel = new TaskFxModel(task);
 	}
 
 	@FXML
@@ -47,23 +40,20 @@ public class NewProjectController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				String name = nameTextField.getText();
-				LocalDate from = fromDatePicker.getValue();
-				LocalDate until = untilDatePicker.getValue();
-				
-				if (name.isEmpty() || from == null || until == null) {
+				Note note = new Note();
+				String text = noteTextArea.getText();
+				if (text.isEmpty()) {
 					showWrongDataInputWindow();
 				} else {
-					Project project = new Project(name, from, until, true);
-					project.setCreatedBy(userModel.getUser());
-					ProjectDAO projectDao = DAOfactory.INSTANCE.getProjectDAO();
-					projectDao.addProject(project);
-					saveButton.getScene().getWindow().hide();
+					note.setText(text);
+					note.setTask(taskModel.getTask());
+					NoteDAO noteDao = DAOfactory.INSTANCE.getNoteDAO();
+					noteDao.addNote(note);
 				}
-				
+				saveButton.getScene().getWindow().hide();
+
 			}
 		});
-
 	}
 
 	private void showWrongDataInputWindow() {

@@ -9,6 +9,7 @@ public class AdminFxModel {
 	private Long adminID;
 	private StringProperty name = new SimpleStringProperty();
 	private StringProperty password = new SimpleStringProperty();
+	private StringProperty email = new SimpleStringProperty();
 	private Admin admin;
 
 	public AdminFxModel(Admin admin) {
@@ -16,6 +17,28 @@ public class AdminFxModel {
 		setName(admin.getName());
 		setPassword(admin.getPassword());
 		setAdminID(admin.getAdminID());
+		setEmail(admin.getEmail());
+	}
+
+	public Admin getAdmin() {
+		Admin a = new Admin();
+		a.setAdminID(adminID);
+		a.setName(getName());
+		a.setPassword(getPassword());
+		a.setEmail(getEmail());
+		return a;
+	}
+
+	public StringProperty EmailProperty() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email.set(email);
+	}
+
+	public String getEmail() {
+		return email.get();
 	}
 
 	public Long getAdminID() {
@@ -48,14 +71,6 @@ public class AdminFxModel {
 
 	public StringProperty passwordProperty() {
 		return password;
-	}
-
-	public Admin getAdmin() {
-		Admin a = new Admin();
-		a.setAdminID(adminID);
-		a.setName(getName());
-		a.setPassword(getPassword());
-		return a;
 	}
 
 }

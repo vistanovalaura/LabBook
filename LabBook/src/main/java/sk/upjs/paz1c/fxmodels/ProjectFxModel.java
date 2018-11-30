@@ -22,12 +22,12 @@ public class ProjectFxModel {
 	private List<User> completedBy;
 	private Project project;
 
-	public ProjectFxModel() {
-
-	}
+//	public ProjectFxModel() {
+//
+//	}
 
 	public ProjectFxModel(Project project) {
-		this.project = project;
+		//this.project = project;
 		setName(project.getName());
 		setFrom(project.getDateFrom());
 		setUntil(project.getDateUntil());

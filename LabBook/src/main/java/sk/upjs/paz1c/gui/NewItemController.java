@@ -1,7 +1,8 @@
 package sk.upjs.paz1c.gui;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,18 +10,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sk.upjs.paz1c.entities.Project;
-import sk.upjs.paz1c.entities.User;
-import sk.upjs.paz1c.fxmodels.UserFxModel;
+import sk.upjs.paz1c.entities.Admin;
+import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.persistent.DAOfactory;
+import sk.upjs.paz1c.persistent.ItemDAO;
 import sk.upjs.paz1c.persistent.ProjectDAO;
-import sk.upjs.paz1c.persistent.UserDAO;
 
-public class NewProjectController {
+public class NewItemController {
 
 	@FXML
 	private Button saveButton;
@@ -29,16 +28,9 @@ public class NewProjectController {
 	private TextField nameTextField;
 
 	@FXML
-	private DatePicker fromDatePicker;
+	private TextField quantityTextField;
 
-	@FXML
-	private DatePicker untilDatePicker;
-	
-	private UserFxModel userModel;
-	
-	public NewProjectController(User user) {
-		userModel = new UserFxModel(user);
-	}
+	private ItemDAO itemDao = DAOfactory.INSTANCE.getItemDAO();
 
 	@FXML
 	void initialize() {
@@ -48,19 +40,20 @@ public class NewProjectController {
 			@Override
 			public void handle(ActionEvent event) {
 				String name = nameTextField.getText();
-				LocalDate from = fromDatePicker.getValue();
-				LocalDate until = untilDatePicker.getValue();
-				
-				if (name.isEmpty() || from == null || until == null) {
+				String quantityString = quantityTextField.getText();
+				int quantity = Integer.parseInt(quantityString);
+				if (name.isEmpty() || quantityString == null) {
 					showWrongDataInputWindow();
+				} else if (!isAvailable(name)) {
+					showTakenNameWindow();
 				} else {
-					Project project = new Project(name, from, until, true);
-					project.setCreatedBy(userModel.getUser());
-					ProjectDAO projectDao = DAOfactory.INSTANCE.getProjectDAO();
-					projectDao.addProject(project);
+					Item item = new Item();
+					item.setName(name);
+					item.setQuantity(quantity);
+					ItemDAO itemDao = DAOfactory.INSTANCE.getItemDAO();
+					itemDao.addItem(item);
 					saveButton.getScene().getWindow().hide();
 				}
-				
 			}
 		});
 
@@ -85,5 +78,36 @@ public class NewProjectController {
 		} catch (IOException iOException) {
 			iOException.printStackTrace();
 		}
+	}
+
+	private void showTakenNameWindow() {
+		TakenNameController controller = new TakenNameController();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("takenName.fxml"));
+			loader.setController(controller);
+
+			Parent parentPane = loader.load();
+			Scene scene = new Scene(parentPane);
+
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setResizable(false);
+			stage.setTitle("Taken Name");
+			stage.show();
+
+		} catch (IOException iOException) {
+			iOException.printStackTrace();
+		}
+	}
+
+	private boolean isAvailable(String name) {
+		List<Item> items = itemDao.getAll();
+		for (Item i : items) {
+			if (i.getName().equals(name)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

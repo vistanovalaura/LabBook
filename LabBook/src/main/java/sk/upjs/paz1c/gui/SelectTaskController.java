@@ -23,8 +23,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sk.upjs.paz1c.entities.Laboratory;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.fxmodels.ProjectFxModel;
@@ -62,10 +65,25 @@ public class SelectTaskController {
 		this.projectModel = new ProjectFxModel(project);
 	}
 
+	public SelectTaskController() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@FXML
 	void initialize() {
 
 		tasksModel = FXCollections.observableArrayList(getTasks());
+
+		tasksTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+					if (mouseEvent.getClickCount() == 2) {
+						openNotes();
+					}
+				}
+			}
+		});
 
 		editButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -81,8 +99,7 @@ public class SelectTaskController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				SelectNoteController notesController = new SelectNoteController(selectedTask.get());
-				showModalWindow(notesController, "selectNote.fxml");
+				openNotes();
 			}
 		});
 
@@ -111,10 +128,10 @@ public class SelectTaskController {
 		tasksTableView.getColumns().add(nameCol);
 		columnsVisibility.put("name", nameCol.visibleProperty());
 
-		TableColumn<Task, String> itemsCol = new TableColumn<>("Items");
-		itemsCol.setCellValueFactory(new PropertyValueFactory<>("items"));
-		tasksTableView.getColumns().add(itemsCol);
-		columnsVisibility.put("items", itemsCol.visibleProperty());
+//		TableColumn<Task, Laboratory> labCol = new TableColumn<>("Laboratory");
+//		labCol.setCellValueFactory(new PropertyValueFactory<>("lab"));
+//		tasksTableView.getColumns().add(labCol);
+//		columnsVisibility.put("lab", labCol.visibleProperty());
 
 		tasksTableView.setItems(tasksModel);
 		tasksTableView.setEditable(true);
@@ -171,6 +188,26 @@ public class SelectTaskController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	public void openNotes() {
+		SelectNoteController controller = new SelectNoteController(selectedTask.get(), projectModel.getProject());
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("selectNotes.fxml"));
+			loader.setController(controller);
+
+			Parent parentPane = loader.load();
+			Scene scene = new Scene(parentPane);
+
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("Notes");
+			stage.show();
+			openButton.getScene().getWindow().hide();
+
+		} catch (IOException iOException) {
+			iOException.printStackTrace();
 		}
 	}
 

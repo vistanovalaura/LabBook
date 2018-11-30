@@ -12,43 +12,45 @@ import sk.upjs.paz1c.persistent.AdminDAO;
 import sk.upjs.paz1c.persistent.DAOfactory;
 
 public class EditAdminController {
-	
+
 	private AdminDAO adminDao = DAOfactory.INSTANCE.getAdminDAO();
-	private AdminFxModel adminModel; 
-	private Admin admin; 
+	private AdminFxModel adminModel;
+	private Admin admin;
 
 	@FXML
-    private Button saveButton;
+	private Button saveButton;
 
-    @FXML
-    private PasswordField passwordPasswordField;
+	@FXML
+	private PasswordField passwordPasswordField;
 
-    @FXML
-    private PasswordField confirmPasswordPasswordField;
+	@FXML
+	private PasswordField confirmPasswordPasswordField;
 
-    @FXML
-    private TextField nameTextField;
-    
-    public EditAdminController(Admin admin) {
-    	this.admin = admin; 
-    	this.adminModel = new AdminFxModel(admin);
-    }
-    
-    
-    
-    @FXML
-    void initialize() {
-    	nameTextField.textProperty().bindBidirectional(adminModel.nameProperty());
-    	passwordPasswordField.textProperty().bindBidirectional(adminModel.passwordProperty());
-    	confirmPasswordPasswordField.textProperty().bindBidirectional(adminModel.passwordProperty());
-    	
-    	saveButton.setOnAction(new EventHandler<ActionEvent>() {
-			
+	@FXML
+	private TextField nameTextField;
+
+	@FXML
+	private TextField emailTextField;
+
+	public EditAdminController(Admin admin) {
+		this.admin = admin;
+		this.adminModel = new AdminFxModel(admin);
+	}
+
+	@FXML
+	void initialize() {
+		nameTextField.textProperty().bindBidirectional(adminModel.nameProperty());
+		emailTextField.textProperty().bindBidirectional(adminModel.EmailProperty());
+		passwordPasswordField.textProperty().bindBidirectional(adminModel.passwordProperty());
+		confirmPasswordPasswordField.textProperty().bindBidirectional(adminModel.passwordProperty());
+
+		saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
 			@Override
 			public void handle(ActionEvent event) {
 				adminDao.saveAdmin(adminModel.getAdmin());
-				saveButton.getScene().getWindow().hide();				
+				saveButton.getScene().getWindow().hide();
 			}
 		});
-    }
+	}
 }

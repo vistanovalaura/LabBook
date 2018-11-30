@@ -127,7 +127,7 @@ public class MysqlProjectDAO implements ProjectDAO {
 	// FIXME urobit test
 	@Override
 	public Project getByID(Long id) {
-//		String sql = "SELECT id_project, name, active, date_from, date_until, each_item_available " + "FROM project "
+//		String sql = "SELECT id_project as projectID, name, active, date_from, date_until, each_item_available " + "FROM project "
 //				+ "WHERE id_project = " + id;
 //		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Project.class));
 		List<Project> projects = DAOfactory.INSTANCE.getProjectDAO().getAll();
