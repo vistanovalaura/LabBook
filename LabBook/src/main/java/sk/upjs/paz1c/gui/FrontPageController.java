@@ -15,6 +15,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.upjs.paz1c.business.UserIdentificationManager;
@@ -28,7 +30,7 @@ import sk.upjs.paz1c.persistent.UserDAO;
 public class FrontPageController {
 
 	private User user;
-	private Admin admin; 
+	private Admin admin;
 	private UserFxModel signInFxModel = new UserFxModel();
 	private sk.upjs.paz1c.business.PasswordManager passwordManager = new sk.upjs.paz1c.business.PasswordManager();
 
@@ -58,6 +60,44 @@ public class FrontPageController {
 
 	@FXML
 	void initialize() {
+		loginTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode().equals(KeyCode.ENTER)) {
+					String login = loginTextField.getText();
+					String password = passwordTextField.getText();
+
+					if (UserIdentificationManager.setUser(login, password) == 1) {
+						loginUser();
+					} else if (UserIdentificationManager.setUser(login, password) == 2) {
+						admin = findByName(login);
+						loginAdmin();
+					} else {
+						showWrongDataWindow();
+					}
+				}
+			}
+		});
+		passwordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode().equals(KeyCode.ENTER)) {
+					String login = loginTextField.getText();
+					String password = passwordTextField.getText();
+
+					if (UserIdentificationManager.setUser(login, password) == 1) {
+						loginUser();
+					} else if (UserIdentificationManager.setUser(login, password) == 2) {
+						admin = findByName(login);
+						loginAdmin();
+					} else {
+						showWrongDataWindow();
+					}
+				}
+			}
+		});
 
 		registerButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -179,7 +219,7 @@ public class FrontPageController {
 			iOException.printStackTrace();
 		}
 	}
-	
+
 	public Admin findByName(String name) {
 		List<Admin> admins = DAOfactory.INSTANCE.getAdminDAO().getAll();
 		for (Admin a : admins) {
@@ -188,6 +228,6 @@ public class FrontPageController {
 			}
 		}
 		return null;
-		
+
 	}
 }

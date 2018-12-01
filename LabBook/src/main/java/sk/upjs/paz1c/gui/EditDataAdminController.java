@@ -1,6 +1,7 @@
 package sk.upjs.paz1c.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.value.ChangeListener;
@@ -21,14 +22,16 @@ import sk.upjs.paz1c.entities.Admin;
 import sk.upjs.paz1c.entities.Laboratory;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.User;
+import sk.upjs.paz1c.fxmodels.LaboratoryFxModel;
 import sk.upjs.paz1c.fxmodels.UserFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
+import sk.upjs.paz1c.persistent.LaboratoryDAO;
 import sk.upjs.paz1c.persistent.UserDAO;
 
 public class EditDataAdminController {
 
 	private Admin admin;
-	
+
 	@FXML
 	private ComboBox<User> userComboBox;
 
@@ -49,38 +52,63 @@ public class EditDataAdminController {
 
 	@FXML
 	private Button editAdminButton;
-	
+
+	@FXML
+	private Button deleteLabButton;
+
+	@FXML
+	private Button newAdminButton;
+
 	private User user;
 	private UserDAO userDao;
 	private UserFxModel selectedUserModel;
 	private ObservableList<User> userModel;
 
+	private Laboratory laboratory;
+	private LaboratoryDAO laboratoryDao;
+	private LaboratoryFxModel selectedLaboratoryModel;
+	private ObservableList<Laboratory> laboratoryModel;
 
 	public EditDataAdminController(Admin admin) {
 		this.admin = admin;
 		userDao = DAOfactory.INSTANCE.getUserDAO();
 		selectedUserModel = new UserFxModel();
+		laboratoryDao = DAOfactory.INSTANCE.getLaboratoryDAO();
+		selectedLaboratoryModel = new LaboratoryFxModel();
 	}
 
 	@FXML
 	void initialize() {
 		userModel = FXCollections.observableArrayList(userDao.getAll());
+		laboratoryModel = FXCollections.observableArrayList(laboratoryDao.getAll());
 
 		List<User> users = userDao.getAll();
-    	userComboBox.setItems(FXCollections.observableList(users));
-    	userComboBox.getSelectionModel().selectedItemProperty()
-    		.addListener(new ChangeListener<User>() {
+		userComboBox.setItems(FXCollections.observableList(users));
+		userComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
 
-				@Override
-				public void changed(ObservableValue<? extends User> observable, 
-						User oldValue, User newValue) {
-					if (newValue != null) {
-						System.out.println(newValue.getName());
-						selectedUserModel.setUser(newValue);
-					}
+			@Override
+			public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
+				if (newValue != null) {
+					System.out.println(newValue.getName());
+					selectedUserModel.setUser(newValue);
 				}
-			});
-    	
+			}
+		});
+
+		List<Laboratory> laboratories = laboratoryDao.getAll();
+		laboratoriesComboBox.setItems(FXCollections.observableList(laboratories));
+		laboratoriesComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Laboratory>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Laboratory> observable, Laboratory oldValue,
+					Laboratory newValue) {
+				if (newValue != null) {
+					// System.out.println(newValue.getName());
+					selectedLaboratoryModel.setLaboratory(newValue);
+				}
+			}
+		});
+
 		signOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -98,26 +126,63 @@ public class EditDataAdminController {
 				userModel.setAll(userDao.getAll());
 			}
 		});
-		
+
 		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
-	
+
 			@Override
 			public void handle(ActionEvent event) {
 				DeleteUserAdminController deleteController = new DeleteUserAdminController(selectedUserModel.getUser());
 				showModalWindow(deleteController, "deleteUserAdmin.fxml");
 				List<User> users = userDao.getAll();
-		    	userComboBox.setItems(FXCollections.observableList(users));
+				userComboBox.setItems(FXCollections.observableList(users));
 				userModel.setAll(userDao.getAll());
 			}
 		});
-		
+
+		deleteLabButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				DeleteLaboratoryController deleteController = new DeleteLaboratoryController(
+						selectedLaboratoryModel.getLaboratory());
+				showModalWindow(deleteController, "deleteLaboratory.fxml");
+				List<Laboratory> labs = laboratoryDao.getAll();
+				laboratoriesComboBox.setItems(FXCollections.observableList(labs));
+				laboratoryModel.setAll(laboratoryDao.getAll());
+			}
+		});
+
 		createButton.setOnAction(new EventHandler<ActionEvent>() {
-			
+
 			@Override
 			public void handle(ActionEvent event) {
 				NewLaboratoryController laboratoryController = new NewLaboratoryController();
 				showModalWindow(laboratoryController, "newLaboratory.fxml");
-				
+				List<Laboratory> laboratories = laboratoryDao.getAll();
+				laboratoriesComboBox.setItems(FXCollections.observableList(laboratories));
+				laboratoryModel.setAll(laboratoryDao.getAll());
+			}
+		});
+
+		editButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				EditLaboratoryController laboratoryController = new EditLaboratoryController(
+						selectedLaboratoryModel.getLaboratory());
+				showModalWindow(laboratoryController, "editLaboratory.fxml");
+				List<Laboratory> laboratories = laboratoryDao.getAll();
+				laboratoriesComboBox.setItems(FXCollections.observableList(laboratories));
+			}
+		});
+
+		newAdminButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				NewAdminController newAdminController = new NewAdminController();
+				showModalWindow(newAdminController, "newAdmin.fxml");
+
 			}
 		});
 

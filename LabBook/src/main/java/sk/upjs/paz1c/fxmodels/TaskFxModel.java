@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import sk.upjs.paz1c.entities.Item;
+import sk.upjs.paz1c.entities.Laboratory;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.entities.User;
@@ -16,41 +17,65 @@ public class TaskFxModel {
 
 	private Long taskId;
 	private StringProperty name = new SimpleStringProperty();
+	private Laboratory laboratory = new Laboratory();
 	private ObjectProperty<LocalDate> from = new SimpleObjectProperty<>();
 	private ObjectProperty<LocalDate> until = new SimpleObjectProperty<>();
 	private List<Item> items;
+	private Project project;
 	private Task task;
 
-	
 	public TaskFxModel() {
 
 	}
 
 	public TaskFxModel(Task task) {
 		this.task = task;
+		setProject(task.getProject());
 		setName(task.getName());
 		setFrom(task.getDateTimeFrom());
 		setUntil(task.getDateTimeUntil());
 		setTaskId(task.getTaskID());
 		setItems(task.getItems());
+		setLaboratory(task.getLaboratory());
 	}
 
 	public void setTask(Task task) {
+		setProject(task.getProject());
 		setName(task.getName());
 		setFrom(task.getDateTimeFrom());
 		setUntil(task.getDateTimeUntil());
 		setItems(task.getItems());
+		if (task.getLaboratory() != null) {
+			setLaboratory(task.getLaboratory());
+		}
 	}
 
 	public Task getTask() {
 		Task t = new Task();
+		t.setProject(getProject());
 		t.setName(getName());
 		t.setDateTimeFrom(getFrom());
 		t.setDateTimeUntil(getUntil());
 		t.setTaskID(getTaskId());
+		t.setLaboratory(getLaboratory());
 		return t;
 	}
 
+	public Laboratory getLaboratory() {
+		return laboratory;
+	}
+
+	public void setLaboratory(Laboratory laboratory) {
+		this.laboratory = laboratory;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
 
 	public Long getTaskId() {
 		return taskId;

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -61,11 +60,6 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <MenuButton fx:id="laboratoryMenuButton" layoutX="186.0" layoutY="249.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="194.0" text="Select laboratory">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
-        </items>
-      </MenuButton>
+      <ComboBox fx:id="laboratoryComboBox" layoutX="186.0" layoutY="249.0" prefHeight="27.0" prefWidth="194.0" promptText="Select Laboratory" />
    </children>
 </AnchorPane>

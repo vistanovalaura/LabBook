@@ -35,7 +35,7 @@ public class EditNoteController {
 
     @FXML
     void initialize() {
-    	noteTextArea.setText("");
+    	noteTextArea.setText(notesModel.getText());
     	
     	saveButton.setOnAction(new EventHandler<ActionEvent>() {
 			

@@ -2,7 +2,9 @@ package sk.upjs.paz1c.gui;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -25,9 +27,14 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.upjs.paz1c.entities.Project;
+import sk.upjs.paz1c.entities.Task;
+import sk.upjs.paz1c.entities.User;
+import sk.upjs.paz1c.fxmodels.UserFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.ProjectDAO;
 
@@ -37,6 +44,7 @@ public class SelectProjectController {
 	private ObservableList<Project> projectsModel;
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private ObjectProperty<Project> selectedProject = new SimpleObjectProperty<>();
+	private UserFxModel userModel;
 
 	@FXML
 	private TableView<Project> projectsTableView;
@@ -56,9 +64,28 @@ public class SelectProjectController {
 	@FXML
 	private Button signOutButton;
 
+	public SelectProjectController(User user) {
+		this.userModel = new UserFxModel(user);
+	}
+
+	public SelectProjectController() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@FXML
 	void initialize() {
 		projectsModel = FXCollections.observableArrayList(projectDao.getAll());
+
+		projectsTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+					if (mouseEvent.getClickCount() == 2) {
+						openTasks();
+					}
+				}
+			}
+		});
 
 		editButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -99,7 +126,7 @@ public class SelectProjectController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				NewProjectController newProjectController = new NewProjectController();
+				NewProjectController newProjectController = new NewProjectController(userModel.getUser());
 				showModalWindow(newProjectController, "newProject.fxml");
 				projectsModel.setAll(projectDao.getAll());
 			}
@@ -137,8 +164,10 @@ public class SelectProjectController {
 			public void changed(ObservableValue<? extends Project> observable, Project oldValue, Project newValue) {
 				if (newValue == null) {
 					editButton.setDisable(true);
+					deleteButton.setDisable(true);
 				} else {
 					editButton.setDisable(false);
+					deleteButton.setDisable(false);
 				}
 				selectedProject.set(newValue);
 			}
@@ -200,5 +229,17 @@ public class SelectProjectController {
 		} catch (IOException iOException) {
 			iOException.printStackTrace();
 		}
+	}
+
+	private List<Project> getProjects() {
+		List<Project> projects = new ArrayList<>();
+		List<Project> allProjects = projectDao.getAll();
+		for (Project p : allProjects) {
+			if (p.getCreatedBy() == userModel.getUser()) {
+				projects.add(p);
+			}
+		}
+		return projects;
+
 	}
 }
