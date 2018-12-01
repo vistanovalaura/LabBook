@@ -10,10 +10,10 @@ public class Project {
 	private boolean active;
 	private LocalDate dateFrom;
 	private LocalDate dateUntil;
+	private User createdBy;
 	private List<Task> tasks;
 	private List<Item> items;
 	private boolean eachItemAvailable;
-	private User createdBy;
 	private List<User> completedBy;
 	
 	public Project() {

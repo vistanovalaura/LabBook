@@ -24,11 +24,19 @@ public class MysqlProjectDAOTest {
 
 	@Test
 	void addDeleteTest() {
+		User testUser = new User();
+		testUser.setName("testerAddDelete");
+		testUser.setPassword("1234");
+		testUser.setEmail("tester.testovaci@test.com");
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		userDAO.addUser(testUser);
+		
 		Project project = new Project();
 		project.setName("testovaci_projekt");
 		project.setActive(true);
 		project.setDateFrom(LocalDate.now());
 		project.setEachItemAvailable(false);
+		project.setCreatedBy(testUser);
 		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
 		boolean notThere = true;
 		List<Project> all = projectDAO.getAll();
@@ -39,13 +47,6 @@ public class MysqlProjectDAOTest {
 		}
 		assertTrue(notThere);
 		projectDAO.addProject(project);
-
-		User testUser = new User();
-		testUser.setName("tester");
-		testUser.setPassword("1234");
-		testUser.setEmail("tester.testovaci@test.com");
-		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
-		userDAO.addUser(testUser);
 		
 		Note note = new Note();
 		note.setText("testovaci text");
@@ -92,11 +93,19 @@ public class MysqlProjectDAOTest {
 
 	@Test
 	void testSave() {
+		User testUser = new User();
+		testUser.setName("testerSave");
+		testUser.setPassword("1234");
+		testUser.setEmail("tester.testovaci@test.com");
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		userDAO.addUser(testUser);
+		
 		Project project = new Project();
 		project.setName("testovaci_projekt");
 		project.setActive(true);
 		project.setDateFrom(LocalDate.now());
 		project.setEachItemAvailable(false);
+		project.setCreatedBy(testUser);
 		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
 		// create
 		projectDAO.saveProject(project);
@@ -109,6 +118,7 @@ public class MysqlProjectDAOTest {
 			if (p.getProjectID() == project.getProjectID()) {
 				assertEquals("testovaci_projekt_new", p.getName());
 				projectDAO.deleteProject(p);
+				userDAO.deleteUser(testUser);
 				return;
 			}
 		}
@@ -117,16 +127,25 @@ public class MysqlProjectDAOTest {
 	
 	@Test
 	void testGetByID() {
+		User testUser = new User();
+		testUser.setName("testerGetByID");
+		testUser.setPassword("1234");
+		testUser.setEmail("tester.testovaci@test.com");
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		userDAO.addUser(testUser);
+		
 		Project project = new Project();
 		project.setName("testovaci_projekt");
 		project.setActive(true);
 		project.setDateFrom(LocalDate.now());
 		project.setEachItemAvailable(false);
+		project.setCreatedBy(testUser);
 		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
 		projectDAO.addProject(project);
 		long id = project.getProjectID();
 		assertTrue(id == projectDAO.getByID(id).getProjectID());
 		projectDAO.deleteProject(project);
+		userDAO.deleteUser(testUser);
 	}
 
 }
