@@ -60,7 +60,7 @@ public class MysqlNoteDAO implements NoteDAO {
 				Note note = new Note();
 				note.setNoteID(rs.getLong("id_note"));
 				note.setText(rs.getString("text"));
-				note.setTimestamp(rs.getTimestamp("timestamp").toLocalDateTime().toLocalDate());
+				note.setTimestamp(rs.getTimestamp("timestamp").toLocalDateTime());
 				note.setAuthor(DAOfactory.INSTANCE.getUserDAO().getByID(rs.getLong("user_id_user")));
 				// ak note nema nastavene napr. task, teda nie je to poznamka k tasku, tak
 				// task_id_task je null, getByID potom nenajde taky riadok v databaze, lebo

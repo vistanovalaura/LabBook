@@ -25,11 +25,12 @@ public class MysqlAdminDAO implements AdminDAO {
 		SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);
 		insert.withTableName("admin");
 		insert.usingGeneratedKeyColumns("id_admin");
-		insert.usingColumns("name", "password");
+		insert.usingColumns("name", "password", "email");
 
 		Map<String, Object> values = new HashMap<>();
 		values.put("name", admin.getName());
 		values.put("password", admin.getPassword());
+		values.put("email", admin.getEmail());
 
 		admin.setAdminID(insert.executeAndReturnKey(values).longValue());
 
@@ -37,7 +38,7 @@ public class MysqlAdminDAO implements AdminDAO {
 
 	@Override
 	public List<Admin> getAll() {
-		String sql = "SELECT id_admin, name, password " + "FROM admin";
+		String sql = "SELECT id_admin, name, password, email " + "FROM admin";
 		return jdbcTemplate.query(sql, new RowMapper<Admin>() {
 
 			@Override
@@ -46,6 +47,7 @@ public class MysqlAdminDAO implements AdminDAO {
 				admin.setAdminID(rs.getLong("id_admin"));
 				admin.setName(rs.getString("name"));
 				admin.setPassword(rs.getString("password"));
+				admin.setEmail(rs.getString("email"));
 				return admin;
 			}
 		});
@@ -57,10 +59,9 @@ public class MysqlAdminDAO implements AdminDAO {
 			return;
 		if (admin.getAdminID() == null) { // CREATE
 			addAdmin(admin);
-			System.out.println("pridavam noveho admina");
 		} else { // UPDATE
-			String sql = "UPDATE admin SET " + "name = ?, password = ? " + "WHERE id_admin = ?";
-			jdbcTemplate.update(sql, admin.getName(), admin.getPassword(), admin.getAdminID());
+			String sql = "UPDATE admin SET " + "name = ?, password = ?, email = ? " + "WHERE id_admin = ?";
+			jdbcTemplate.update(sql, admin.getName(), admin.getPassword(), admin.getEmail(), admin.getAdminID());
 		}
 	}
 

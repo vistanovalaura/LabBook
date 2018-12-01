@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ public class MysqlNoteDAOTest {
 		
 		Note note = new Note();
 		note.setText("testovaci text");
-		note.setTimestamp(LocalDate.now());
+		note.setTimestamp(LocalDateTime.now());
 		note.setAuthor(testUser);
 		note.setProject(project);
 		NoteDAO noteDAO = DAOfactory.INSTANCE.getNoteDAO();
@@ -87,7 +88,7 @@ public class MysqlNoteDAOTest {
 		
 		Note note = new Note();
 		note.setText("testovaci text");
-		note.setTimestamp(LocalDate.now());
+		note.setTimestamp(LocalDateTime.now());
 		note.setAuthor(testUser);
 		note.setProject(project);
 		NoteDAO noteDAO = DAOfactory.INSTANCE.getNoteDAO();

@@ -1,12 +1,14 @@
 package sk.upjs.paz1c.entities;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Note {
 
 	private Long noteID;
 	private String text;
-	private LocalDate timestamp;
+	private LocalDateTime timestamp;
 	private User author;
 	private Task task;
 	private Project project;
@@ -52,12 +54,12 @@ public class Note {
 		this.text = text;
 	}
 
-	public LocalDate getTimestamp() {
+	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(LocalDate timestamp) {
-		this.timestamp = timestamp;
+	public void setTimestamp(LocalDateTime time) {
+		this.timestamp = time;
 	}
 
 	public User getAuthor() {

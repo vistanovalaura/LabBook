@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -67,15 +68,7 @@ public class MysqlLaboratoryDAO implements LaboratoryDAO {
 
 	@Override
 	public void deleteLaboratory(Laboratory laboratory) {
-		// updatuje vsetky itemy, ktore patrili danemu labaku, aby nepatrili ziadnemu
-//		ItemDAO itemDao = DAOfactory.INSTANCE.getItemDAO();
-//		List<Item> items = itemDao.getAll();
-//		for (Item item : items) {
-//			if (item.getLaboratory().getLaboratoryID() == laboratory.getLaboratoryID()) {
-//				item.setLaboratory(null);
-//				itemDao.saveItem(item);
-//			}
-//		}
+		// updatuje itemy, ktore patrili danemu labaku, nech nepatria ziadnemu
 		String sql = "UPDATE item SET " + "laboratory_id_laboratory = ? " + "WHERE laboratory_id_laboratory = ?";
 		jdbcTemplate.update(sql, null, laboratory.getLaboratoryID());
 		// vymaze labak
@@ -84,13 +77,9 @@ public class MysqlLaboratoryDAO implements LaboratoryDAO {
 
 	@Override
 	public Laboratory getLaboratoryByID(Long id) {
-		List<Laboratory> laboratories = DAOfactory.INSTANCE.getLaboratoryDAO().getAll();
-		for(Laboratory laboratory: laboratories) {
-			if(laboratory.getLaboratoryID() == id) {
-				return laboratory;
-			}
-		}
-		return null;
+		String sql = "SELECT id_laboratory AS laboratoryID, name, location " + "FROM laboratory "
+				+ "WHERE id_laboratory = " + id;
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Laboratory.class));
 	}
 
 }

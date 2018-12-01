@@ -63,6 +63,7 @@ class MysqlAdminDAOTest {
 		adminDAO.saveAdmin(testAdmin);
 		assertNotNull(testAdmin.getAdminID());
 		testAdmin.setName("tester_new");
+		testAdmin.setEmail("admin.omnipotentny@mail.sk");
 		// update
 		adminDAO.saveAdmin(testAdmin);
 		List<Admin> all = adminDAO.getAll();

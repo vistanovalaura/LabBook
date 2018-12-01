@@ -3,6 +3,7 @@ package sk.upjs.paz1c.persistent;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,7 @@ public class MysqlProjectDAOTest {
 		
 		Note note = new Note();
 		note.setText("testovaci text");
-		note.setTimestamp(LocalDate.now());
+		note.setTimestamp(LocalDateTime.now());
 		note.setAuthor(testUser);
 		note.setProject(project);
 		NoteDAO noteDAO = DAOfactory.INSTANCE.getNoteDAO();
@@ -56,7 +57,7 @@ public class MysqlProjectDAOTest {
 		
 		Note note2 = new Note();
 		note2.setText("testovaci text 2");
-		note2.setTimestamp(LocalDate.now());
+		note2.setTimestamp(LocalDateTime.now());
 		note2.setAuthor(testUser);
 		note2.setProject(project);
 		noteDAO.addNote(note2);
