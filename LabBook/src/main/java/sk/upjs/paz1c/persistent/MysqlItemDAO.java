@@ -12,8 +12,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.upjs.paz1c.entities.Item;
-import sk.upjs.paz1c.entities.Project;
-import sk.upjs.paz1c.entities.Task;
 
 public class MysqlItemDAO implements ItemDAO {
 
@@ -36,12 +34,11 @@ public class MysqlItemDAO implements ItemDAO {
 		values.put("available", item.isAvailable());
 		if (item.getLaboratory() != null)
 			values.put("laboratory_id_laboratory", item.getLaboratory().getLaboratoryID());
-		else 
+		else
 			values.put("laboratory_id_laboratory", null);
 		item.setItemID(insert.executeAndReturnKey(values).longValue());
 	}
 
-	//FIXME nullpointer na getLaboratory().getLaboratoryID()
 	@Override
 	public void saveItem(Item item) {
 		if (item == null)
@@ -49,10 +46,14 @@ public class MysqlItemDAO implements ItemDAO {
 		if (item.getItemID() == null) { // CREATE
 			addItem(item);
 		} else { // UPDATE
+			Long laboratoryID = null;
+			if (item.getLaboratory() != null) {
+				laboratoryID = item.getLaboratory().getLaboratoryID();
+			}
 			String sql = "UPDATE item SET " + "name = ?, quantity = ?, available = ?, laboratory_id_laboratory = ? "
 					+ "WHERE id_item = ?";
-			jdbcTemplate.update(sql, item.getName(), item.getQuantity(), item.isAvailable(),
-					item.getLaboratory().getLaboratoryID(), item.getItemID());
+			jdbcTemplate.update(sql, item.getName(), item.getQuantity(), item.isAvailable(), laboratoryID,
+					item.getItemID());
 		}
 	}
 
@@ -78,25 +79,20 @@ public class MysqlItemDAO implements ItemDAO {
 
 	@Override
 	public void deleteItem(Item item) {
-		String sql = "DELETE FROM item WHERE id_item = " + item.getItemID();
-		jdbcTemplate.update(sql);
+		// vymaze vsetky note, ktore patrili k danemu itemu
+		jdbcTemplate.update("DELETE FROM note WHERE item_id_item = ?", item.getItemID());
+		// vymaze vsetky riadky tabulky task_has_item, ktore patrili k danemu
+		// item
+		jdbcTemplate.update("DELETE FROM task_has_item WHERE item_id_item = ?", item.getItemID());
+		// vymaze item
+		jdbcTemplate.update("DELETE FROM item WHERE id_item = " + item.getItemID());
 	}
 
-	// FIXME urobit test
 	@Override
 	public Item getByID(Long id) {
-		// String sql = "SELECT name, quantity, available, laboratory_id_laboratory " +
-		// "FROM item "
-		// + "WHERE id_item = " + id;
-		// return jdbcTemplate.queryForObject(sql, new
-		// BeanPropertyRowMapper<>(Item.class));
-		List<Item> items = DAOfactory.INSTANCE.getItemDAO().getAll();
-		for (Item item : items) {
-			if (item.getItemID() == id) {
-				return item;
-			}
-		}
-		return null;
+		String sql = "SELECT id_item AS itemID, name, quantity, available, laboratory_id_laboratory " + "FROM item "
+				+ "WHERE id_item = " + id;
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Item.class));
 	}
 
 }

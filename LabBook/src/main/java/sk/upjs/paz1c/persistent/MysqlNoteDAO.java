@@ -2,7 +2,6 @@ package sk.upjs.paz1c.persistent;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.upjs.paz1c.entities.Note;
-import sk.upjs.paz1c.entities.User;
 
 public class MysqlNoteDAO implements NoteDAO {
 

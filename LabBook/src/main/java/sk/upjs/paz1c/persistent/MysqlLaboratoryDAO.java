@@ -2,7 +2,6 @@ package sk.upjs.paz1c.persistent;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +11,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Laboratory;
-import sk.upjs.paz1c.entities.Project;
+
 
 public class MysqlLaboratoryDAO implements LaboratoryDAO {
 
