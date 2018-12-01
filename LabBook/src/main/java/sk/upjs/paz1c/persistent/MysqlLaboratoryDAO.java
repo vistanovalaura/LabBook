@@ -68,17 +68,18 @@ public class MysqlLaboratoryDAO implements LaboratoryDAO {
 	@Override
 	public void deleteLaboratory(Laboratory laboratory) {
 		// updatuje vsetky itemy, ktore patrili danemu labaku, aby nepatrili ziadnemu
-		ItemDAO itemDao = DAOfactory.INSTANCE.getItemDAO();
-		List<Item> items = itemDao.getAll();
-		for (Item item : items) {
-			if (item.getLaboratory().getLaboratoryID() == laboratory.getLaboratoryID()) {
-				item.setLaboratory(null);
-				itemDao.saveItem(item);
-			}
-		}
+//		ItemDAO itemDao = DAOfactory.INSTANCE.getItemDAO();
+//		List<Item> items = itemDao.getAll();
+//		for (Item item : items) {
+//			if (item.getLaboratory().getLaboratoryID() == laboratory.getLaboratoryID()) {
+//				item.setLaboratory(null);
+//				itemDao.saveItem(item);
+//			}
+//		}
+		String sql = "UPDATE item SET " + "laboratory_id_laboratory = ? " + "WHERE laboratory_id_laboratory = ?";
+		jdbcTemplate.update(sql, null, laboratory.getLaboratoryID());
 		// vymaze labak
-		String sql = "DELETE FROM laboratory WHERE id_laboratory = " + laboratory.getLaboratoryID();
-		jdbcTemplate.update(sql);
+		jdbcTemplate.update("DELETE FROM laboratory WHERE id_laboratory = " + laboratory.getLaboratoryID());
 	}
 
 	@Override
