@@ -6,7 +6,6 @@ import java.util.List;
 public class Task {
 
 	private Long taskID;
-	private Long projectID;
 	private String name;
 	private boolean active;
 	private LocalDate dateTimeFrom;
@@ -26,7 +25,7 @@ public class Task {
 		this.name = name;
 		this.dateTimeFrom = dateTimeFrom;
 		this.dateTimeUntil = dateTimeUntil;
-		this.projectID = project.getProjectID();
+		this.project = project;
 	}
 
 	public Long getTaskID() {
@@ -35,14 +34,6 @@ public class Task {
 
 	public void setTaskID(Long taskID) {
 		this.taskID = taskID;
-	}
-
-	public Long getProjectID() {
-		return projectID;
-	}
-
-	public void setProjectID(Long projectID) {
-		this.projectID = projectID;
 	}
 
 	public String getName() {
@@ -125,12 +116,11 @@ public class Task {
 	public void setProject(Project project) {
 		this.project = project;
 	}
-	
-//=======
+
 	@Override
 	public String toString() {
-		return "Task [taskID=" + taskID + ", projectID=" + projectID + ", name=" + name + "]";
+		return "Task [taskID=" + taskID + ", projectID=" + project.getProjectID() + ", name=" + name + "]";
 	}
-//>>>>>>> branch 'zakladne_gui_+_dao' of https://github.com/vistanovalaura/LabBook.git
+
 
 }

@@ -77,15 +77,9 @@ public class MysqlUserDAO implements UserDAO {
 	// FIXME - urobit test
 	@Override
 	public User getByID(Long id) {
-//		String sql = "SELECT id_user, name, password, email " + "FROM lab_book.user " + "WHERE id_user = " + id;
-//		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class));
-		List<User> users = DAOfactory.INSTANCE.getUserDAO().getAll();
-		for(User user: users) {
-			if(user.getUserID() == id) {
-				return user;
-			}
-		}
-		return null;
+		String sql = "SELECT id_user AS userID, name, password, email " + "FROM lab_book.user " + "WHERE id_user = "
+				+ id;
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class));
 	}
 
 }

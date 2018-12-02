@@ -21,7 +21,7 @@ public class TaskFxModel {
 	private ObjectProperty<LocalDate> from = new SimpleObjectProperty<>();
 	private ObjectProperty<LocalDate> until = new SimpleObjectProperty<>();
 	private List<Item> items;
-	private Long projectID;
+	private Project project;
 	private Task task;
 
 	public TaskFxModel() {
@@ -30,7 +30,7 @@ public class TaskFxModel {
 
 	public TaskFxModel(Task task) {
 		this.task = task;
-		setProjectID(task.getProjectID());
+		setProject(task.getProject());
 		setName(task.getName());
 		setFrom(task.getDateTimeFrom());
 		setUntil(task.getDateTimeUntil());
@@ -40,7 +40,7 @@ public class TaskFxModel {
 	}
 
 	public void setTask(Task task) {
-		setProjectID(task.getProjectID());
+		setProject(task.getProject());
 		setName(task.getName());
 		setFrom(task.getDateTimeFrom());
 		setUntil(task.getDateTimeUntil());
@@ -52,7 +52,7 @@ public class TaskFxModel {
 
 	public Task getTask() {
 		Task t = new Task();
-		t.setProjectID(getProjectID());
+		t.setProject(getProject());
 		t.setName(getName());
 		t.setDateTimeFrom(getFrom());
 		t.setDateTimeUntil(getUntil());
@@ -69,12 +69,12 @@ public class TaskFxModel {
 		this.laboratory = laboratory;
 	}
 
-	public Long getProjectID() {
-		return projectID;
+	public Project getProject() {
+		return project;
 	}
 
-	public void setProjectID(Long projectID) {
-		this.projectID = projectID;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	public Long getTaskId() {

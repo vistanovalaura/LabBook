@@ -2,18 +2,17 @@ package sk.upjs.paz1c.persistent;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Laboratory;
-import sk.upjs.paz1c.entities.Project;
+
 
 public class MysqlLaboratoryDAO implements LaboratoryDAO {
 
@@ -67,29 +66,18 @@ public class MysqlLaboratoryDAO implements LaboratoryDAO {
 
 	@Override
 	public void deleteLaboratory(Laboratory laboratory) {
-		// updatuje vsetky itemy, ktore patrili danemu labaku, aby nepatrili ziadnemu
-		ItemDAO itemDao = DAOfactory.INSTANCE.getItemDAO();
-		List<Item> items = itemDao.getAll();
-		for (Item item : items) {
-			if (item.getLaboratory().getLaboratoryID() == laboratory.getLaboratoryID()) {
-				item.setLaboratory(null);
-				itemDao.saveItem(item);
-			}
-		}
+		// updatuje itemy, ktore patrili danemu labaku, nech nepatria ziadnemu
+		String sql = "UPDATE item SET " + "laboratory_id_laboratory = ? " + "WHERE laboratory_id_laboratory = ?";
+		jdbcTemplate.update(sql, null, laboratory.getLaboratoryID());
 		// vymaze labak
-		String sql = "DELETE FROM laboratory WHERE id_laboratory = " + laboratory.getLaboratoryID();
-		jdbcTemplate.update(sql);
+		jdbcTemplate.update("DELETE FROM laboratory WHERE id_laboratory = " + laboratory.getLaboratoryID());
 	}
 
 	@Override
 	public Laboratory getLaboratoryByID(Long id) {
-		List<Laboratory> laboratories = DAOfactory.INSTANCE.getLaboratoryDAO().getAll();
-		for(Laboratory laboratory: laboratories) {
-			if(laboratory.getLaboratoryID() == id) {
-				return laboratory;
-			}
-		}
-		return null;
+		String sql = "SELECT id_laboratory AS laboratoryID, name, location " + "FROM laboratory "
+				+ "WHERE id_laboratory = " + id;
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Laboratory.class));
 	}
 
 }

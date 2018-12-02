@@ -7,17 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import sk.upjs.paz1c.entities.Item;
-import sk.upjs.paz1c.entities.Note;
 import sk.upjs.paz1c.entities.Project;
-import sk.upjs.paz1c.entities.Task;
+
 
 public class MysqlProjectDAO implements ProjectDAO {
 
@@ -32,7 +28,7 @@ public class MysqlProjectDAO implements ProjectDAO {
 		SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);
 		insert.withTableName("project");
 		insert.usingGeneratedKeyColumns("id_project");
-		insert.usingColumns("name", "active", "date_from", "date_until", "each_item_available");
+		insert.usingColumns("name", "active", "date_from", "date_until", "each_item_available", "user_id_user");
 
 		Map<String, Object> values = new HashMap<>();
 		values.put("name", project.getName());
@@ -40,13 +36,15 @@ public class MysqlProjectDAO implements ProjectDAO {
 		values.put("date_from", project.getDateFrom());
 		values.put("date_until", project.getDateUntil());
 		values.put("each_item_available", project.isEachItemAvailable());
+		values.put("user_id_user", project.getCreatedBy().getUserID());
 
 		project.setProjectID(insert.executeAndReturnKey(values).longValue());
 	}
 
 	@Override
 	public List<Project> getAll() {
-		String sql = "SELECT id_project, name, active, date_from, date_until, each_item_available " + "FROM project";
+		String sql = "SELECT id_project, name, active, date_from, date_until, each_item_available, user_id_user "
+				+ "FROM project";
 		return jdbcTemplate.query(sql, new RowMapper<Project>() {
 
 			@Override
@@ -62,6 +60,7 @@ public class MysqlProjectDAO implements ProjectDAO {
 					project.setDateUntil(timestamp.toLocalDateTime().toLocalDate());
 				}
 				project.setEachItemAvailable(rs.getBoolean("each_item_available"));
+				project.setCreatedBy(DAOfactory.INSTANCE.getUserDAO().getByID(rs.getLong("user_id_user")));
 				return project;
 			}
 		});
@@ -75,67 +74,31 @@ public class MysqlProjectDAO implements ProjectDAO {
 			addProject(project);
 		} else { // UPDATE
 			String sql = "UPDATE project SET " + "name = ?, active = ?, date_from = ?, date_until = ?, "
-					+ "each_item_available = ? " + "WHERE id_project = ?";
+					+ "each_item_available = ?, user_id_user = ? " + "WHERE id_project = ?";
 			jdbcTemplate.update(sql, project.getName(), project.isActive(), project.getDateFrom(),
-					project.getDateUntil(), project.isEachItemAvailable(), project.getProjectID());
+					project.getDateUntil(), project.isEachItemAvailable(), project.getCreatedBy().getUserID(),
+					project.getProjectID());
 		}
 	}
-
-	// @Override
-	// public Project getByName(String name) {
-	// String sql = "SELECT * " + "FROM project " + "WHERE name = '" + name + "'";
-	// Project project = jdbcTemplate.query(sql, new ResultSetExtractor<Project>() {
-	//
-	// @Override
-	// public Project extractData(ResultSet rs) throws SQLException,
-	// DataAccessException {
-	// Project project = new Project();
-	// project.setProjectID(rs.getLong("id_project"));
-	// project.setName(rs.getString("name"));
-	// project.setActive(rs.getBoolean("active"));
-	// Timestamp timestamp = rs.getTimestamp("date_from");
-	// project.setDateFrom(timestamp.toLocalDateTime().toLocalDate());
-	// timestamp = rs.getTimestamp("date_until");
-	// if (timestamp != null) {
-	// project.setDateUntil(timestamp.toLocalDateTime().toLocalDate());
-	// }
-	// project.setEachItemAvailable(rs.getBoolean("each_item_available"));
-	// return project;
-	// }
-	// });
-	// return project;
-	// }
 
 	@Override
 	public void deleteProject(Project project) {
 		// vymaze vsetky note, ktore patrili k danemu projektu
-		NoteDAO noteDao = DAOfactory.INSTANCE.getNoteDAO();
-		List<Note> notes = noteDao.getAll();
-		for (Note note : notes) {
-			if (note.getProject() != null) {
-				//System.out.println(note.getProject().getProjectID() + " vs " + project.getProjectID());
-				if (note.getProject().getProjectID() == project.getProjectID()) {
-					noteDao.deleteNote(note);
-				}
-			}
-		}
-
+		jdbcTemplate.update("DELETE FROM note WHERE project_id_project = ?", project.getProjectID());
+		// vymaze vsetky tasky, ktore patrili k danemu projektu
+		jdbcTemplate.update("DELETE FROM task WHERE project_id_project = ?", project.getProjectID());
+		// vymaze vsetky riadky tabulky user_has_project, ktore patrili k danemu
+		// projektu
+		jdbcTemplate.update("DELETE FROM user_has_project WHERE project_id_project = ?", project.getProjectID());
+		// vymaze projekt
 		String sql = "DELETE FROM project WHERE id_project = " + project.getProjectID();
 		jdbcTemplate.update(sql);
 	}
 
-	// FIXME urobit test
 	@Override
 	public Project getByID(Long id) {
-//		String sql = "SELECT id_project as projectID, name, active, date_from, date_until, each_item_available " + "FROM project "
-//				+ "WHERE id_project = " + id;
-//		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Project.class));
-		List<Project> projects = DAOfactory.INSTANCE.getProjectDAO().getAll();
-		for(Project project: projects) {
-			if(project.getProjectID() == id) {
-				return project;
-			}
-		}
-		return null;
+		String sql = "SELECT id_project AS projectID, name, active, date_from, date_until, each_item_available "
+				+ "FROM project " + "WHERE id_project = " + id;
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Project.class));
 	}
 }

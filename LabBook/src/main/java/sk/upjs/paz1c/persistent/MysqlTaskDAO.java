@@ -34,7 +34,7 @@ public class MysqlTaskDAO implements TaskDAO {
 				"each_item_available");
 
 		Map<String, Object> values = new HashMap<>();
-		values.put("project_id_project", task.getProjectID());
+		values.put("project_id_project", task.getProject().getProjectID());
 		values.put("name", task.getName());
 		values.put("active", task.isActive());
 		values.put("date_time_from", task.getDateTimeFrom());
@@ -54,8 +54,8 @@ public class MysqlTaskDAO implements TaskDAO {
 			String sql = "UPDATE task SET "
 					+ "project_id_project = ?, name = ?, active = ?, date_time_from = ?, date_time_until = ?, "
 					+ "each_item_available = ? " + "WHERE id_task = ?";
-			jdbcTemplate.update(sql, task.getProjectID(), task.getName(), task.isActive(), task.getDateTimeFrom(),
-					task.getDateTimeUntil(), task.isEachItemAvailable(), task.getTaskID());
+			jdbcTemplate.update(sql, task.getProject().getProjectID(), task.getName(), task.isActive(),
+					task.getDateTimeFrom(), task.getDateTimeUntil(), task.isEachItemAvailable(), task.getTaskID());
 		}
 	}
 
@@ -69,7 +69,7 @@ public class MysqlTaskDAO implements TaskDAO {
 			public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Task task = new Task();
 				task.setTaskID(rs.getLong("id_task"));
-				task.setProjectID(rs.getLong("project_id_project"));
+				task.setProject(DAOfactory.INSTANCE.getProjectDAO().getByID(rs.getLong("project_id_project")));
 				task.setName(rs.getString("name"));
 				task.setActive(rs.getBoolean("active"));
 				Timestamp timestamp = rs.getTimestamp("date_time_from");
@@ -96,12 +96,14 @@ public class MysqlTaskDAO implements TaskDAO {
 	// FIXME - urobit test
 	@Override
 	public Task getByID(Long id) {
-//		String sql = "SELECT project_id_project, name, active, date_time_from, date_time_until, each_item_available "
-//				+ "FROM task " + "WHERE id_task = " + id;
-//		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Task.class));
+		// String sql = "SELECT project_id_project, name, active, date_time_from,
+		// date_time_until, each_item_available "
+		// + "FROM task " + "WHERE id_task = " + id;
+		// return jdbcTemplate.queryForObject(sql, new
+		// BeanPropertyRowMapper<>(Task.class));
 		List<Task> tasks = DAOfactory.INSTANCE.getTaskDAO().getAll();
-		for(Task task: tasks) {
-			if(task.getTaskID() == id) {
+		for (Task task : tasks) {
+			if (task.getTaskID() == id) {
 				return task;
 			}
 		}
