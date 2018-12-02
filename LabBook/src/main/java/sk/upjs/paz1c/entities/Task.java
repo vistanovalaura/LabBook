@@ -100,7 +100,6 @@ public class Task {
 		this.completedBy = completedBy;
 	}
 
-//<<<<<<< HEAD
 	public Laboratory getLaboratory() {
 		return laboratory;
 	}

@@ -3,15 +3,19 @@ package sk.upjs.paz1c.persistent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
+import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.entities.User;
@@ -61,8 +65,20 @@ public class MysqlTaskDAO implements TaskDAO {
 
 	@Override
 	public List<Task> getAll() {
-		String sql = "SELECT id_task, project_id_project, name, active, date_time_from, date_time_until, each_item_available "
-				+ "FROM task";
+//		Map<Long, Long> taskIDitemID = new HashMap<>();
+//		String sql = "SELECT task_id_task, item_id_item FROM task_has_item";
+//		jdbcTemplate.query(sql, new RowMapper<Task>() {
+//
+//			@Override
+//			public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
+//				taskIDitemID.put(rs.getLong("task_id_task"), rs.getLong("item_id_item"));
+//				return null;
+//			}
+//		
+//		});
+//		System.out.println(taskIDitemID);
+		String sql = "SELECT id_task, project_id_project, name, active, date_time_from, date_time_until,"
+				+ " each_item_available, user_id_user, laboratory_id_laboratory " + "FROM task";
 		return jdbcTemplate.query(sql, new RowMapper<Task>() {
 
 			@Override
@@ -81,6 +97,10 @@ public class MysqlTaskDAO implements TaskDAO {
 					task.setDateTimeUntil(timestamp.toLocalDateTime().toLocalDate());
 				}
 				task.setEachItemAvailable(rs.getBoolean("each_item_available"));
+				task.setCreatedBy(DAOfactory.INSTANCE.getUserDAO().getByID(rs.getLong("user_id_user")));
+				task.setLaboratory(DAOfactory.INSTANCE.getLaboratoryDAO()
+						.getLaboratoryByID(rs.getLong("laboratory_id_laboratory")));
+
 				return task;
 			}
 		});

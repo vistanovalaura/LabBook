@@ -14,7 +14,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.upjs.paz1c.entities.Project;
 
-
 public class MysqlProjectDAO implements ProjectDAO {
 
 	private JdbcTemplate jdbcTemplate;
@@ -97,7 +96,7 @@ public class MysqlProjectDAO implements ProjectDAO {
 
 	@Override
 	public Project getByID(Long id) {
-		String sql = "SELECT id_project AS projectID, name, active, date_from, date_until, each_item_available "
+		String sql = "SELECT id_project AS projectID, name, active, date_from, date_until, each_item_available, user_id_user "
 				+ "FROM project " + "WHERE id_project = " + id;
 		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Project.class));
 	}
