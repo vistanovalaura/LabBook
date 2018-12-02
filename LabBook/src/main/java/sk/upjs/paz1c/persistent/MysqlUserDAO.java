@@ -66,14 +66,22 @@ public class MysqlUserDAO implements UserDAO {
 		}
 	}
 
+	// dobuducna - nech aj po odstraneni usera ostanu jeho projekty, tasky,
+	// komenty... foreign key na null, alebo odstranenie stlpca s foreign key,
+	// pridanie stlpca so stringom s menom byvaleho usera...
 	@Override
 	public void deleteUser(User user) {
+		// vymaze vsetky note, ktore patrili k danemu userovi
+		jdbcTemplate.update("DELETE FROM note WHERE user_id_user = ?", user.getUserID());
+		// vymaze vsetky tasky, ktore patrili k danemu userovi
+		jdbcTemplate.update("DELETE FROM task WHERE user_id_user = ?", user.getUserID());
+		// vymaze vsetky projekty, ktore patrili k danemu userovi
+		jdbcTemplate.update("DELETE FROM project WHERE user_id_user = ?", user.getUserID());
+		// vymaze usera
 		String sql = "DELETE FROM user WHERE id_user = " + user.getUserID();
 		jdbcTemplate.update(sql);
 	}
 
-	// FIXME - dorobit getByID tak, aby pridalo usera aj s jeho listom projektov a
-	// taskov
 	// FIXME - urobit test
 	@Override
 	public User getByID(Long id) {

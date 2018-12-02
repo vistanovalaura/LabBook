@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.upjs.paz1c.entities.Item;
+import sk.upjs.paz1c.entities.Laboratory;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.entities.User;
@@ -35,7 +36,7 @@ public class MysqlTaskDAO implements TaskDAO {
 		insert.withTableName("task");
 		insert.usingGeneratedKeyColumns("id_task");
 		insert.usingColumns("project_id_project", "name", "active", "date_time_from", "date_time_until",
-				"each_item_available");
+				"each_item_available", "user_id_user", "laboratory_id_laboratory");
 
 		Map<String, Object> values = new HashMap<>();
 		values.put("project_id_project", task.getProject().getProjectID());
@@ -44,6 +45,10 @@ public class MysqlTaskDAO implements TaskDAO {
 		values.put("date_time_from", task.getDateTimeFrom());
 		values.put("date_time_until", task.getDateTimeUntil());
 		values.put("each_item_available", task.isEachItemAvailable());
+		values.put("user_id_user", task.getCreatedBy().getUserID());
+		if (task.getLaboratory() != null) {
+			values.put("laboratory_id_laboratory", task.getLaboratory().getLaboratoryID());
+		}
 
 		task.setTaskID(insert.executeAndReturnKey(values).longValue());
 	}
@@ -57,26 +62,31 @@ public class MysqlTaskDAO implements TaskDAO {
 		} else { // UPDATE
 			String sql = "UPDATE task SET "
 					+ "project_id_project = ?, name = ?, active = ?, date_time_from = ?, date_time_until = ?, "
-					+ "each_item_available = ? " + "WHERE id_task = ?";
+					+ "each_item_available = ?, user_id_user = ?, laboratory_id_laboratory = ? " + "WHERE id_task = ?";
+			Long laboratoryID = null;
+			if (task.getLaboratory() != null) {
+				laboratoryID = task.getLaboratory().getLaboratoryID();
+			}
 			jdbcTemplate.update(sql, task.getProject().getProjectID(), task.getName(), task.isActive(),
-					task.getDateTimeFrom(), task.getDateTimeUntil(), task.isEachItemAvailable(), task.getTaskID());
+					task.getDateTimeFrom(), task.getDateTimeUntil(), task.isEachItemAvailable(),
+					task.getCreatedBy().getUserID(), laboratoryID, task.getTaskID());
 		}
 	}
 
 	@Override
 	public List<Task> getAll() {
-//		Map<Long, Long> taskIDitemID = new HashMap<>();
-//		String sql = "SELECT task_id_task, item_id_item FROM task_has_item";
-//		jdbcTemplate.query(sql, new RowMapper<Task>() {
-//
-//			@Override
-//			public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
-//				taskIDitemID.put(rs.getLong("task_id_task"), rs.getLong("item_id_item"));
-//				return null;
-//			}
-//		
-//		});
-//		System.out.println(taskIDitemID);
+		// Map<Long, Long> taskIDitemID = new HashMap<>();
+		// String sql = "SELECT task_id_task, item_id_item FROM task_has_item";
+		// jdbcTemplate.query(sql, new RowMapper<Task>() {
+		//
+		// @Override
+		// public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
+		// taskIDitemID.put(rs.getLong("task_id_task"), rs.getLong("item_id_item"));
+		// return null;
+		// }
+		//
+		// });
+		// System.out.println(taskIDitemID);
 		String sql = "SELECT id_task, project_id_project, name, active, date_time_from, date_time_until,"
 				+ " each_item_available, user_id_user, laboratory_id_laboratory " + "FROM task";
 		return jdbcTemplate.query(sql, new RowMapper<Task>() {
@@ -116,18 +126,10 @@ public class MysqlTaskDAO implements TaskDAO {
 	// FIXME - urobit test
 	@Override
 	public Task getByID(Long id) {
-		// String sql = "SELECT project_id_project, name, active, date_time_from,
-		// date_time_until, each_item_available "
-		// + "FROM task " + "WHERE id_task = " + id;
-		// return jdbcTemplate.queryForObject(sql, new
-		// BeanPropertyRowMapper<>(Task.class));
-		List<Task> tasks = DAOfactory.INSTANCE.getTaskDAO().getAll();
-		for (Task task : tasks) {
-			if (task.getTaskID() == id) {
-				return task;
-			}
-		}
-		return null;
+		String sql = "SELECT id_task AS taskID, project_id_project, name, active,"
+				+ " date_time_from, date_time_until, each_item_available, user_id_user, laboratory_id_laboratory "
+				+ "FROM task " + "WHERE id_task = " + id;
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Task.class));
 	}
 
 }

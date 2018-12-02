@@ -68,6 +68,7 @@ public class MysqlProjectDAOTest {
 		task.setName("task taskovity");
 		task.setActive(true);
 		task.setEachItemAvailable(true);
+		task.setCreatedBy(testUser);
 		TaskDAO taskDao = DAOfactory.INSTANCE.getTaskDAO();
 		taskDao.addTask(task);
 		

@@ -88,7 +88,7 @@ public class MysqlProjectDAO implements ProjectDAO {
 		jdbcTemplate.update("DELETE FROM task WHERE project_id_project = ?", project.getProjectID());
 		// vymaze vsetky riadky tabulky user_has_project, ktore patrili k danemu
 		// projektu
-		jdbcTemplate.update("DELETE FROM user_has_project WHERE project_id_project = ?", project.getProjectID());
+		//jdbcTemplate.update("DELETE FROM user_has_project WHERE project_id_project = ?", project.getProjectID());
 		// vymaze projekt
 		String sql = "DELETE FROM project WHERE id_project = " + project.getProjectID();
 		jdbcTemplate.update(sql);

@@ -37,6 +37,7 @@ public class MysqlNoteDAOTest {
 		project.setActive(true);
 		project.setDateFrom(LocalDate.now());
 		project.setEachItemAvailable(false);
+		project.setCreatedBy(testUser);
 		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
 		projectDAO.addProject(project);
 		
@@ -64,8 +65,8 @@ public class MysqlNoteDAOTest {
 				successfullyDeleted = false;
 			}
 		}
-		userDAO.deleteUser(testUser);
 		projectDAO.deleteProject(project);
+		userDAO.deleteUser(testUser);
 		assertTrue(successfullyDeleted);
 	}
 	
@@ -83,6 +84,7 @@ public class MysqlNoteDAOTest {
 		project.setActive(true);
 		project.setDateFrom(LocalDate.now());
 		project.setEachItemAvailable(false);
+		project.setCreatedBy(testUser);
 		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
 		projectDAO.addProject(project);
 		
@@ -106,8 +108,8 @@ public class MysqlNoteDAOTest {
 				return;
 			}
 		}
-		userDAO.deleteUser(testUser);
 		projectDAO.deleteProject(project);
+		userDAO.deleteUser(testUser);
 		assertTrue(false, "update sa nepodaril");
 	}
 
