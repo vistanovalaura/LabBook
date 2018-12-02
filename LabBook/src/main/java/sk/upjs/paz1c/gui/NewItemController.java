@@ -15,6 +15,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.upjs.paz1c.entities.Admin;
 import sk.upjs.paz1c.entities.Item;
+import sk.upjs.paz1c.entities.Laboratory;
+import sk.upjs.paz1c.fxmodels.LaboratoryFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.ItemDAO;
 import sk.upjs.paz1c.persistent.ProjectDAO;
@@ -31,6 +33,16 @@ public class NewItemController {
 	private TextField quantityTextField;
 
 	private ItemDAO itemDao = DAOfactory.INSTANCE.getItemDAO();
+
+	private LaboratoryFxModel laboratoryModel;
+
+	public NewItemController(Laboratory laboratory) {
+		this.laboratoryModel = new LaboratoryFxModel(laboratory);
+	}
+
+	public NewItemController() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@FXML
 	void initialize() {
@@ -50,6 +62,7 @@ public class NewItemController {
 					Item item = new Item();
 					item.setName(name);
 					item.setQuantity(quantity);
+					item.setLaboratory(laboratoryModel.getLaboratory());
 					ItemDAO itemDao = DAOfactory.INSTANCE.getItemDAO();
 					itemDao.addItem(item);
 					saveButton.getScene().getWindow().hide();

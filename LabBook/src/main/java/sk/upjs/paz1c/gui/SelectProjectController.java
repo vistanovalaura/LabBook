@@ -127,7 +127,7 @@ public class SelectProjectController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				NewProjectController newProjectController = new NewProjectController(userModel.getUser());
+				NewProjectController newProjectController = new NewProjectController(UserIdentificationManager.getUser());
 				showModalWindow(newProjectController, "newProject.fxml");
 				projectsModel.setAll(getProjects());
 			}

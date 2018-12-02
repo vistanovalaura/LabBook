@@ -68,6 +68,15 @@ public class NewLaboratoryController {
 
 			}
 		});
+		
+		addButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				NewItemController newItemController = new NewItemController();
+				showModalWindow(newItemController, "newItem.fxml");				
+			}
+		});
 
 	}
 
@@ -121,6 +130,23 @@ public class NewLaboratoryController {
 			}
 		}
 		return true;
+	}
+	
+	private void showModalWindow(Object controller, String fxml) {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
+			fxmlLoader.setController(controller);
+			Parent rootPane = fxmlLoader.load();
+			Scene scene = new Scene(rootPane);
+
+			Stage dialog = new Stage();
+			dialog.setScene(scene);
+			dialog.initModality(Modality.APPLICATION_MODAL);
+			dialog.showAndWait();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
