@@ -69,10 +69,10 @@ public class FrontPageController {
 					String password = passwordTextField.getText();
 
 					if (UserIdentificationManager.setUser(login, password) == 1) {
-						user = findByName(login, password);
+						user = UserIdentificationManager.getUser();
 						loginUser();
 					} else if (UserIdentificationManager.setUser(login, password) == 2) {
-						admin = findByName(login);
+						admin = UserIdentificationManager.getAdmin();
 						loginAdmin();
 					} else {
 						showWrongDataWindow();
@@ -89,9 +89,10 @@ public class FrontPageController {
 					String password = passwordTextField.getText();
 
 					if (UserIdentificationManager.setUser(login, password) == 1) {
+						user = UserIdentificationManager.getUser();
 						loginUser();
 					} else if (UserIdentificationManager.setUser(login, password) == 2) {
-						admin = findByName(login);
+						admin = UserIdentificationManager.getAdmin();
 						loginAdmin();
 					} else {
 						showWrongDataWindow();
@@ -132,9 +133,10 @@ public class FrontPageController {
 			String password = passwordTextField.getText();
 
 			if (UserIdentificationManager.setUser(login, password) == 1) {
+				user = UserIdentificationManager.getUser();
 				loginUser();
 			} else if (UserIdentificationManager.setUser(login, password) == 2) {
-				admin = findByName(login);
+				admin = UserIdentificationManager.getAdmin();
 				loginAdmin();
 			} else {
 				showWrongDataWindow();
