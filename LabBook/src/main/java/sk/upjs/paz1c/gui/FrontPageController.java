@@ -69,6 +69,7 @@ public class FrontPageController {
 					String password = passwordTextField.getText();
 
 					if (UserIdentificationManager.setUser(login, password) == 1) {
+						user = findByName(login, password);
 						loginUser();
 					} else if (UserIdentificationManager.setUser(login, password) == 2) {
 						admin = findByName(login);
@@ -163,7 +164,7 @@ public class FrontPageController {
 	}
 
 	private void loginUser() {
-		SelectProjectController controller = new SelectProjectController();
+		SelectProjectController controller = new SelectProjectController(user);
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("selectProject.fxml"));
 			loader.setController(controller);
@@ -228,6 +229,16 @@ public class FrontPageController {
 			}
 		}
 		return null;
+	}
 
+	public User findByName(String name, String password) {
+		List<User> users = DAOfactory.INSTANCE.getUserDAO().getAll();
+		for (User user : users) {
+			if (user.getName().equals(name) && user.getPassword().equals(password)) {
+				return user;
+			}
+
+		}
+		return null;
 	}
 }

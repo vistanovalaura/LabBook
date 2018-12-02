@@ -74,7 +74,7 @@ public class SelectProjectController {
 
 	@FXML
 	void initialize() {
-		projectsModel = FXCollections.observableArrayList(projectDao.getAll());
+		projectsModel = FXCollections.observableArrayList(getProjects());
 
 		projectsTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
