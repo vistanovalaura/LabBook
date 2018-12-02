@@ -1,11 +1,11 @@
 package sk.upjs.paz1c.gui;
 
-import java.awt.TextArea;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import sk.upjs.paz1c.entities.Note;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.fxmodels.NoteFxModel;
@@ -41,7 +41,8 @@ public class EditNoteController {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				//notesModel.setAll(noteDao.getAll());
+				noteDao.saveNote(notesModel.getNote());
+				saveButton.getScene().getWindow().hide();
 			}
 		});
     }

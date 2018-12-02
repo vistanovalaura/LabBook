@@ -31,6 +31,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.entities.User;
@@ -74,7 +75,7 @@ public class SelectProjectController {
 
 	@FXML
 	void initialize() {
-		projectsModel = FXCollections.observableArrayList(projectDao.getAll());
+		projectsModel = FXCollections.observableArrayList(getProjects());
 
 		projectsTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -93,7 +94,7 @@ public class SelectProjectController {
 			public void handle(ActionEvent event) {
 				EditProjectController editController = new EditProjectController(selectedProject.get());
 				showModalWindow(editController, "editProject.fxml");
-				projectsModel.setAll(projectDao.getAll());
+				projectsModel.setAll(getProjects());
 			}
 		});
 
@@ -111,7 +112,7 @@ public class SelectProjectController {
 			public void handle(ActionEvent event) {
 				DeleteProjectController deleteProjectController = new DeleteProjectController(selectedProject.get());
 				showModalWindow(deleteProjectController, "deleteProject.fxml");
-				projectsModel.setAll(projectDao.getAll());
+				projectsModel.setAll(getProjects());
 			}
 		});
 
@@ -126,9 +127,9 @@ public class SelectProjectController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				NewProjectController newProjectController = new NewProjectController(userModel.getUser());
+				NewProjectController newProjectController = new NewProjectController(UserIdentificationManager.getUser());
 				showModalWindow(newProjectController, "newProject.fxml");
-				projectsModel.setAll(projectDao.getAll());
+				projectsModel.setAll(getProjects());
 			}
 		});
 
@@ -235,7 +236,7 @@ public class SelectProjectController {
 		List<Project> projects = new ArrayList<>();
 		List<Project> allProjects = projectDao.getAll();
 		for (Project p : allProjects) {
-			if (p.getCreatedBy() == userModel.getUser()) {
+			if (p.getCreatedBy().getUserID().equals(UserIdentificationManager.getUser().getUserID())) {
 				projects.add(p);
 			}
 		}

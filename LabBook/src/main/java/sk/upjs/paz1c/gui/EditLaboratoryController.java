@@ -1,11 +1,11 @@
 package sk.upjs.paz1c.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.w3c.dom.events.EventException;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -29,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Laboratory;
 import sk.upjs.paz1c.entities.Project;
@@ -68,7 +69,6 @@ public class EditLaboratoryController {
 	private ObservableList<Item> itemModel;
 	private ItemDAO itemDao = DAOfactory.INSTANCE.getItemDAO();
 	private ObjectProperty<Item> selectedItem = new SimpleObjectProperty<>();
-	
 
 	public EditLaboratoryController(Laboratory laboratory) {
 		this.laboratory = laboratory;
@@ -77,7 +77,7 @@ public class EditLaboratoryController {
 
 	@FXML
 	void initialize() {
-		itemModel = FXCollections.observableArrayList(itemDao.getAll());
+		itemModel = FXCollections.observableArrayList(getItems());
 		nameTextField.textProperty().bindBidirectional(laboratoryModel.nameProperty());
 		locationTextField.textProperty().bindBidirectional(laboratoryModel.locationProperty());
 
@@ -95,9 +95,9 @@ public class EditLaboratoryController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				NewItemController newItemController = new NewItemController();
+				NewItemController newItemController = new NewItemController(laboratoryModel.getLaboratory());
 				showModalWindow(newItemController, "newItem.fxml");
-				itemModel.setAll(itemDao.getAll());
+				itemModel.setAll(getItems());
 			}
 		});
 
@@ -107,7 +107,7 @@ public class EditLaboratoryController {
 			public void handle(ActionEvent event) {
 				DeleteItemController deleteItemController = new DeleteItemController(selectedItem.get());
 				showModalWindow(deleteItemController, "deleteItem.fxml");
-				itemModel.setAll(itemDao.getAll());
+				itemModel.setAll(getItems());
 
 			}
 		});
@@ -163,5 +163,17 @@ public class EditLaboratoryController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private List<Item> getItems() {
+		List<Item> items = new ArrayList<>();
+		List<Item> allItems = itemDao.getAll();
+		for (Item i : allItems) {
+			if (i.getLaboratory().equals(laboratoryModel.getLaboratory())) {
+				items.add(i);
+			}
+		}
+		return items;
+
 	}
 }

@@ -102,7 +102,6 @@ public class SelectNoteController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("delete");
 				DeleteNoteController deleteNoteController = new DeleteNoteController(selectedNote.get());
 				showModalWindow(deleteNoteController, "deleteNote.fxml");
 				notesModel.setAll(getNotes());
@@ -202,7 +201,7 @@ public class SelectNoteController {
 		List<Note> notes = new ArrayList<>();
 		List<Note> allNotes = noteDao.getAll();
 		for (Note n : allNotes) {
-			if (n.getTask().getTaskID() == taskModel.getTaskId()) {
+			if (n.getTask().getTaskID().equals(taskModel.getTaskId())) {
 				notes.add(n);
 			}
 		}

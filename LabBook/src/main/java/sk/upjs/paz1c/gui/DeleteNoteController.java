@@ -37,7 +37,6 @@ public class DeleteNoteController {
 			@Override
 			public void handle(ActionEvent event) {
 				noteDao.deleteNote(noteModel.getNote());
-				noteDao.saveNote(noteModel.getNote());
 				yesButton.getScene().getWindow().hide();
 			}
 		});
