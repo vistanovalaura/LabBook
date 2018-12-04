@@ -51,7 +51,7 @@ public class MysqlNoteDAOTest {
 		boolean succesfullyAdded = false;
 		List<Note> all = noteDAO.getAll();
 		for (Note n : all) {
-			if (n.getNoteID() == note.getNoteID()) {
+			if (n.getNoteID().equals(note.getNoteID())) {
 				succesfullyAdded = true;
 			}
 		}
@@ -61,7 +61,7 @@ public class MysqlNoteDAOTest {
 		all = noteDAO.getAll();
 		boolean successfullyDeleted = true;
 		for (Note n : all) {
-			if (n.getNoteID() == note.getNoteID()) {
+			if (n.getNoteID().equals(note.getNoteID())) {
 				successfullyDeleted = false;
 			}
 		}
@@ -102,14 +102,14 @@ public class MysqlNoteDAOTest {
 		noteDAO.saveNote(note);
 		List<Note> all = noteDAO.getAll();
 		for (Note n : all) {
-			if (n.getNoteID() == note.getNoteID()) {
+			if (n.getNoteID().equals(note.getNoteID())) {
 				assertEquals("testovaci_task_new", n.getText());
 				noteDAO.deleteNote(n);
+				projectDAO.deleteProject(project);
+				userDAO.deleteUser(testUser);
 				return;
 			}
 		}
-		projectDAO.deleteProject(project);
-		userDAO.deleteUser(testUser);
 		assertTrue(false, "update sa nepodaril");
 	}
 

@@ -55,7 +55,7 @@ public class MysqlItemDAOTest {
 		boolean notThere = true;
 		List<Item> all = itemDAO.getAll();
 		for (Item i : all) {
-			if (i.getItemID() == testItem.getItemID()) {
+			if (i.getItemID().equals(testItem.getItemID())) {
 				notThere = false;
 			}
 		}
@@ -65,7 +65,7 @@ public class MysqlItemDAOTest {
 		all = itemDAO.getAll();
 		boolean succesfullyAdded = false;
 		for (Item i : all) {
-			if (i.getItemID() == testItem.getItemID()) {
+			if (i.getItemID().equals(testItem.getItemID())) {
 				succesfullyAdded = true;
 			}
 		}
@@ -76,7 +76,7 @@ public class MysqlItemDAOTest {
 		all = itemDAO.getAll();
 		boolean successfullyDeleted = true;
 		for (Item i : all) {
-			if (i.getItemID() == testItem.getItemID()) {
+			if (i.getItemID().equals(testItem.getItemID())) {
 				successfullyDeleted = false;
 			}
 		}
@@ -103,7 +103,7 @@ public class MysqlItemDAOTest {
 		itemDAO.saveItem(testItem);
 		List<Item> all = itemDAO.getAll();
 		for (Item u : all) {
-			if (u.getItemID() == testItem.getItemID()) {
+			if (u.getItemID().equals(testItem.getItemID())) {
 				assertEquals("test_item_new", u.getName());
 				itemDAO.deleteItem(u);
 				return;

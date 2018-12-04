@@ -41,7 +41,7 @@ public class MysqlProjectDAOTest {
 		boolean notThere = true;
 		List<Project> all = projectDAO.getAll();
 		for (Project p : all) {
-			if (p.getProjectID() == project.getProjectID()) {
+			if (p.getProjectID().equals(project.getProjectID())) {
 				notThere = false;
 			}
 		}
@@ -75,7 +75,7 @@ public class MysqlProjectDAOTest {
 		all = projectDAO.getAll();
 		boolean succesfullyAdded = false;
 		for (Project p : all) {
-			if (p.getProjectID() == project.getProjectID()) {
+			if (p.getProjectID().equals(project.getProjectID())) {
 				succesfullyAdded = true;
 			}
 		}
@@ -85,7 +85,7 @@ public class MysqlProjectDAOTest {
 		all = projectDAO.getAll();
 		boolean successfullyDeleted = true;
 		for (Project p : all) {
-			if (p.getProjectID() == project.getProjectID()) {
+			if (p.getProjectID().equals(project.getProjectID())) {
 				successfullyDeleted = false;
 			}
 		}
@@ -116,7 +116,7 @@ public class MysqlProjectDAOTest {
 		projectDAO.saveProject(project);
 		List<Project> all = projectDAO.getAll();
 		for (Project p : all) {
-			if (p.getProjectID() == project.getProjectID()) {
+			if (p.getProjectID().equals(project.getProjectID())) {
 				assertEquals("testovaci_projekt_new", p.getName());
 				projectDAO.deleteProject(p);
 				userDAO.deleteUser(testUser);
