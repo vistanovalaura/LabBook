@@ -89,7 +89,6 @@ public class EditDataAdminController {
 			@Override
 			public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
 				if (newValue != null) {
-					System.out.println(newValue.getName());
 					selectedUserModel.setUser(newValue);
 				}
 			}
@@ -102,7 +101,6 @@ public class EditDataAdminController {
 			public void changed(ObservableValue<? extends Laboratory> observable, Laboratory oldValue,
 					Laboratory newValue) {
 				if (newValue != null) {
-					System.out.println(newValue.getName());
 					selectedLaboratoryModel.setLaboratory(newValue);
 				}
 			}
@@ -145,8 +143,6 @@ public class EditDataAdminController {
 				DeleteLaboratoryController deleteController = new DeleteLaboratoryController(
 						selectedLaboratoryModel.getLaboratory());
 				showModalWindow(deleteController, "deleteLaboratory.fxml");
-				//List<Laboratory> labs = laboratoryDao.getAll();
-				//laboratoriesComboBox.setItems(FXCollections.observableList(labs));
 				laboratoryModel.setAll(laboratoryDao.getAll());
 			}
 		});

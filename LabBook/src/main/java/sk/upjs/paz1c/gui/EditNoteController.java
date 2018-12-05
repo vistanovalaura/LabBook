@@ -43,7 +43,7 @@ public class EditNoteController {
 			@Override
 			public void handle(ActionEvent event) {
 				notesModel.setAuthor(UserIdentificationManager.getUser());
-				System.out.println(notesModel.getAuthor().toString());
+				notesModel.setText(noteTextArea.getText());
 				noteDao.saveNote(notesModel.getNote());
 				saveButton.getScene().getWindow().hide();
 			}
