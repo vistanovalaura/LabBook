@@ -95,15 +95,14 @@ public class EditDataAdminController {
 			}
 		});
 
-		List<Laboratory> laboratories = laboratoryDao.getAll();
-		laboratoriesComboBox.setItems(FXCollections.observableList(laboratories));
+		laboratoriesComboBox.setItems(laboratoryModel);
 		laboratoriesComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Laboratory>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Laboratory> observable, Laboratory oldValue,
 					Laboratory newValue) {
 				if (newValue != null) {
-					// System.out.println(newValue.getName());
+					System.out.println(newValue.getName());
 					selectedLaboratoryModel.setLaboratory(newValue);
 				}
 			}
@@ -146,8 +145,8 @@ public class EditDataAdminController {
 				DeleteLaboratoryController deleteController = new DeleteLaboratoryController(
 						selectedLaboratoryModel.getLaboratory());
 				showModalWindow(deleteController, "deleteLaboratory.fxml");
-				List<Laboratory> labs = laboratoryDao.getAll();
-				laboratoriesComboBox.setItems(FXCollections.observableList(labs));
+				//List<Laboratory> labs = laboratoryDao.getAll();
+				//laboratoriesComboBox.setItems(FXCollections.observableList(labs));
 				laboratoryModel.setAll(laboratoryDao.getAll());
 			}
 		});
