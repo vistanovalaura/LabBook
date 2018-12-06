@@ -33,7 +33,7 @@ class MysqlUserDAOTest {
 		boolean notThere = true;
 		List<User> all = userDAO.getAll();
 		for (User u : all) {
-			if (u.getUserID() == testUser.getUserID()) {
+			if (u.getUserID().equals(testUser.getUserID())) {
 				notThere = false;
 			}
 		}
@@ -70,7 +70,7 @@ class MysqlUserDAOTest {
 		all = userDAO.getAll();
 		boolean succesfullyAdded = false;
 		for (User u : all) {
-			if (u.getUserID() == testUser.getUserID()) {
+			if (u.getUserID().equals(testUser.getUserID())) {
 				succesfullyAdded = true;
 			}
 		}
@@ -80,7 +80,7 @@ class MysqlUserDAOTest {
 		all = userDAO.getAll();
 		boolean successfullyDeleted = true;
 		for (User u : all) {
-			if (u.getUserID() == testUser.getUserID()) {
+			if (u.getUserID().equals(testUser.getUserID())) {
 				successfullyDeleted = false;
 			}
 		}
@@ -111,7 +111,7 @@ class MysqlUserDAOTest {
 		userDAO.saveUser(testUser);
 		List<User> all = userDAO.getAll();
 		for (User u : all) {
-			if (u.getUserID() == testUser.getUserID()) {
+			if (u.getUserID().equals(testUser.getUserID())) {
 				assertEquals("tester_new", u.getName());
 				assertTrue(project.getCreatedBy().getName().equals(u.getName()));
 				userDAO.deleteUser(u);

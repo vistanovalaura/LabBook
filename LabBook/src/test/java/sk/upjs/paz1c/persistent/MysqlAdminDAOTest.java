@@ -26,7 +26,7 @@ class MysqlAdminDAOTest {
 		boolean notThere = true;
 		List<Admin> all = adminDAO.getAll();
 		for (Admin a : all) {
-			if (a.getAdminID() == testAdmin.getAdminID()) {
+			if (a.getAdminID().equals(testAdmin.getAdminID())) {
 				notThere = false;
 			}
 		}
@@ -36,7 +36,7 @@ class MysqlAdminDAOTest {
 		all = adminDAO.getAll();
 		boolean succesfullyAdded = false;
 		for (Admin a : all) {
-			if (a.getAdminID() == testAdmin.getAdminID()) {
+			if (a.getAdminID().equals(testAdmin.getAdminID())) {
 				succesfullyAdded = true;
 			}
 		}
@@ -46,7 +46,7 @@ class MysqlAdminDAOTest {
 		all = adminDAO.getAll();
 		boolean successfullyDeleted = true;
 		for (Admin a : all) {
-			if (a.getAdminID() == testAdmin.getAdminID()) {
+			if (a.getAdminID().equals(testAdmin.getAdminID())) {
 				successfullyDeleted = false;
 			}
 		}
@@ -68,7 +68,7 @@ class MysqlAdminDAOTest {
 		adminDAO.saveAdmin(testAdmin);
 		List<Admin> all = adminDAO.getAll();
 		for (Admin a : all) {
-			if (a.getAdminID() == testAdmin.getAdminID()) {
+			if (a.getAdminID().equals(testAdmin.getAdminID())) {
 				assertEquals("tester_new", a.getName());
 				adminDAO.deleteAdmin(a);
 				return;

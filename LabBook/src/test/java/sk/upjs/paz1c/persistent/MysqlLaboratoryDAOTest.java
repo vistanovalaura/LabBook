@@ -29,7 +29,7 @@ public class MysqlLaboratoryDAOTest {
 		boolean notThere = true;
 		List<Laboratory> all = laboratoryDAO.getAll();
 		for (Laboratory l : all) {
-			if (l.getLaboratoryID() == testLaboratory.getLaboratoryID()) {
+			if (l.getLaboratoryID().equals(testLaboratory.getLaboratoryID())) {
 				notThere = false;
 			}
 		}
@@ -48,7 +48,7 @@ public class MysqlLaboratoryDAOTest {
 		all = laboratoryDAO.getAll();
 		boolean succesfullyAdded = false;
 		for (Laboratory l : all) {
-			if (l.getLaboratoryID() == testLaboratory.getLaboratoryID()) {
+			if (l.getLaboratoryID().equals(testLaboratory.getLaboratoryID())) {
 				succesfullyAdded = true;
 			}
 		}
@@ -58,7 +58,7 @@ public class MysqlLaboratoryDAOTest {
 		all = laboratoryDAO.getAll();
 		boolean successfullyDeleted = true;
 		for (Laboratory l : all) {
-			if (l.getLaboratoryID() == testLaboratory.getLaboratoryID()) {
+			if (l.getLaboratoryID().equals(testLaboratory.getLaboratoryID())) {
 				successfullyDeleted = false;
 			}
 		}
@@ -80,7 +80,7 @@ public class MysqlLaboratoryDAOTest {
 		laboratoryDAO.saveLaboratory(testLaboratory);
 		List<Laboratory> all = laboratoryDAO.getAll();
 		for (Laboratory l : all) {
-			if (l.getLaboratoryID() == testLaboratory.getLaboratoryID()) {
+			if (l.getLaboratoryID().equals(testLaboratory.getLaboratoryID())) {
 				assertEquals("tester_new", l.getName());
 				laboratoryDAO.deleteLaboratory(l);
 				return;
