@@ -68,4 +68,10 @@ public class Item {
 		this.laboratory = laboratory;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+
 }

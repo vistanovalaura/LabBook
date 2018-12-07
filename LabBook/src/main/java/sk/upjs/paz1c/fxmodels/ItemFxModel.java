@@ -1,6 +1,7 @@
 package sk.upjs.paz1c.fxmodels;
 
 import sk.upjs.paz1c.entities.Item;
+import sk.upjs.paz1c.entities.Laboratory;
 
 public class ItemFxModel {
 
@@ -12,6 +13,10 @@ public class ItemFxModel {
 		setName(item.getName());
 		setItemID(item.getItemID());
 		setQuantity(item.getQuantity());
+	}
+	
+	public ItemFxModel() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public ItemFxModel(Long itemID, String name, int quantity) {
@@ -26,6 +31,12 @@ public class ItemFxModel {
 		item.setItemID(getItemID());
 		item.setQuantity(getQuantity());
 		return item;
+	}
+	
+	public void setItem(Item item) {
+		setName(item.getName());
+		setItemID(item.getItemID());
+		item.setQuantity(item.getQuantity());
 	}
 
 	public Long getItemID() {

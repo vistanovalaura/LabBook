@@ -65,6 +65,9 @@ public class SelectProjectController {
 	@FXML
 	private Button signOutButton;
 
+	@FXML
+	private Button editAccount;
+
 	public SelectProjectController(User user) {
 		this.userModel = new UserFxModel(user);
 	}
@@ -127,9 +130,21 @@ public class SelectProjectController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				NewProjectController newProjectController = new NewProjectController(UserIdentificationManager.getUser());
+				NewProjectController newProjectController = new NewProjectController(
+						UserIdentificationManager.getUser());
 				showModalWindow(newProjectController, "newProject.fxml");
 				projectsModel.setAll(getProjects());
+			}
+		});
+		
+		editAccount.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				EditUserController editUserController = new EditUserController(
+						UserIdentificationManager.getUser());
+				showModalWindow(editUserController, "editUser.fxml");
+				
 			}
 		});
 

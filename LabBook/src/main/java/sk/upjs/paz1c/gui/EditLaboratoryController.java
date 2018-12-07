@@ -78,6 +78,7 @@ public class EditLaboratoryController {
 	@FXML
 	void initialize() {
 		itemModel = FXCollections.observableArrayList(getItems());
+		// itemModel = FXCollections.observableArrayList(getItems());
 		nameTextField.textProperty().bindBidirectional(laboratoryModel.nameProperty());
 		locationTextField.textProperty().bindBidirectional(laboratoryModel.locationProperty());
 
@@ -107,6 +108,7 @@ public class EditLaboratoryController {
 			public void handle(ActionEvent event) {
 				DeleteItemController deleteItemController = new DeleteItemController(selectedItem.get());
 				showModalWindow(deleteItemController, "deleteItem.fxml");
+				// itemModel.setAll(itemDao.getAll());
 				itemModel.setAll(getItems());
 
 			}
@@ -167,10 +169,14 @@ public class EditLaboratoryController {
 
 	private List<Item> getItems() {
 		List<Item> items = new ArrayList<>();
-		List<Item> allItems = itemDao.getAll();
-		for (Item i : allItems) {
-			if (i.getLaboratory().equals(laboratoryModel.getLaboratory())) {
-				items.add(i);
+		if (itemDao.getAll() != null) {
+			List<Item> allItems = itemDao.getAll();
+			for (Item i : allItems) {
+				System.out.println("1 " + i.getLaboratory().getLaboratoryID());
+				System.out.println("2 " + laboratoryModel.getLaboratory().getLaboratoryID());
+				if (i.getLaboratory().equals(laboratoryModel.getLaboratory())) {
+					items.add(i);
+				}
 			}
 		}
 		return items;

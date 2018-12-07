@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Note;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.fxmodels.NoteFxModel;
@@ -41,6 +42,8 @@ public class EditNoteController {
 			
 			@Override
 			public void handle(ActionEvent event) {
+				notesModel.setAuthor(UserIdentificationManager.getUser());
+				notesModel.setText(noteTextArea.getText());
 				noteDao.saveNote(notesModel.getNote());
 				saveButton.getScene().getWindow().hide();
 			}

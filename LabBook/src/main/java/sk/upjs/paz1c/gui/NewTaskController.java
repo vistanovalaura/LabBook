@@ -32,6 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Admin;
 import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Laboratory;
@@ -157,6 +158,7 @@ public class NewTaskController {
 					if (selectedLaboratoryModel.getLaboratory() != null) {
 						task.setLaboratory(selectedLaboratoryModel.getLaboratory());
 					}
+					task.setCreatedBy(UserIdentificationManager.getUser());
 					TaskDAO taskDao = DAOfactory.INSTANCE.getTaskDAO();
 					taskDao.addTask(task);
 					saveButton.getScene().getWindow().hide();

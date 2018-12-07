@@ -69,6 +69,9 @@ public class MysqlLaboratoryDAO implements LaboratoryDAO {
 		// updatuje itemy, ktore patrili danemu labaku, nech nepatria ziadnemu
 		String sql = "UPDATE item SET " + "laboratory_id_laboratory = ? " + "WHERE laboratory_id_laboratory = ?";
 		jdbcTemplate.update(sql, null, laboratory.getLaboratoryID());
+		// updatuje tasky, ktore patrili danemu labaku, nech nepatria ziadnemu
+		sql = "UPDATE task SET " + "laboratory_id_laboratory = ? " + "WHERE laboratory_id_laboratory = ?";
+		jdbcTemplate.update(sql, null, laboratory.getLaboratoryID());
 		// vymaze labak
 		jdbcTemplate.update("DELETE FROM laboratory WHERE id_laboratory = " + laboratory.getLaboratoryID());
 	}
