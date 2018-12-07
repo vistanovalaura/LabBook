@@ -29,6 +29,21 @@ public class MysqlTaskDAO implements TaskDAO {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
+	private void insertItems(Task task) {
+		jdbcTemplate.update("DELETE FROM task_has_item WHERE task_id_task = ?", task.getTaskID());
+		if (task.getItems() != null)
+			if (task.getItems().size() > 0) {
+				StringBuilder sb = new StringBuilder();
+				sb.append("INSERT INTO task_has_item (task_id_task, item_id_item)");
+				sb.append(" VALUES ");
+				for (int i = 0; i < task.getItems().size(); i++) {
+					sb.append("(" + task.getTaskID() + "," + task.getItems().get(i).getItemID() + "),");
+				}
+				String insertSql = sb.substring(0, sb.length() - 1);
+				jdbcTemplate.update(insertSql);
+			}
+	}
+
 	@Override
 	public void addTask(Task task) {
 
@@ -51,6 +66,7 @@ public class MysqlTaskDAO implements TaskDAO {
 		}
 
 		task.setTaskID(insert.executeAndReturnKey(values).longValue());
+		insertItems(task);
 	}
 
 	@Override
@@ -70,6 +86,7 @@ public class MysqlTaskDAO implements TaskDAO {
 			jdbcTemplate.update(sql, task.getProject().getProjectID(), task.getName(), task.isActive(),
 					task.getDateTimeFrom(), task.getDateTimeUntil(), task.isEachItemAvailable(),
 					task.getCreatedBy().getUserID(), laboratoryID, task.getTaskID());
+			insertItems(task);
 		}
 	}
 
@@ -120,18 +137,29 @@ public class MysqlTaskDAO implements TaskDAO {
 
 	@Override
 	public void deleteTask(Task task) {
+		jdbcTemplate.update("DELETE FROM task_has_item WHERE task_id_task= ?", task.getTaskID());
 		String sql = "DELETE FROM task WHERE id_task = " + task.getTaskID();
 		jdbcTemplate.update(sql);
 	}
 
-	// FIXME - dorobit getByID tak, aby pridalo task aj s jeho listom itemov,
-	// FIXME - urobit test
 	@Override
 	public Task getByID(Long id) {
 		String sql = "SELECT id_task AS taskID, project_id_project, name, active,"
 				+ " date_time_from, date_time_until, each_item_available, user_id_user, laboratory_id_laboratory "
 				+ "FROM task " + "WHERE id_task = " + id;
-		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Task.class));
+		Task task = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Task.class));
+		sql = "SELECT item_id_item FROM task_has_item WHERE task_id_task =" + task.getTaskID();
+		List<Item> items = jdbcTemplate.query(sql, new RowMapper<Item>() {
+
+			@Override
+			public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Item item = new Item();
+				item = DAOfactory.INSTANCE.getItemDAO().getByID(rs.getLong("item_id_item"));
+				return item;
+			}
+		});
+		task.setItems(items);
+		return task;
 	}
 
 }

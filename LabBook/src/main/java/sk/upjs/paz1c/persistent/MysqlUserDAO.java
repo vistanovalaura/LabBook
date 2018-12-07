@@ -2,6 +2,7 @@ package sk.upjs.paz1c.persistent;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
+import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Project;
+import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.entities.User;
 
 public class MysqlUserDAO implements UserDAO {
@@ -73,8 +76,15 @@ public class MysqlUserDAO implements UserDAO {
 	public void deleteUser(User user) {
 		// vymaze vsetky note, ktore patrili k danemu userovi
 		jdbcTemplate.update("DELETE FROM note WHERE user_id_user = ?", user.getUserID());
-		// vymaze vsetky tasky, ktore patrili k danemu userovi
-		jdbcTemplate.update("DELETE FROM task WHERE user_id_user = ?", user.getUserID());
+		// vymaze vsetky tasky, ktore patria danemu userovi (nestaci mazat riadky
+		// tabulky lebo tasky su foreign key inde a to je obsiahnute v metode
+		// deleteTask, preto tuto volame)
+		List<Task> tasks = DAOfactory.INSTANCE.getUserDAO().getTasks(user);
+		if (tasks != null) {
+			for (Task task : tasks) {
+				DAOfactory.INSTANCE.getTaskDAO().deleteTask(task);
+			}
+		}
 		// vymaze vsetky projekty, ktore patrili k danemu userovi
 		jdbcTemplate.update("DELETE FROM project WHERE user_id_user = ?", user.getUserID());
 		// vymaze usera
@@ -82,12 +92,56 @@ public class MysqlUserDAO implements UserDAO {
 		jdbcTemplate.update(sql);
 	}
 
-	// FIXME - urobit test
 	@Override
 	public User getByID(Long id) {
 		String sql = "SELECT id_user AS userID, name, password, email " + "FROM lab_book.user " + "WHERE id_user = "
 				+ id;
 		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class));
+	}
+
+	public List<Task> getTasks(User user) {
+		String sql = "SELECT id_task, project_id_project, name, active,"
+				+ " date_time_from, date_time_until, each_item_available, user_id_user, laboratory_id_laboratory "
+				+ "FROM task " + "WHERE user_id_user = " + user.getUserID();
+		List<Task> tasks = jdbcTemplate.query(sql, new RowMapper<Task>() {
+
+			@Override
+			public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Task task = new Task();
+				task.setTaskID(rs.getLong("id_task"));
+				task.setProject(DAOfactory.INSTANCE.getProjectDAO().getByID(rs.getLong("project_id_project")));
+				task.setName(rs.getString("name"));
+				task.setActive(rs.getBoolean("active"));
+				Timestamp timestamp = rs.getTimestamp("date_time_from");
+				if (timestamp != null) {
+					task.setDateTimeFrom(timestamp.toLocalDateTime().toLocalDate());
+				}
+				timestamp = rs.getTimestamp("date_time_until");
+				if (timestamp != null) {
+					task.setDateTimeUntil(timestamp.toLocalDateTime().toLocalDate());
+				}
+				task.setEachItemAvailable(rs.getBoolean("each_item_available"));
+				task.setCreatedBy(DAOfactory.INSTANCE.getUserDAO().getByID(rs.getLong("user_id_user")));
+				if (task.getLaboratory() != null)
+					task.setLaboratory(DAOfactory.INSTANCE.getLaboratoryDAO()
+							.getLaboratoryByID(rs.getLong("laboratory_id_laboratory")));
+				return task;
+			}
+		});
+		for (Task task : tasks) {
+			sql = "SELECT item_id_item FROM task_has_item WHERE task_id_task =" + task.getTaskID();
+			List<Item> items = jdbcTemplate.query(sql, new RowMapper<Item>() {
+
+				@Override
+				public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+					Item item = new Item();
+					item = DAOfactory.INSTANCE.getItemDAO().getByID(rs.getLong("item_id_item"));
+					return item;
+				}
+			});
+			task.setItems(items);
+		}
+		return tasks;
 	}
 
 }

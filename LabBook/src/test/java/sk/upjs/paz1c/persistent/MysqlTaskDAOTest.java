@@ -5,11 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import sk.upjs.paz1c.entities.Item;
+import sk.upjs.paz1c.entities.Laboratory;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.entities.User;
@@ -21,12 +23,6 @@ public class MysqlTaskDAOTest {
 		List<Task> tasks = DAOfactory.INSTANCE.getTaskDAO().getAll();
 		assertNotNull(tasks);
 		assertTrue(tasks.size() == 3);
-		for (Task task : tasks) {
-			if (task.getItems() != null)
-				for (Item item : task.getItems()) {
-					System.out.println("Task " + task.getTaskID() + " ma item " + item.getItemID());
-				}
-		}
 	}
 
 	@Test
@@ -46,6 +42,33 @@ public class MysqlTaskDAOTest {
 		project.setCreatedBy(testUser);
 		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
 		projectDAO.addProject(project);
+		
+		Laboratory testLaboratory = new Laboratory();
+		testLaboratory.setName("tester");
+		testLaboratory.setLocation("testovacia");
+		LaboratoryDAO laboratoryDAO = DAOfactory.INSTANCE.getLaboratoryDAO();
+		laboratoryDAO.addLaboratory(testLaboratory);
+		
+		Item testItem = new Item();
+		testItem.setName("test_item1");
+		testItem.setQuantity(10);
+		testItem.setAvailable(true);
+		testItem.setLaboratory(testLaboratory);
+
+		Item testItem2 = new Item();
+		testItem2.setName("test_item2");
+		testItem2.setQuantity(10);
+		testItem2.setAvailable(true);
+		
+		Item testItem3 = new Item();
+		testItem3.setName("test_item3");
+		testItem3.setQuantity(10);
+		testItem3.setAvailable(true);
+		
+		ItemDAO itemDAO = DAOfactory.INSTANCE.getItemDAO();
+		itemDAO.addItem(testItem);
+		itemDAO.addItem(testItem2);
+		itemDAO.addItem(testItem3);
 
 		Task task = new Task();
 		task.setProject(project);
@@ -54,6 +77,7 @@ public class MysqlTaskDAOTest {
 		task.setDateTimeFrom(LocalDate.now());
 		task.setEachItemAvailable(false);
 		task.setCreatedBy(testUser);
+		task.setItems(Arrays.asList(testItem, testItem2, testItem3));
 		TaskDAO taskDAO = DAOfactory.INSTANCE.getTaskDAO();
 		taskDAO.addTask(task);
 		boolean succesfullyAdded = false;
@@ -64,6 +88,7 @@ public class MysqlTaskDAOTest {
 			}
 		}
 		assertTrue(succesfullyAdded);
+		assertTrue(task.getItems().size() == 3);
 
 		taskDAO.deleteTask(task);
 		all = taskDAO.getAll();
@@ -74,6 +99,10 @@ public class MysqlTaskDAOTest {
 			}
 		}
 		userDAO.deleteUser(testUser);
+		itemDAO.deleteItem(testItem);
+		itemDAO.deleteItem(testItem2);
+		itemDAO.deleteItem(testItem3);
+		laboratoryDAO.deleteLaboratory(testLaboratory);
 		assertTrue(successfullyDeleted);
 	}
 
@@ -94,6 +123,13 @@ public class MysqlTaskDAOTest {
 		project.setCreatedBy(testUser);
 		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
 		projectDAO.addProject(project);
+		
+		Item testItem = new Item();
+		testItem.setName("test_item1");
+		testItem.setQuantity(10);
+		testItem.setAvailable(true);
+		ItemDAO itemDAO = DAOfactory.INSTANCE.getItemDAO();
+		itemDAO.addItem(testItem);
 
 		Task task = new Task();
 		task.setProject(project);
@@ -102,10 +138,12 @@ public class MysqlTaskDAOTest {
 		task.setDateTimeFrom(LocalDate.now());
 		task.setEachItemAvailable(false);
 		task.setCreatedBy(testUser);
+		task.setItems(Arrays.asList(testItem));
 		TaskDAO taskDAO = DAOfactory.INSTANCE.getTaskDAO();
 		// create
 		taskDAO.saveTask(task);
 		assertNotNull(task.getTaskID());
+		assertTrue(task.getItems().size() == 1);
 		task.setName("testovaci_task_new");
 		// update
 		taskDAO.saveTask(task);
@@ -114,10 +152,78 @@ public class MysqlTaskDAOTest {
 			if (t.getTaskID().equals(task.getTaskID())) {
 				assertEquals("testovaci_task_new", t.getName());
 				userDAO.deleteUser(testUser);
+				itemDAO.deleteItem(testItem);
 				return;
 			}
 		}
 		assertTrue(false, "update sa nepodaril");
+	}
+	
+	@Test
+	void testGetByID() {
+		User testUser = new User();
+		testUser.setName("testerGetByID");
+		testUser.setPassword("1234");
+		testUser.setEmail("tester.testovaci@test.com");
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		userDAO.addUser(testUser);
+		
+		Project project = new Project();
+		project.setName("testovaci_projekt");
+		project.setActive(true);
+		project.setDateFrom(LocalDate.now());
+		project.setEachItemAvailable(false);
+		project.setCreatedBy(testUser);
+		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
+		projectDAO.addProject(project);
+		
+		Laboratory testLaboratory = new Laboratory();
+		testLaboratory.setName("tester");
+		testLaboratory.setLocation("testovacia");
+		LaboratoryDAO laboratoryDAO = DAOfactory.INSTANCE.getLaboratoryDAO();
+		laboratoryDAO.addLaboratory(testLaboratory);
+		
+		Item testItem = new Item();
+		testItem.setName("test_item1");
+		testItem.setQuantity(10);
+		testItem.setAvailable(true);
+		testItem.setLaboratory(testLaboratory);
+
+		Item testItem2 = new Item();
+		testItem2.setName("test_item2");
+		testItem2.setQuantity(10);
+		testItem2.setAvailable(true);
+		
+		Item testItem3 = new Item();
+		testItem3.setName("test_item3");
+		testItem3.setQuantity(10);
+		testItem3.setAvailable(true);
+		
+		ItemDAO itemDAO = DAOfactory.INSTANCE.getItemDAO();
+		itemDAO.addItem(testItem);
+		itemDAO.addItem(testItem2);
+		itemDAO.addItem(testItem3);
+
+		Task task = new Task();
+		task.setProject(project);
+		task.setName("testTask");
+		task.setActive(true);
+		task.setDateTimeFrom(LocalDate.now());
+		task.setEachItemAvailable(false);
+		task.setCreatedBy(testUser);
+		task.setItems(Arrays.asList(testItem, testItem2, testItem3));
+		TaskDAO taskDAO = DAOfactory.INSTANCE.getTaskDAO();
+		taskDAO.addTask(task);
+		
+		Task vratenyTask = taskDAO.getByID(task.getTaskID());
+		assertTrue(vratenyTask != null);
+		assertTrue(vratenyTask.getItems().size() == 3);
+		
+		userDAO.deleteUser(testUser);
+		itemDAO.deleteItem(testItem);
+		itemDAO.deleteItem(testItem2);
+		itemDAO.deleteItem(testItem3);
+		laboratoryDAO.deleteLaboratory(testLaboratory);
 	}
 
 }

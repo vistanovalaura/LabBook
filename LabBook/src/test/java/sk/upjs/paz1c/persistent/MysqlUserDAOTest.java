@@ -21,7 +21,7 @@ class MysqlUserDAOTest {
 		assertNotNull(users);
 		assertTrue(users.size() > 0);
 	}
-	
+
 	@Test
 	void addDeleteTest() {
 		User testUser = new User();
@@ -29,7 +29,7 @@ class MysqlUserDAOTest {
 		testUser.setPassword("1234");
 		testUser.setEmail("tester.testovaci@test.com");
 		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
-		
+
 		boolean notThere = true;
 		List<User> all = userDAO.getAll();
 		for (User u : all) {
@@ -40,7 +40,7 @@ class MysqlUserDAOTest {
 		assertTrue(notThere);
 
 		userDAO.addUser(testUser);
-		
+
 		Project project = new Project();
 		project.setName("testovaci_projekt");
 		project.setActive(true);
@@ -49,7 +49,7 @@ class MysqlUserDAOTest {
 		project.setCreatedBy(testUser);
 		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
 		projectDAO.addProject(project);
-		
+
 		Note note = new Note();
 		note.setText("testovaci text");
 		note.setTimestamp(LocalDateTime.now());
@@ -57,7 +57,7 @@ class MysqlUserDAOTest {
 		note.setProject(project);
 		NoteDAO noteDAO = DAOfactory.INSTANCE.getNoteDAO();
 		noteDAO.addNote(note);
-		
+
 		Task task = new Task();
 		task.setProject(project);
 		task.setName("task taskovity");
@@ -66,7 +66,7 @@ class MysqlUserDAOTest {
 		task.setCreatedBy(testUser);
 		TaskDAO taskDao = DAOfactory.INSTANCE.getTaskDAO();
 		taskDao.addTask(task);
-		
+
 		all = userDAO.getAll();
 		boolean succesfullyAdded = false;
 		for (User u : all) {
@@ -86,7 +86,7 @@ class MysqlUserDAOTest {
 		}
 		assertTrue(successfullyDeleted);
 	}
-	
+
 	@Test
 	void testSave() {
 		User testUser = new User();
@@ -107,7 +107,7 @@ class MysqlUserDAOTest {
 		project.setCreatedBy(testUser);
 		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
 		projectDAO.addProject(project);
-		
+
 		userDAO.saveUser(testUser);
 		List<User> all = userDAO.getAll();
 		for (User u : all) {
@@ -120,7 +120,7 @@ class MysqlUserDAOTest {
 		}
 		assertTrue(false, "update sa nepodaril");
 	}
-	
+
 	@Test
 	void testGetByID() {
 		User testUser = new User();
@@ -129,9 +129,70 @@ class MysqlUserDAOTest {
 		testUser.setEmail("tester.testovaci@test.com");
 		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
 		userDAO.addUser(testUser);
-	
+
 		long id = testUser.getUserID();
 		assertTrue(id == userDAO.getByID(id).getUserID());
 		userDAO.deleteUser(testUser);
 	}
+
+	@Test
+	void testGetTasks() {
+		User testUser = new User();
+		testUser.setName("testerGetByID");
+		testUser.setPassword("1234");
+		testUser.setEmail("tester.testovaci@test.com");
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		userDAO.addUser(testUser);
+
+		Project project = new Project();
+		project.setName("testovaci_projekt");
+		project.setActive(true);
+		project.setDateFrom(LocalDate.now());
+		project.setEachItemAvailable(false);
+		project.setCreatedBy(testUser);
+		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
+		projectDAO.addProject(project);
+
+		Task task = new Task();
+		task.setProject(project);
+		task.setName("task taskovity");
+		task.setActive(true);
+		task.setEachItemAvailable(true);
+		task.setCreatedBy(testUser);
+		TaskDAO taskDao = DAOfactory.INSTANCE.getTaskDAO();
+		taskDao.addTask(task);
+
+		Project project2 = new Project();
+		project2.setName("testovaci_projekt2");
+		project2.setActive(true);
+		project2.setDateFrom(LocalDate.now());
+		project2.setEachItemAvailable(false);
+		project2.setCreatedBy(testUser);
+		projectDAO = DAOfactory.INSTANCE.getProjectDAO();
+		projectDAO.addProject(project2);
+
+		Task task2 = new Task();
+		task2.setProject(project2);
+		task2.setName("task taskovity2");
+		task2.setActive(true);
+		task2.setEachItemAvailable(true);
+		task2.setCreatedBy(testUser);
+		taskDao = DAOfactory.INSTANCE.getTaskDAO();
+		taskDao.addTask(task2);
+
+		assertTrue(userDAO.getTasks(testUser).size() == 2);
+		
+		userDAO.deleteUser(testUser);
+	}
+
+	// org.springframework.jdbc.UncategorizedSQLException: StatementCallback;
+	// uncategorized SQLException for SQL [SELECT id_task AS taskID,
+	// project_id_project, name, active, date_time_from, date_time_until,
+	// each_item_available, user_id_user, laboratory_id_laboratory FROM task WHERE
+	// user_id_user = 197]; SQL state [S0022]; error code [0]; Column 'id_task' not
+	// found.; nested exception is java.sql.SQLException: Column 'id_task' not
+	// found.
+
+	// Caused by: java.sql.SQLException: Column 'id_task' not found.
+
 }
