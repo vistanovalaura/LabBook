@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -185,14 +186,54 @@ class MysqlUserDAOTest {
 		userDAO.deleteUser(testUser);
 	}
 
-	// org.springframework.jdbc.UncategorizedSQLException: StatementCallback;
-	// uncategorized SQLException for SQL [SELECT id_task AS taskID,
-	// project_id_project, name, active, date_time_from, date_time_until,
-	// each_item_available, user_id_user, laboratory_id_laboratory FROM task WHERE
-	// user_id_user = 197]; SQL state [S0022]; error code [0]; Column 'id_task' not
-	// found.; nested exception is java.sql.SQLException: Column 'id_task' not
-	// found.
-
-	// Caused by: java.sql.SQLException: Column 'id_task' not found.
+	@Test
+	void testGetNotes() {
+		User testUser = new User();
+		testUser.setName("tester");
+		testUser.setPassword("1234");
+		testUser.setEmail("tester.testovaci@test.com");
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		userDAO.addUser(testUser);
+		
+		Project project = new Project();
+		project.setName("testovaci_projekt");
+		project.setActive(true);
+		project.setDateFrom(LocalDate.now());
+		project.setEachItemAvailable(false);
+		project.setCreatedBy(testUser);
+		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
+		projectDAO.addProject(project);
+		
+		Task task = new Task();
+		task.setProject(project);
+		task.setName("testTask");
+		task.setActive(true);
+		task.setDateTimeFrom(LocalDate.now());
+		task.setEachItemAvailable(false);
+		task.setCreatedBy(testUser);
+		TaskDAO taskDAO = DAOfactory.INSTANCE.getTaskDAO();
+		taskDAO.addTask(task);
+		
+		Note note = new Note();
+		note.setText("testovaci text");
+		note.setTimestamp(LocalDateTime.now());
+		note.setAuthor(testUser);
+		note.setProject(project);
+		NoteDAO noteDAO = DAOfactory.INSTANCE.getNoteDAO();
+		noteDAO.addNote(note);
+		
+		Note note2 = new Note();
+		note2.setText("testovaci text");
+		note2.setTimestamp(LocalDateTime.now());
+		note2.setAuthor(testUser);
+		note2.setTask(task);
+		noteDAO.addNote(note2);
+		
+		assertTrue(userDAO.getNotes(testUser) != null);
+		assertTrue(userDAO.getNotes(testUser).size() == 2);
+		
+		userDAO.deleteUser(testUser);
+		
+	}
 
 }

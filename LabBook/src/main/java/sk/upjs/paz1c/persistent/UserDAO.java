@@ -2,6 +2,7 @@ package sk.upjs.paz1c.persistent;
 
 import java.util.List;
 
+import sk.upjs.paz1c.entities.Note;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.entities.User;
 
@@ -24,5 +25,8 @@ public interface UserDAO {
 	
 	// vrati tasky daneho usera
 	List<Task> getTasks(User user);
+	
+	// vrati notes daneho usera
+	public List<Note> getNotes(User user);
 
 }

@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.upjs.paz1c.entities.Item;
+import sk.upjs.paz1c.entities.Note;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.entities.User;
@@ -142,6 +143,41 @@ public class MysqlUserDAO implements UserDAO {
 			task.setItems(items);
 		}
 		return tasks;
+	}
+	
+	public List<Note> getNotes(User user) {
+		String sql = "SELECT id_note, text, timestamp, user_id_user, task_id_task, project_id_project, item_id_item "
+				+ "FROM note " + "WHERE user_id_user = " + user.getUserID();
+		return jdbcTemplate.query(sql, new RowMapper<Note>() {
+
+			@Override
+			public Note mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Note note = new Note();
+				note.setNoteID(rs.getLong("id_note"));
+				note.setText(rs.getString("text"));
+				note.setTimestamp(rs.getTimestamp("timestamp").toLocalDateTime());
+				note.setAuthor(DAOfactory.INSTANCE.getUserDAO().getByID(rs.getLong("user_id_user")));
+				// ak note nema nastavene napr. task, teda nie je to poznamka k tasku, tak
+				// task_id_task je null, getByID potom nenajde taky riadok v databaze, lebo
+				// ziadny task nema primarny kluc = null, lenze getByID je cez queryForObject a
+				// musi preto vratit prave jeden riadok
+				if (rs.getObject("task_id_task") != null)
+					note.setTask(DAOfactory.INSTANCE.getTaskDAO().getByID(rs.getLong("task_id_task")));
+				else
+					note.setTask(null);
+
+				if (rs.getObject("project_id_project") != null)
+					note.setProject(DAOfactory.INSTANCE.getProjectDAO().getByID(rs.getLong("project_id_project")));
+				else
+					note.setProject(null);
+
+				if (rs.getObject("item_id_item") != null)
+					note.setItem(DAOfactory.INSTANCE.getItemDAO().getByID(rs.getLong("item_id_item")));
+				else
+					note.setItem(null);
+				return note;
+			}
+		});
 	}
 
 }
