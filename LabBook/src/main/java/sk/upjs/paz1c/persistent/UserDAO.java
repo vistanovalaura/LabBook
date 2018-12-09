@@ -23,6 +23,9 @@ public interface UserDAO {
 	// vrati usera podla id
 	User getByID(Long id);
 	
+	// vrati pouzivatela podla emailu
+	User getByEmail(String email);
+	
 	// vrati tasky daneho usera
 	List<Task> getTasks(User user);
 	

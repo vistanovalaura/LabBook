@@ -25,7 +25,7 @@ public class MysqlUserDAO implements UserDAO {
 	public MysqlUserDAO(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-//LabBook17ViVa
+
 	//FIXME nech neprida ak uz je v databaze taka kombinacia mena a hesla
 	@Override
 	public void addUser(User user) {
@@ -179,6 +179,13 @@ public class MysqlUserDAO implements UserDAO {
 				return note;
 			}
 		});
+	}
+	
+	@Override
+	public User getByEmail(String email) {
+		String sql = "SELECT id_user AS userID, name, password, email " + "FROM lab_book.user " + "WHERE email = '"
+				+ email + "'";
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class));
 	}
 
 }

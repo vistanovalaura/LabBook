@@ -235,5 +235,19 @@ class MysqlUserDAOTest {
 		userDAO.deleteUser(testUser);
 		
 	}
+	
+	@Test
+	void testGetByEmail() {
+		User testUser = new User();
+		testUser.setName("testerGetByID");
+		testUser.setPassword("1234");
+		testUser.setEmail("tester.testovaci@test.com");
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		userDAO.addUser(testUser);
+
+		Long id = testUser.getUserID();
+		assertTrue(id.equals(userDAO.getByEmail("tester.testovaci@test.com").getUserID()));
+		userDAO.deleteUser(testUser);
+	}
 
 }
