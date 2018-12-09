@@ -25,6 +25,7 @@ public class ForgottenPasswordManagerSimple {
 		try {
 			user = userDAO.getByEmail(email);
 		} catch (EmptyResultDataAccessException e) {
+			//FIXME potencial na wrong data input alebo variaciu
 			return;
 		}
 		
