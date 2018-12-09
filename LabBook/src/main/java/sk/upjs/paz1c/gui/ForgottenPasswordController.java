@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import sk.upjs.paz1c.business.ForgottenPasswordManagerSimple;
 
 public class ForgottenPasswordController {
 
@@ -25,8 +26,7 @@ public class ForgottenPasswordController {
     void initialize() {
         sendPasswordButton.setOnAction(eh -> {
             String email = emailTextField.textProperty().get();
-            //treba dorobit manager
-            //LostPasswordManager.sendNewPassword(email);
+            ForgottenPasswordManagerSimple.sendPassword(email);
             sendPasswordButton.getScene().getWindow().hide();
         });
     }

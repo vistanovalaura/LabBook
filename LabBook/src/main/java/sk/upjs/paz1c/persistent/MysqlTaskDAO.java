@@ -291,8 +291,6 @@ public class MysqlTaskDAO implements TaskDAO {
 //		jdbcTemplate.update(sql);
 //	}
 //
-//	// FIXME - dorobit getByID tak, aby pridalo task aj s jeho listom itemov,
-//	// FIXME - urobit test
 //	@Override
 //	public Task getByID(Long id) {
 //		String sql = "SELECT id_task AS taskID, project_id_project, name, active,"

@@ -25,7 +25,8 @@ public class MysqlUserDAO implements UserDAO {
 	public MysqlUserDAO(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-
+//LabBook17ViVa
+	//FIXME nech neprida ak uz je v databaze taka kombinacia mena a hesla
 	@Override
 	public void addUser(User user) {
 		SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);
