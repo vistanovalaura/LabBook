@@ -26,7 +26,7 @@ public class MysqlUserDAO implements UserDAO {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	//FIXME nech neprida ak uz je v databaze taka kombinacia mena a hesla
+	//FIXME nech neprida ak uz je v databaze taka kombinacia mena a hesla alebo taky email
 	@Override
 	public void addUser(User user) {
 		SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);

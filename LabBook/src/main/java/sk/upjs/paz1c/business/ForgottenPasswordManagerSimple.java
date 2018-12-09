@@ -4,6 +4,13 @@ import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.dao.EmptyResultDataAccessException;
+
+import sk.upjs.paz1c.entities.User;
+import sk.upjs.paz1c.persistent.DAOfactory;
+import sk.upjs.paz1c.persistent.UserDAO;
+
 // https://stackoverflow.com/questions/46663/how-can-i-send-an-email-by-java-application-using-gmail-yahoo-or-hotmail#47452
 
 public class ForgottenPasswordManagerSimple {
@@ -12,11 +19,24 @@ public class ForgottenPasswordManagerSimple {
 	private static String PASSWORD = "LabBook17ViVa"; // GMail password
 
 	public static void sendPassword(String email) {
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		
+		User user;
+		try {
+			user = userDAO.getByEmail(email);
+		} catch (EmptyResultDataAccessException e) {
+			return;
+		}
+		
+		String newPassword = RandomStringUtils.randomAscii(10);
+		user.setPassword(newPassword);
+		userDAO.saveUser(user);
+		
 		String from = USER_NAME;
 		String pass = PASSWORD;
 		String[] to = { email }; // list of recipient email addresses
 		String subject = "Forgotten Password";
-		String body = "Your new password is ...";
+		String body = "Your new password is " + userDAO.getByEmail(email).getPassword();
 
 		sendFromGMail(from, pass, to, subject, body);
 	}
