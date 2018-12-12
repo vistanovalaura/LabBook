@@ -35,4 +35,7 @@ public interface UserDAO {
 	// vrati zoznam emailov vsetkych userov
 	List<String> getAllEmails();
 
+	// vrati zoznam prihlasovacich mien vsetkych userov
+	List<String> getAllNames();
+
 }

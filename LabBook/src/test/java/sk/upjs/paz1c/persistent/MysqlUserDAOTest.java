@@ -239,7 +239,7 @@ class MysqlUserDAOTest {
 	@Test
 	void testGetByEmail() {
 		User testUser = new User();
-		testUser.setName("testerGetByID");
+		testUser.setName("testGetByEmail");
 		testUser.setPassword("1234");
 		testUser.setEmail("tester.testovaci@test.com");
 		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
@@ -255,11 +255,24 @@ class MysqlUserDAOTest {
 		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
 		int origNumber = userDAO.getAllEmails().size();
 		User testUser = new User();
-		testUser.setName("testerGetByID");
+		testUser.setName("testGetAllEmails");
 		testUser.setPassword("1234");
 		testUser.setEmail("tester.testovaci@test.com");
 		userDAO.addUser(testUser);
 		assertTrue(userDAO.getAllEmails().size() == origNumber + 1);
+		userDAO.deleteUser(testUser);
+	}
+	
+	@Test
+	void testGetAllNames() {
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		int origNumber = userDAO.getAllNames().size();
+		User testUser = new User();
+		testUser.setName("testGetAllNames");
+		testUser.setPassword("1234");
+		testUser.setEmail("tester.testovaci@test.com");
+		userDAO.addUser(testUser);
+		assertTrue(userDAO.getAllNames().size() == origNumber + 1);
 		userDAO.deleteUser(testUser);
 	}
 

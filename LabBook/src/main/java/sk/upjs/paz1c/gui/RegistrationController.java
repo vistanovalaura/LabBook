@@ -45,13 +45,17 @@ public class RegistrationController {
 				String email = emailAdressTextField.getText();
 				String password1 = passwordPasswordField.getText();
 				String password2 = confirmPasswordPasswordField.getText();
-				//FIXME metodu stade skopirovat 
-				if (name.isEmpty() || email.isEmpty() || password1.isEmpty()) {
+				UserDAO userDao = DAOfactory.INSTANCE.getUserDAO();
+				List<String> emails = userDao.getAllEmails();
+				List<String> names = userDao.getAllNames();
+				boolean duplicateEmailOrName = emails.contains(email) || names.contains(name);
+				// FIXME metodu stade skopirovat
+				if (name.isEmpty() || email.isEmpty() || password1.isEmpty() || duplicateEmailOrName) {
 					showWrongDataInputWindow();
 				} else {
 					if (password1.equals(password2)) {
 						User user = new User(name, password1, email);
-						UserDAO userDao = DAOfactory.INSTANCE.getUserDAO();
+						userDao = DAOfactory.INSTANCE.getUserDAO();
 						userDao.addUser(user);
 						finishButton.getScene().getWindow().hide();
 					} else {

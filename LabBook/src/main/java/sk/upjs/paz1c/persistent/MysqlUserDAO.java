@@ -26,8 +26,6 @@ public class MysqlUserDAO implements UserDAO {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	// FIXME nech neprida ak uz je v databaze taka kombinacia mena a hesla alebo
-	// taky email
 	@Override
 	public void addUser(User user) {
 		SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);
@@ -197,6 +195,18 @@ public class MysqlUserDAO implements UserDAO {
 			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
 				String email = rs.getString("email");
 				return email;
+			}
+		});
+	}
+
+	@Override
+	public List<String> getAllNames() {
+		String sql = "SELECT name " + "FROM lab_book.user";
+		return jdbcTemplate.query(sql, new RowMapper<String>() {
+			@Override
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				String name = rs.getString("name");
+				return name;
 			}
 		});
 	}
