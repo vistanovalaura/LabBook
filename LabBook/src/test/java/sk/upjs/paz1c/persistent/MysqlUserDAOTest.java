@@ -249,5 +249,18 @@ class MysqlUserDAOTest {
 		assertTrue(id.equals(userDAO.getByEmail("tester.testovaci@test.com").getUserID()));
 		userDAO.deleteUser(testUser);
 	}
+	
+	@Test
+	void testGetAllEmails() {
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		int origNumber = userDAO.getAllEmails().size();
+		User testUser = new User();
+		testUser.setName("testerGetByID");
+		testUser.setPassword("1234");
+		testUser.setEmail("tester.testovaci@test.com");
+		userDAO.addUser(testUser);
+		assertTrue(userDAO.getAllEmails().size() == origNumber + 1);
+		userDAO.deleteUser(testUser);
+	}
 
 }

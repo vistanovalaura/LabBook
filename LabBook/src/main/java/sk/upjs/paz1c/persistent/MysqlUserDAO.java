@@ -26,7 +26,8 @@ public class MysqlUserDAO implements UserDAO {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	//FIXME nech neprida ak uz je v databaze taka kombinacia mena a hesla alebo taky email
+	// FIXME nech neprida ak uz je v databaze taka kombinacia mena a hesla alebo
+	// taky email
 	@Override
 	public void addUser(User user) {
 		SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);
@@ -145,7 +146,7 @@ public class MysqlUserDAO implements UserDAO {
 		}
 		return tasks;
 	}
-	
+
 	public List<Note> getNotes(User user) {
 		String sql = "SELECT id_note, text, timestamp, user_id_user, task_id_task, project_id_project, item_id_item "
 				+ "FROM note " + "WHERE user_id_user = " + user.getUserID();
@@ -180,12 +181,24 @@ public class MysqlUserDAO implements UserDAO {
 			}
 		});
 	}
-	
+
 	@Override
 	public User getByEmail(String email) {
 		String sql = "SELECT id_user AS userID, name, password, email " + "FROM lab_book.user " + "WHERE email = '"
 				+ email + "'";
 		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class));
+	}
+
+	@Override
+	public List<String> getAllEmails() {
+		String sql = "SELECT email " + "FROM lab_book.user";
+		return jdbcTemplate.query(sql, new RowMapper<String>() {
+			@Override
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				String email = rs.getString("email");
+				return email;
+			}
+		});
 	}
 
 }

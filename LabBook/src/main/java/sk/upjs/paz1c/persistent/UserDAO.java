@@ -19,17 +19,20 @@ public interface UserDAO {
 
 	// vymazanie usera z databazy
 	void deleteUser(User user);
-	
+
 	// vrati usera podla id
 	User getByID(Long id);
-	
+
 	// vrati pouzivatela podla emailu
 	User getByEmail(String email);
-	
+
 	// vrati tasky daneho usera
 	List<Task> getTasks(User user);
-	
+
 	// vrati notes daneho usera
-	public List<Note> getNotes(User user);
+	List<Note> getNotes(User user);
+
+	// vrati zoznam emailov vsetkych userov
+	List<String> getAllEmails();
 
 }
