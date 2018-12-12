@@ -201,9 +201,10 @@ public class SelectNoteController {
 		List<Note> notes = new ArrayList<>();
 		List<Note> allNotes = noteDao.getAll();
 		for (Note n : allNotes) {
-			if (n.getTask().getTaskID().equals(taskModel.getTaskId())) {
-				notes.add(n);
-			}
+			if (n.getTask() != null)
+				if (n.getTask().getTaskID().equals(taskModel.getTaskId())) {
+					notes.add(n);
+				}
 		}
 		return notes;
 

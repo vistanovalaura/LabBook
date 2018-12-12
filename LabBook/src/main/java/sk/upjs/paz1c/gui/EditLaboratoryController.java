@@ -174,9 +174,10 @@ public class EditLaboratoryController {
 			for (Item i : allItems) {
 				System.out.println("1 " + i.getLaboratory().getLaboratoryID());
 				System.out.println("2 " + laboratoryModel.getLaboratory().getLaboratoryID());
-				if (i.getLaboratory().equals(laboratoryModel.getLaboratory())) {
-					items.add(i);
-				}
+				if (i.getLaboratory() != null)
+					if (i.getLaboratory().equals(laboratoryModel.getLaboratory())) {
+						items.add(i);
+					}
 			}
 		}
 		return items;

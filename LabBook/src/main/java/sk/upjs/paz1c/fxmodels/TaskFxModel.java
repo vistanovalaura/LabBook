@@ -23,6 +23,7 @@ public class TaskFxModel {
 	private List<Item> items;
 	private Project project;
 	private Task task;
+	private User createdBy;
 
 	public TaskFxModel() {
 
@@ -37,6 +38,7 @@ public class TaskFxModel {
 		setTaskId(task.getTaskID());
 		setItems(task.getItems());
 		setLaboratory(task.getLaboratory());
+		setCreatedBy(task.getCreatedBy());
 	}
 
 	public void setTask(Task task) {
@@ -48,6 +50,7 @@ public class TaskFxModel {
 		if (task.getLaboratory() != null) {
 			setLaboratory(task.getLaboratory());
 		}
+		setCreatedBy(task.getCreatedBy());
 	}
 
 	public Task getTask() {
@@ -58,6 +61,7 @@ public class TaskFxModel {
 		t.setDateTimeUntil(getUntil());
 		t.setTaskID(getTaskId());
 		t.setLaboratory(getLaboratory());
+		t.setCreatedBy(getCreatedBy());
 		return t;
 	}
 
@@ -127,6 +131,14 @@ public class TaskFxModel {
 
 	public void setItems(List<Item> items) {
 		this.items = items;
+	}
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
 	}
 
 }

@@ -45,6 +45,7 @@ public class RegistrationController {
 				String email = emailAdressTextField.getText();
 				String password1 = passwordPasswordField.getText();
 				String password2 = confirmPasswordPasswordField.getText();
+				//FIXME metodu stade skopirovat 
 				if (name.isEmpty() || email.isEmpty() || password1.isEmpty()) {
 					showWrongDataInputWindow();
 				} else {

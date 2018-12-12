@@ -24,6 +24,7 @@ public class ForgottenPasswordController {
 
     @FXML
     void initialize() {
+    	//FIXME tu dorobit ten if a metodu na show wrong data input
         sendPasswordButton.setOnAction(eh -> {
             String email = emailTextField.textProperty().get();
             ForgottenPasswordManagerSimple.sendPassword(email);
