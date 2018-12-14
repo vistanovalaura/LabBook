@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -231,6 +230,40 @@ class MysqlUserDAOTest {
 		
 		assertTrue(userDAO.getNotes(testUser) != null);
 		assertTrue(userDAO.getNotes(testUser).size() == 2);
+		
+		userDAO.deleteUser(testUser);
+		
+	}
+	
+	@Test
+	void testGetProjects() {
+		User testUser = new User();
+		testUser.setName("tester");
+		testUser.setPassword("1234");
+		testUser.setEmail("tester.testovaci@test.com");
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		userDAO.addUser(testUser);
+		
+		Project project = new Project();
+		project.setName("testovaci_projekt");
+		project.setActive(true);
+		project.setDateFrom(LocalDate.now());
+		project.setEachItemAvailable(false);
+		project.setCreatedBy(testUser);
+		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
+		projectDAO.addProject(project);
+		
+		Project project2 = new Project();
+		project2.setName("testovaci_projekt2");
+		project2.setActive(true);
+		project2.setDateFrom(LocalDate.now());
+		project2.setEachItemAvailable(false);
+		project2.setCreatedBy(testUser);
+		projectDAO = DAOfactory.INSTANCE.getProjectDAO();
+		projectDAO.addProject(project2);
+		
+		assertTrue(userDAO.getProjects(testUser) != null);
+		assertTrue(userDAO.getProjects(testUser).size() == 2);
 		
 		userDAO.deleteUser(testUser);
 		

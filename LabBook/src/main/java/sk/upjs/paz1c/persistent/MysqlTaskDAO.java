@@ -4,23 +4,17 @@ package sk.upjs.paz1c.persistent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import sk.upjs.paz1c.entities.Item;
-import sk.upjs.paz1c.entities.Laboratory;
-import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
-import sk.upjs.paz1c.entities.User;
 
 public class MysqlTaskDAO implements TaskDAO {
 

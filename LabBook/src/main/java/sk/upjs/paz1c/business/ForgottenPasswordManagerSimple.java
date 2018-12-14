@@ -5,7 +5,6 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.dao.EmptyResultDataAccessException;
 
 import sk.upjs.paz1c.entities.User;
 import sk.upjs.paz1c.persistent.DAOfactory;
@@ -21,14 +20,7 @@ public class ForgottenPasswordManagerSimple {
 	public static void sendPassword(String email) {
 		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
 		
-		User user;
-		try {
-			user = userDAO.getByEmail(email);
-		} catch (EmptyResultDataAccessException e) {
-			//FIXME potencial na wrong data input alebo variaciu
-			return;
-		}
-		
+		User user = userDAO.getByEmail(email);
 		String newPassword = RandomStringUtils.randomAscii(10);
 		user.setPassword(newPassword);
 		userDAO.saveUser(user);
