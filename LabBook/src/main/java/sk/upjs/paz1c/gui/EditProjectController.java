@@ -1,4 +1,5 @@
 package sk.upjs.paz1c.gui;
+
 import java.io.IOException;
 
 import javafx.collections.FXCollections;
@@ -21,64 +22,48 @@ import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.ProjectDAO;
 
 public class EditProjectController {
-	
+
 	private ProjectDAO projectDao = DAOfactory.INSTANCE.getProjectDAO();
-	private ProjectFxModel projectModel; 
-	//private Project project; 
+	private ProjectFxModel projectModel;
+	// private Project project;
 
-    @FXML
-    private TextField nameTextField;
+	@FXML
+	private TextField nameTextField;
 
-    @FXML
-    private DatePicker fromDatePicker;
+	@FXML
+	private DatePicker fromDatePicker;
 
-    @FXML
-    private DatePicker untilDatePicker;
+	@FXML
+	private DatePicker untilDatePicker;
 
-    @FXML
-    private TableView<User> completedByTableView;
+	@FXML
+	private Button saveButton;
 
-    @FXML
-    private Button editButton;
-    
-    @FXML
-    private Button saveButton;
-    
-    public EditProjectController(Project project) {
-    	//this.project = project; 
-    	this.projectModel = new ProjectFxModel(project);
-    }
+	public EditProjectController(Project project) {
+		// this.project = project;
+		this.projectModel = new ProjectFxModel(project);
+	}
 
-    @FXML
-    void initialize() {
-		//projectModel = FXCollections.observableArrayList(projectDao.getAll());
-    	nameTextField.textProperty().bindBidirectional(projectModel.nameProperty());
-    	fromDatePicker.valueProperty().bindBidirectional(projectModel.fromProperty());
-    	untilDatePicker.valueProperty().bindBidirectional(projectModel.untilProperty());
+	@FXML
+	void initialize() {
+		// projectModel = FXCollections.observableArrayList(projectDao.getAll());
+		nameTextField.textProperty().bindBidirectional(projectModel.nameProperty());
+		fromDatePicker.valueProperty().bindBidirectional(projectModel.fromProperty());
+		untilDatePicker.valueProperty().bindBidirectional(projectModel.untilProperty());
 
-    	
-    	saveButton.setOnAction(new EventHandler<ActionEvent>() {
-			
+		saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
 			@Override
 			public void handle(ActionEvent event) {
 				projectDao.saveProject(projectModel.getProject());
 				saveButton.getScene().getWindow().hide();
-				
-			}
-		});
-    	
-    	editButton.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-				AddUserProjectEditController addUserController = new AddUserProjectEditController(projectModel);
-				showModalWindow(addUserController, "addUserProjectEdit.fxml");				
 			}
 		});
-    	
-    	
-    }
-    private void showModalWindow(Object controller, String fxml) {
+
+	}
+
+	private void showModalWindow(Object controller, String fxml) {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
 			fxmlLoader.setController(controller);
