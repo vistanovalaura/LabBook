@@ -36,5 +36,10 @@
       </Button>
       <Button fx:id="signOutButton" layoutX="17.0" layoutY="14.0" mnemonicParsing="false" text="Sign out" />
       <Button fx:id="editAccount" layoutX="334.0" layoutY="14.0" mnemonicParsing="false" text="Edit Account" />
+      <Button fx:id="exportDataButton" layoutX="305.0" layoutY="109.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="127.0" text="Export Data">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
