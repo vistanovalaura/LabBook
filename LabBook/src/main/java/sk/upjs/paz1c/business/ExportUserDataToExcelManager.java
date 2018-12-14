@@ -1,6 +1,5 @@
 package sk.upjs.paz1c.business;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.ZoneId;
@@ -17,6 +16,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import sk.upjs.paz1c.entities.Note;
+import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.entities.User;
 import sk.upjs.paz1c.persistent.DAOfactory;
@@ -34,7 +35,7 @@ public class ExportUserDataToExcelManager {
 
 	private static UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
 
-	public static void ExportUserData(User user) throws IOException {
+	public static void exportUserData(User user) throws IOException {
 		// Create a Workbook
 		Workbook workbook = new XSSFWorkbook(); // new HSSFWorkbook() for generating `.xls` file
 
@@ -66,6 +67,36 @@ public class ExportUserDataToExcelManager {
 		CellStyle dateCellStyle = workbook.createCellStyle();
 		dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd-MM-yyyy"));
 
+		List<Project> projects = userDAO.getProjects(user);
+		int rowNum = 1;
+		for (Project project : projects) {
+			Row row = sheet.createRow(rowNum++);
+			// { "Name", "Active", "Start of the project", "End of the project", "Each item
+			// is available" }
+			row.createCell(0).setCellValue(project.getName());
+			row.createCell(1).setCellValue(project.isActive());
+			Cell dateFrom = row.createCell(2);
+			if (project.getDateFrom() != null) {
+				dateFrom.setCellValue(
+						// https://stackoverflow.com/questions/22929237/convert-java-time-localdate-into-java-util-date-type
+						Date.from(project.getDateFrom().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+				dateFrom.setCellStyle(dateCellStyle);
+			} else
+				row.createCell(2).setCellValue("Not defined");
+			Cell dateUntil = row.createCell(3);
+			if (project.getDateUntil() != null) {
+				dateUntil.setCellValue(
+						Date.from(project.getDateUntil().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+				dateUntil.setCellStyle(dateCellStyle);
+			} else
+				row.createCell(3).setCellValue("Not defined");
+			row.createCell(4).setCellValue(project.isEachItemAvailable());
+		}
+
+		for (int i = 0; i < projectColumns.length; i++) {
+			sheet.autoSizeColumn(i);
+		}
+
 		sheet = workbook.createSheet("Tasks");
 
 		headerFont.setColor(IndexedColors.BLUE.getIndex());
@@ -79,7 +110,7 @@ public class ExportUserDataToExcelManager {
 		}
 
 		List<Task> tasks = userDAO.getTasks(user);
-		int rowNum = 1;
+		rowNum = 1;
 		for (Task task : tasks) {
 			Row row = sheet.createRow(rowNum++);
 
@@ -108,6 +139,10 @@ public class ExportUserDataToExcelManager {
 				row.createCell(6).setCellValue("Not defined");
 		}
 
+		for (int i = 0; i < taskColumns.length; i++) {
+			sheet.autoSizeColumn(i);
+		}
+
 		sheet = workbook.createSheet("Notes");
 
 		headerFont.setColor(IndexedColors.PINK.getIndex());
@@ -120,6 +155,33 @@ public class ExportUserDataToExcelManager {
 			cell.setCellStyle(headerCellStyle);
 		}
 
+		List<Note> notes = userDAO.getNotes(user);
+		rowNum = 1;
+		for (Note note : notes) {
+			Row row = sheet.createRow(rowNum++);
+			row.createCell(0).setCellValue(note.getText());
+			Cell timeStamp = row.createCell(1);
+			// https://stackoverflow.com/questions/19431234/converting-between-java-time-localdatetime-and-java-util-date
+			timeStamp.setCellValue(Date.from(note.getTimestamp().atZone(ZoneId.systemDefault()).toInstant()));
+			timeStamp.setCellStyle(dateCellStyle);
+			if (note.getProject() != null)
+				row.createCell(2).setCellValue(note.getProject().getName());
+			else
+				row.createCell(2).setCellValue("Not defined");
+			if (note.getTask() != null)
+				row.createCell(3).setCellValue(note.getTask().getName());
+			else
+				row.createCell(3).setCellValue("Not defined");
+			if (note.getItem() != null)
+				row.createCell(4).setCellValue(note.getItem().getName());
+			else
+				row.createCell(4).setCellValue("Not defined");
+		}
+
+		for (int i = 0; i < noteColumns.length; i++) {
+			sheet.autoSizeColumn(i);
+		}
+
 		// Write the output to a file
 		FileOutputStream fileOut = new FileOutputStream("userData.xlsx");
 		workbook.write(fileOut);
@@ -128,10 +190,6 @@ public class ExportUserDataToExcelManager {
 		// Closing the workbook
 		workbook.close();
 
-	}
-	
-	public static void main(String[] args) {
-		
 	}
 
 }

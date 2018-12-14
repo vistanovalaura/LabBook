@@ -179,6 +179,31 @@ public class MysqlUserDAO implements UserDAO {
 			}
 		});
 	}
+	
+	@Override
+	public List<Project> getProjects(User user) {
+		String sql = "SELECT id_project, name, active, date_from, date_until, each_item_available, user_id_user "
+				+ "FROM project " + "WHERE user_id_user = " + user.getUserID();
+		return jdbcTemplate.query(sql, new RowMapper<Project>() {
+
+			@Override
+			public Project mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Project project = new Project();
+				project.setProjectID(rs.getLong("id_project"));
+				project.setName(rs.getString("name"));
+				project.setActive(rs.getBoolean("active"));
+				Timestamp timestamp = rs.getTimestamp("date_from");
+				project.setDateFrom(timestamp.toLocalDateTime().toLocalDate());
+				timestamp = rs.getTimestamp("date_until");
+				if (timestamp != null) {
+					project.setDateUntil(timestamp.toLocalDateTime().toLocalDate());
+				}
+				project.setEachItemAvailable(rs.getBoolean("each_item_available"));
+				project.setCreatedBy(DAOfactory.INSTANCE.getUserDAO().getByID(rs.getLong("user_id_user")));
+				return project;
+			}
+		});
+	}
 
 	@Override
 	public User getByEmail(String email) {

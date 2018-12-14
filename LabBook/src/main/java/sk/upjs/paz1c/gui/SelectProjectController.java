@@ -31,6 +31,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sk.upjs.paz1c.business.ExportUserDataToExcelManager;
 import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
@@ -93,13 +94,18 @@ public class SelectProjectController {
 				}
 			}
 		});
-		
+
 		exportDataButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				
+				try {
+					ExportUserDataToExcelManager.exportUserData(userModel.getUser());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
 		});
 
@@ -164,15 +170,15 @@ public class SelectProjectController {
 		projectsTableView.getColumns().add(nameCol);
 		columnsVisibility.put("ID", nameCol.visibleProperty());
 
-//		TableColumn<Project, LocalDate> fromCol = new TableColumn<>("date_from");
-//		fromCol.setCellValueFactory(new PropertyValueFactory<>("from"));
-//		projectsTableView.getColumns().add(fromCol);
-//		columnsVisibility.put("from", fromCol.visibleProperty());
+		// TableColumn<Project, LocalDate> fromCol = new TableColumn<>("date_from");
+		// fromCol.setCellValueFactory(new PropertyValueFactory<>("from"));
+		// projectsTableView.getColumns().add(fromCol);
+		// columnsVisibility.put("from", fromCol.visibleProperty());
 
-//		TableColumn<Project, Boolean> activeCol = new TableColumn<>("Active");
-//		activeCol.setCellValueFactory(new PropertyValueFactory<>("active"));
-//		projectsTableView.getColumns().add(activeCol);
-//		columnsVisibility.put("active", activeCol.visibleProperty());
+		// TableColumn<Project, Boolean> activeCol = new TableColumn<>("Active");
+		// activeCol.setCellValueFactory(new PropertyValueFactory<>("active"));
+		// projectsTableView.getColumns().add(activeCol);
+		// columnsVisibility.put("active", activeCol.visibleProperty());
 
 		projectsTableView.setItems(projectsModel);
 		projectsTableView.setEditable(true);
