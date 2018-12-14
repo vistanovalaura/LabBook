@@ -5,7 +5,6 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.dao.EmptyResultDataAccessException;
 
 import sk.upjs.paz1c.entities.User;
 import sk.upjs.paz1c.persistent.DAOfactory;
