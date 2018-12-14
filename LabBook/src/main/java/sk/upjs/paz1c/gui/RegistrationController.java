@@ -49,7 +49,6 @@ public class RegistrationController {
 				List<String> emails = userDao.getAllEmails();
 				List<String> names = userDao.getAllNames();
 				boolean duplicateEmailOrName = emails.contains(email) || names.contains(name);
-				// FIXME metodu stade skopirovat
 				if (name.isEmpty() || email.isEmpty() || password1.isEmpty() || duplicateEmailOrName) {
 					showWrongDataInputWindow();
 				} else {

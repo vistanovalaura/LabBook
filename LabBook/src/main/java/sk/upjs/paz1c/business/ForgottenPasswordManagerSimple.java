@@ -21,14 +21,7 @@ public class ForgottenPasswordManagerSimple {
 	public static void sendPassword(String email) {
 		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
 		
-		User user;
-		try {
-			user = userDAO.getByEmail(email);
-		} catch (EmptyResultDataAccessException e) {
-			//FIXME potencial na wrong data input alebo variaciu
-			return;
-		}
-		
+		User user = userDAO.getByEmail(email);
 		String newPassword = RandomStringUtils.randomAscii(10);
 		user.setPassword(newPassword);
 		userDAO.saveUser(user);
