@@ -13,12 +13,9 @@ public class Laboratory {
 
 	}
 
-	public Laboratory(String name, String location, List<Item> items) {
+	public Laboratory(String name, String location) {
 		this.name = name;
 		this.location = location;
-		if (items != null) {
-			this.items = items;
-		}
 	}
 
 	public Long getLaboratoryID() {

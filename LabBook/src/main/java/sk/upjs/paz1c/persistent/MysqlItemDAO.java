@@ -69,7 +69,12 @@ public class MysqlItemDAO implements ItemDAO {
 				item.setName(rs.getString("name"));
 				item.setQuantity(rs.getInt("quantity"));
 				item.setAvailable(rs.getBoolean("available"));
-				if (item.getLaboratory() != null)
+				/*
+				 * if (item.getLaboratory() != null)
+				 * item.setLaboratory(DAOfactory.INSTANCE.getLaboratoryDAO()
+				 * .getLaboratoryByID(rs.getLong("laboratory_id_laboratory")));
+				 */
+				if (rs.getObject("laboratory_id_laboratory") != null)
 					item.setLaboratory(DAOfactory.INSTANCE.getLaboratoryDAO()
 							.getLaboratoryByID(rs.getLong("laboratory_id_laboratory")));
 				return item;

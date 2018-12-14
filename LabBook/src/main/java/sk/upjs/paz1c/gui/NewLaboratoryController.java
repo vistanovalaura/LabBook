@@ -29,15 +29,6 @@ public class NewLaboratoryController {
 	private Button saveButton;
 
 	@FXML
-	private TableView<Item> itemsTableView;
-
-	@FXML
-	private Button addButton;
-
-	@FXML
-	private Button deleteButton;
-
-	@FXML
 	private TextField nameTextField;
 
 	@FXML
@@ -53,14 +44,13 @@ public class NewLaboratoryController {
 			public void handle(ActionEvent event) {
 				String name = nameTextField.getText();
 				String location = locationTextField.getText();
-				List<Item> items = itemsTableView.getItems();
 
 				if (name.isEmpty() || location.isEmpty()) {
 					showWrongDataInputWindow();
 				} else if (!isAvailable(name)) {
 					showTakenNameWindow();
 				} else {
-					Laboratory laboratory = new Laboratory(name, location, items);
+					Laboratory laboratory = new Laboratory(name, location);
 					LaboratoryDAO laboratoryDao = DAOfactory.INSTANCE.getLaboratoryDAO();
 					laboratoryDao.addLaboratory(laboratory);
 					saveButton.getScene().getWindow().hide();
@@ -68,15 +58,7 @@ public class NewLaboratoryController {
 
 			}
 		});
-		
-		addButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				NewItemController newItemController = new NewItemController();
-				showModalWindow(newItemController, "newItem.fxml");				
-			}
-		});
+	
 
 	}
 

@@ -140,10 +140,13 @@ public class EditDataAdminController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				DeleteLaboratoryController deleteController = new DeleteLaboratoryController(
-						selectedLaboratoryModel.getLaboratory());
-				showModalWindow(deleteController, "deleteLaboratory.fxml");
+				System.out.println(selectedLaboratoryModel.getLaboratory().toString());
+//				DeleteLaboratoryController deleteController = new DeleteLaboratoryController(
+//						selectedLaboratoryModel.getLaboratory());
+//				showModalWindow(deleteController, "deleteLaboratory.fxml");
+				laboratoryDao.deleteLaboratory(selectedLaboratoryModel.getLaboratory());
 				laboratoryModel.setAll(laboratoryDao.getAll());
+				laboratoriesComboBox.setItems(FXCollections.observableList(laboratoryDao.getAll()));
 			}
 		});
 

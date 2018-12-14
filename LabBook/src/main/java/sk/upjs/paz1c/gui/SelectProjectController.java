@@ -68,6 +68,9 @@ public class SelectProjectController {
 	@FXML
 	private Button editAccount;
 
+	@FXML
+	private Button exportDataButton;
+
 	public SelectProjectController(User user) {
 		this.userModel = new UserFxModel(user);
 	}
@@ -88,6 +91,15 @@ public class SelectProjectController {
 						openTasks();
 					}
 				}
+			}
+		});
+		
+		exportDataButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 
@@ -136,15 +148,14 @@ public class SelectProjectController {
 				projectsModel.setAll(getProjects());
 			}
 		});
-		
+
 		editAccount.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				EditUserController editUserController = new EditUserController(
-						UserIdentificationManager.getUser());
+				EditUserController editUserController = new EditUserController(UserIdentificationManager.getUser());
 				showModalWindow(editUserController, "editUser.fxml");
-				
+
 			}
 		});
 
@@ -158,10 +169,10 @@ public class SelectProjectController {
 //		projectsTableView.getColumns().add(fromCol);
 //		columnsVisibility.put("from", fromCol.visibleProperty());
 
-		TableColumn<Project, Boolean> activeCol = new TableColumn<>("Active");
-		activeCol.setCellValueFactory(new PropertyValueFactory<>("active"));
-		projectsTableView.getColumns().add(activeCol);
-		columnsVisibility.put("active", activeCol.visibleProperty());
+//		TableColumn<Project, Boolean> activeCol = new TableColumn<>("Active");
+//		activeCol.setCellValueFactory(new PropertyValueFactory<>("active"));
+//		projectsTableView.getColumns().add(activeCol);
+//		columnsVisibility.put("active", activeCol.visibleProperty());
 
 		projectsTableView.setItems(projectsModel);
 		projectsTableView.setEditable(true);

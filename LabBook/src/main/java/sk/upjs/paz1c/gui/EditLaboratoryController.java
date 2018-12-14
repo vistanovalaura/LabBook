@@ -29,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sk.upjs.paz1c.business.LaboratoryManager;
 import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Laboratory;
@@ -168,19 +169,24 @@ public class EditLaboratoryController {
 	}
 
 	private List<Item> getItems() {
-		List<Item> items = new ArrayList<>();
-		if (itemDao.getAll() != null) {
-			List<Item> allItems = itemDao.getAll();
-			for (Item i : allItems) {
-				System.out.println("1 " + i.getLaboratory().getLaboratoryID());
-				System.out.println("2 " + laboratoryModel.getLaboratory().getLaboratoryID());
-				if (i.getLaboratory() != null)
-					if (i.getLaboratory().equals(laboratoryModel.getLaboratory())) {
-						items.add(i);
-					}
-			}
-		}
-		return items;
-
+		return LaboratoryManager.getItemsOfLaboratory(laboratoryModel.getLaboratory());
 	}
+
+//	private List<Item> getItems() {
+//		List<Item> items = new ArrayList<>();
+//		if (itemDao.getAll() != null) {
+//			List<Item> allItems = itemDao.getAll();
+//			for (Item i : allItems) {
+//				System.out.println("1 " + i.getLaboratory());
+//				System.out.println("2 " + laboratoryModel.getLaboratory().getLaboratoryID());
+//				if (i.getLaboratory() != null)
+//					if (i.getLaboratory().getLaboratoryID().equals(laboratoryModel.getLaboratory().getLaboratoryID())) {
+//						items.add(i);
+//					}
+//			}
+//		}
+//		return items;
+//
+//	}
+
 }
