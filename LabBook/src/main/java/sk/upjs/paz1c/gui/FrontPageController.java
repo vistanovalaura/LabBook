@@ -35,10 +35,10 @@ public class FrontPageController {
 	private sk.upjs.paz1c.business.PasswordManager passwordManager = new sk.upjs.paz1c.business.PasswordManager();
 
 	@FXML
-	private PasswordField passwordTextField;
+	private TextField loginTextField;
 
 	@FXML
-	private TextField loginTextField;
+	private PasswordField passwordTextField;
 
 	@FXML
 	private Button signInButton;
