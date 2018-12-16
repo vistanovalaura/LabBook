@@ -84,6 +84,7 @@ public class SelectProjectController {
 	void initialize() {
 		projectsModel = FXCollections.observableArrayList(getProjects());
 
+		//https://stackoverflow.com/questions/26563390/detect-doubleclick-on-row-of-tableview-javafx
 		projectsTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {

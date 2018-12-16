@@ -10,9 +10,9 @@ public class Tester {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
-List<User> users = userDAO.getAll();
-System.out.println(users.size());
+		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
+		List<User> users = userDAO.getAll();
+		System.out.println(users.size());
 	}
 
 }
