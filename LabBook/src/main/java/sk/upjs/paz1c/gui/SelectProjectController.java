@@ -100,7 +100,7 @@ public class SelectProjectController {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					ExportUserDataToExcelManager.exportUserData(userModel.getUser());
+					ExportUserDataToExcelManager.exportUserData(UserIdentificationManager.getUser());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

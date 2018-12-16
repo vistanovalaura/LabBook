@@ -31,7 +31,7 @@ public class ExportUserDataToExcelManager {
 			"Each item is available" };
 	private static String[] taskColumns = { "Project", "Name", "Active", "Start of the project", "End of the project",
 			"Each item is available", "Laboratory" };
-	private static String[] noteColumns = { "Text", "Timestamp", "Project", "Task", "Item" };
+	private static String[] noteColumns = { "Text", "Timestamp", "Task", "Item" };
 
 	private static UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
 
@@ -164,18 +164,18 @@ public class ExportUserDataToExcelManager {
 			// https://stackoverflow.com/questions/19431234/converting-between-java-time-localdatetime-and-java-util-date
 			timeStamp.setCellValue(Date.from(note.getTimestamp().atZone(ZoneId.systemDefault()).toInstant()));
 			timeStamp.setCellStyle(dateCellStyle);
-			if (note.getProject() != null)
-				row.createCell(2).setCellValue(note.getProject().getName());
+//			if (note.getProject() != null)
+//				row.createCell(2).setCellValue(note.getProject().getName());
+//			else
+//				row.createCell(2).setCellValue("Not defined");
+			if (note.getTask() != null)
+				row.createCell(2).setCellValue(note.getTask().getName());
 			else
 				row.createCell(2).setCellValue("Not defined");
-			if (note.getTask() != null)
-				row.createCell(3).setCellValue(note.getTask().getName());
+			if (note.getItem() != null)
+				row.createCell(3).setCellValue(note.getItem().getName());
 			else
 				row.createCell(3).setCellValue("Not defined");
-			if (note.getItem() != null)
-				row.createCell(4).setCellValue(note.getItem().getName());
-			else
-				row.createCell(4).setCellValue("Not defined");
 		}
 
 		for (int i = 0; i < noteColumns.length; i++) {
