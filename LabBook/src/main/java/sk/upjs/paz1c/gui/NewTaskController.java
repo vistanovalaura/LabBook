@@ -81,7 +81,7 @@ public class NewTaskController {
 	private LaboratoryDAO laboratoryDao;
 	private LaboratoryFxModel selectedLaboratoryModel;
 	private ObservableList<Laboratory> laboratoryModel;
-	private ObjectProperty<Item> selectedItem = new SimpleObjectProperty<>();
+	//private ObjectProperty<Item> selectedItem = new SimpleObjectProperty<>();
 	private ObjectProperty<Laboratory> selectedLaboratory = new SimpleObjectProperty<>();
 	private ObservableList<Item> itemsModel;
 	private ItemDAO itemDao;
@@ -96,7 +96,7 @@ public class NewTaskController {
 	@FXML
 	void initialize() {
 		laboratoryModel = FXCollections.observableArrayList(laboratoryDao.getAll());
-		itemsModel = FXCollections.observableArrayList(getItems());
+		//itemsModel = FXCollections.observableArrayList(getItems());
 
 		List<Laboratory> laboratories = laboratoryDao.getAll();
 		laboratoryComboBox.setItems(FXCollections.observableList(laboratories));
@@ -112,34 +112,34 @@ public class NewTaskController {
 			}
 		});
 
-		TableColumn<Item, String> nameCol = new TableColumn<>("Name");
-		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-		itemsTableView.getColumns().add(nameCol);
-		columnsVisibility.put("Name", nameCol.visibleProperty());
+//		TableColumn<Item, String> nameCol = new TableColumn<>("Name");
+//		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+//		itemsTableView.getColumns().add(nameCol);
+//		columnsVisibility.put("Name", nameCol.visibleProperty());
 
-		itemsTableView.setItems(itemsModel);
-		itemsTableView.setEditable(true);
+//		itemsTableView.setItems(itemsModel);
+//		itemsTableView.setEditable(true);
 
-		ContextMenu contextMenu = new ContextMenu();
-		for (Entry<String, BooleanProperty> entry : columnsVisibility.entrySet()) {
-			CheckMenuItem menuItem = new CheckMenuItem(entry.getKey());
-			menuItem.selectedProperty().bindBidirectional(entry.getValue());
-			contextMenu.getItems().add(menuItem);
-		}
-		itemsTableView.setContextMenu(contextMenu);
-
-		itemsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Item>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Item> observable, Item oldValue, Item newValue) {
-				if (newValue == null) {
-					saveButton.setDisable(true);
-				} else {
-					saveButton.setDisable(false);
-				}
-				selectedItem.set(newValue);
-			}
-		});
+//		ContextMenu contextMenu = new ContextMenu();
+//		for (Entry<String, BooleanProperty> entry : columnsVisibility.entrySet()) {
+//			CheckMenuItem menuItem = new CheckMenuItem(entry.getKey());
+//			menuItem.selectedProperty().bindBidirectional(entry.getValue());
+//			contextMenu.getItems().add(menuItem);
+//		}
+//		itemsTableView.setContextMenu(contextMenu);
+//
+//		itemsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Item>() {
+//
+//			@Override
+//			public void changed(ObservableValue<? extends Item> observable, Item oldValue, Item newValue) {
+//				if (newValue == null) {
+//					saveButton.setDisable(true);
+//				} else {
+//					saveButton.setDisable(false);
+//				}
+//				selectedItem.set(newValue);
+//			}
+//		});
 
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -167,27 +167,26 @@ public class NewTaskController {
 			}
 		});
 
-		addButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println(selectedItem.get().getName());
-				SelectItemTasksController itemController = new SelectItemTasksController(selectedLaboratory.get());
-				showModalWindow(itemController, "selectItemTasks.fxml");
-
-			}
-		});
-
-		removeButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				DeleteItemController deleteItemController = new DeleteItemController(selectedItem.get());
-				showModalWindow(deleteItemController, "deleteItem.fxml");
-				itemsModel.setAll(itemDao.getAll());
-
-			}
-		});
+//		addButton.setOnAction(new EventHandler<ActionEvent>() {
+//
+//			@Override
+//			public void handle(ActionEvent event) {
+//				SelectItemTasksController itemController = new SelectItemTasksController(selectedLaboratory.get());
+//				showModalWindow(itemController, "selectItemTasks.fxml");
+//
+//			}
+//		});
+//
+//		removeButton.setOnAction(new EventHandler<ActionEvent>() {
+//
+//			@Override
+//			public void handle(ActionEvent event) {
+//				DeleteItemController deleteItemController = new DeleteItemController(selectedItem.get());
+//				showModalWindow(deleteItemController, "deleteItem.fxml");
+//				itemsModel.setAll(itemDao.getAll());
+//
+//			}
+//		});
 
 	}
 
@@ -229,17 +228,17 @@ public class NewTaskController {
 		}
 	}
 
-	private List<Item> getItems() {
-		List<Item> items = new ArrayList<>();
-		List<Item> allItems = itemDao.getAll();
-		for (Item i : allItems) {
-			if (i.getLaboratory() == selectedLaboratoryModel.getLaboratory()) {
-				items.add(i);
-			}
-		}
-		return items;
-
-	}
+//	private List<Item> getItems() {
+//		List<Item> items = new ArrayList<>();
+//		List<Item> allItems = itemDao.getAll();
+//		for (Item i : allItems) {
+//			if (i.getLaboratory() == selectedLaboratoryModel.getLaboratory()) {
+//				items.add(i);
+//			}
+//		}
+//		return items;
+//
+//	}
 
 	private void showTakenNameWindow() {
 		TakenNameController controller = new TakenNameController();

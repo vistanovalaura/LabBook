@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.User;
 import sk.upjs.paz1c.fxmodels.ProjectFxModel;
@@ -55,6 +56,7 @@ public class EditProjectController {
 
 			@Override
 			public void handle(ActionEvent event) {
+				projectModel.setCreatedBy(UserIdentificationManager.getUser());
 				projectDao.saveProject(projectModel.getProject());
 				saveButton.getScene().getWindow().hide();
 
