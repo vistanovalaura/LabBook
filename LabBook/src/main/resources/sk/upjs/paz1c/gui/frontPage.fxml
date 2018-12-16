@@ -41,6 +41,6 @@
       <Hyperlink fx:id="forgottenPasswordHyperlink" layoutX="156.0" layoutY="328.0" text="Forgotten password" />
    </children>
    <cursor>
-      <Cursor fx:constant="E_RESIZE" />
+      <Cursor fx:constant="DEFAULT" />
    </cursor>
 </AnchorPane>
