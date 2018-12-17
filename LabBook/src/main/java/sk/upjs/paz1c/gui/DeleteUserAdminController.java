@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.User;
 import sk.upjs.paz1c.fxmodels.ProjectFxModel;
@@ -20,7 +23,6 @@ public class DeleteUserAdminController {
 	public DeleteUserAdminController(User user) {
 		this.user = user;
 	}
-	
 
 	@FXML
 	private Button yesButton;
@@ -30,13 +32,15 @@ public class DeleteUserAdminController {
 
 	@FXML
 	void initialize() {
-		yesButton.setOnAction(new EventHandler<ActionEvent>() {
+
+		yesButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
-			public void handle(ActionEvent event) {
-				userDao.deleteUser(user);
-				//userDao.saveUser(userModel.getUser());
-				yesButton.getScene().getWindow().hide();
+			public void handle(KeyEvent event) {
+				if (event.getCode().equals(KeyCode.ENTER)) {
+					userDao.deleteUser(user);
+					yesButton.getScene().getWindow().hide();
+				}
 			}
 		});
 

@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Laboratory;
 import sk.upjs.paz1c.entities.Note;
 import sk.upjs.paz1c.fxmodels.LaboratoryFxModel;
@@ -30,12 +33,14 @@ public class DeleteLaboratoryController {
 
 	void initialize() {
 
-		yesButton.setOnAction(new EventHandler<ActionEvent>() {
+		yesButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
-			public void handle(ActionEvent event) {
-				laboratoryDao.deleteLaboratory(laboratoryModel.getLaboratory());
-				yesButton.getScene().getWindow().hide();
+			public void handle(KeyEvent event) {
+				if (event.getCode().equals(KeyCode.ENTER)) {
+					laboratoryDao.deleteLaboratory(laboratoryModel.getLaboratory());
+					yesButton.getScene().getWindow().hide();
+				}
 			}
 		});
 
