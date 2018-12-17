@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.fxmodels.ProjectFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
@@ -29,13 +32,16 @@ public class DeleteProjectController {
 	@FXML
 	void initialize() {
 
-		yesButton.setOnAction(new EventHandler<ActionEvent>() {
+		yesButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
-			public void handle(ActionEvent event) {
-				projectDao.deleteProject(projectModel.getProject());
-				// projectDao.saveProject(projectModel.getProject());
-				yesButton.getScene().getWindow().hide();
+
+			public void handle(KeyEvent event) {
+				if (event.getCode().equals(KeyCode.ENTER)) {
+					projectDao.deleteProject(projectModel.getProject());
+					yesButton.getScene().getWindow().hide();
+				}
+
 			}
 		});
 

@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Note;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.fxmodels.NoteFxModel;
@@ -31,12 +34,14 @@ public class DeleteNoteController {
 	@FXML
 	void initialize() {
 
-		yesButton.setOnAction(new EventHandler<ActionEvent>() {
+		yesButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
-			public void handle(ActionEvent event) {
-				noteDao.deleteNote(noteModel.getNote());
-				yesButton.getScene().getWindow().hide();
+			public void handle(KeyEvent event) {
+				if (event.getCode().equals(KeyCode.ENTER)) {
+					noteDao.deleteNote(noteModel.getNote());
+					yesButton.getScene().getWindow().hide();
+				}
 			}
 		});
 

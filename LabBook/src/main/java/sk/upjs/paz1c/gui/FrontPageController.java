@@ -60,6 +60,7 @@ public class FrontPageController {
 
 	@FXML
 	void initialize() {
+		// https://www.programcreek.com/java-api-examples/?class=javafx.scene.Scene&method=setOnKeyPressed
 		loginTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
