@@ -27,12 +27,10 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sk.upjs.paz1c.entities.Laboratory;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.fxmodels.ProjectFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
-import sk.upjs.paz1c.persistent.ProjectDAO;
 import sk.upjs.paz1c.persistent.TaskDAO;
 
 public class SelectTaskController {

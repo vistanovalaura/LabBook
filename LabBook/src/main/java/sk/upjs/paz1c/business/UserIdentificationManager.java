@@ -5,7 +5,6 @@ import java.util.List;
 import sk.upjs.paz1c.entities.Admin;
 import sk.upjs.paz1c.entities.User;
 import sk.upjs.paz1c.persistent.DAOfactory;
-import sk.upjs.paz1c.persistent.UserDAO;
 
 public class UserIdentificationManager {
 

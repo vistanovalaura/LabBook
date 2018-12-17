@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Laboratory;
-import sk.upjs.paz1c.entities.Project;
 
 public class LaboratoryFxModel {
 

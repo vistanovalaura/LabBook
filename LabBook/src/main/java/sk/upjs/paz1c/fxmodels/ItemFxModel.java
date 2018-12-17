@@ -1,7 +1,6 @@
 package sk.upjs.paz1c.fxmodels;
 
 import sk.upjs.paz1c.entities.Item;
-import sk.upjs.paz1c.entities.Laboratory;
 
 public class ItemFxModel {
 

@@ -2,8 +2,6 @@ package sk.upjs.paz1c.gui;
 
 import java.io.IOException;
 import java.util.List;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
@@ -24,8 +21,6 @@ import sk.upjs.paz1c.entities.Admin;
 import sk.upjs.paz1c.entities.User;
 import sk.upjs.paz1c.fxmodels.UserFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
-import sk.upjs.paz1c.persistent.MysqlUserDAO;
-import sk.upjs.paz1c.persistent.UserDAO;
 
 public class FrontPageController {
 

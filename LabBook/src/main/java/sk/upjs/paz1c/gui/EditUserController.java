@@ -6,11 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import sk.upjs.paz1c.entities.Admin;
 import sk.upjs.paz1c.entities.User;
-import sk.upjs.paz1c.fxmodels.AdminFxModel;
 import sk.upjs.paz1c.fxmodels.UserFxModel;
-import sk.upjs.paz1c.persistent.AdminDAO;
 import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.UserDAO;
 

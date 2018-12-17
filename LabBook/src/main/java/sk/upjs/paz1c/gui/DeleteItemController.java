@@ -6,14 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Item;
-import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.fxmodels.ItemFxModel;
-import sk.upjs.paz1c.fxmodels.ProjectFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.ItemDAO;
-import sk.upjs.paz1c.persistent.ProjectDAO;
 
 public class DeleteItemController {
 

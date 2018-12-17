@@ -1,7 +1,6 @@
 package sk.upjs.paz1c.gui;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -34,7 +33,6 @@ import javafx.stage.Stage;
 import sk.upjs.paz1c.business.ExportUserDataToExcelManager;
 import sk.upjs.paz1c.business.UserIdentificationManager;
 import sk.upjs.paz1c.entities.Project;
-import sk.upjs.paz1c.entities.Task;
 import sk.upjs.paz1c.entities.User;
 import sk.upjs.paz1c.fxmodels.UserFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;

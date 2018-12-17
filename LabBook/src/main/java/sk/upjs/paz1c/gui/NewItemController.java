@@ -13,13 +13,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sk.upjs.paz1c.entities.Admin;
 import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Laboratory;
 import sk.upjs.paz1c.fxmodels.LaboratoryFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.ItemDAO;
-import sk.upjs.paz1c.persistent.ProjectDAO;
 
 public class NewItemController {
 

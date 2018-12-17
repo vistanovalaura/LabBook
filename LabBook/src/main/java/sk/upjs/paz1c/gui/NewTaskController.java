@@ -2,11 +2,9 @@ package sk.upjs.paz1c.gui;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -22,29 +20,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.upjs.paz1c.business.UserIdentificationManager;
-import sk.upjs.paz1c.entities.Admin;
 import sk.upjs.paz1c.entities.Item;
 import sk.upjs.paz1c.entities.Laboratory;
 import sk.upjs.paz1c.entities.Project;
 import sk.upjs.paz1c.entities.Task;
-import sk.upjs.paz1c.fxmodels.ItemFxModel;
 import sk.upjs.paz1c.fxmodels.LaboratoryFxModel;
 import sk.upjs.paz1c.fxmodels.ProjectFxModel;
 import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.ItemDAO;
 import sk.upjs.paz1c.persistent.LaboratoryDAO;
-import sk.upjs.paz1c.persistent.ProjectDAO;
 import sk.upjs.paz1c.persistent.TaskDAO;
 
 public class NewTaskController {
