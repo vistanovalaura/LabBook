@@ -177,7 +177,6 @@ public class SelectNoteController {
 				selectedNote.set(newValue);
 			}
 		});
-
 	}
 
 	private void showModalWindow(Object controller, String fxml) {

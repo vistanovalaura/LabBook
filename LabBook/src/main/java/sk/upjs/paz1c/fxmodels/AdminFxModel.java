@@ -7,6 +7,8 @@ import sk.upjs.paz1c.entities.Admin;
 public class AdminFxModel {
 
 	private Long adminID;
+	// na property vieme dat listenery, treba rozlisovat medzi vracanim property a
+	// vracanim value wrapped v property = property.get()
 	private StringProperty name = new SimpleStringProperty();
 	private StringProperty password = new SimpleStringProperty();
 	private StringProperty email = new SimpleStringProperty();

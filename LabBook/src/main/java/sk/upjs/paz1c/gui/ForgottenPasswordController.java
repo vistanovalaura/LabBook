@@ -47,6 +47,7 @@ public class ForgottenPasswordController {
 	private void showWrongDataInputWindow() {
 		WrongDataInputController controller = new WrongDataInputController();
 		try {
+
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("WrongDataInput.fxml"));
 			loader.setController(controller);
 

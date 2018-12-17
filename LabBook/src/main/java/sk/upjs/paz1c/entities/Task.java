@@ -121,5 +121,4 @@ public class Task {
 		return "Task [taskID=" + taskID + ", projectID=" + project.getProjectID() + ", name=" + name + "]";
 	}
 
-
 }

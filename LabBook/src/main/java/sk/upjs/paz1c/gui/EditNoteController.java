@@ -1,6 +1,5 @@
 package sk.upjs.paz1c.gui;
 
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,30 +15,29 @@ import sk.upjs.paz1c.persistent.NoteDAO;
 
 public class EditNoteController {
 
+	@FXML
+	private Button saveButton;
 
 	@FXML
-    private Button saveButton;
+	private TextArea noteTextArea;
 
-    @FXML
-    private TextArea noteTextArea;
-    
-    private TaskFxModel taskModel;
-    
-    private NoteFxModel notesModel;
-    
-    private NoteDAO noteDao;
-    
-    public EditNoteController(Note note) {
-    	this.notesModel = new NoteFxModel(note); 
-    	this.noteDao = DAOfactory.INSTANCE.getNoteDAO();
-    }
+	private TaskFxModel taskModel;
 
-    @FXML
-    void initialize() {
-    	noteTextArea.setText(notesModel.getText());
-    	
-    	saveButton.setOnAction(new EventHandler<ActionEvent>() {
-			
+	private NoteFxModel notesModel;
+
+	private NoteDAO noteDao;
+
+	public EditNoteController(Note note) {
+		this.notesModel = new NoteFxModel(note);
+		this.noteDao = DAOfactory.INSTANCE.getNoteDAO();
+	}
+
+	@FXML
+	void initialize() {
+		noteTextArea.setText(notesModel.getText());
+
+		saveButton.setOnAction(new EventHandler<ActionEvent>() {
+
 			@Override
 			public void handle(ActionEvent event) {
 				notesModel.setAuthor(UserIdentificationManager.getUser());
@@ -48,5 +46,5 @@ public class EditNoteController {
 				saveButton.getScene().getWindow().hide();
 			}
 		});
-    }
+	}
 }

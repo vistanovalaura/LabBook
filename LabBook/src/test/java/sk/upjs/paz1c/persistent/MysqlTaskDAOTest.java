@@ -22,7 +22,7 @@ public class MysqlTaskDAOTest {
 	void testGetAll() {
 		List<Task> tasks = DAOfactory.INSTANCE.getTaskDAO().getAll();
 		assertNotNull(tasks);
-		assertTrue(tasks.size() == 3);
+		assertTrue(tasks.size() > 0);
 	}
 
 	@Test

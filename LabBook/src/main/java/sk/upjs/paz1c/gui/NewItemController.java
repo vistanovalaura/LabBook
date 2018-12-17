@@ -39,7 +39,7 @@ public class NewItemController {
 	public NewItemController(Laboratory laboratory) {
 		this.laboratoryModel = new LaboratoryFxModel(laboratory);
 	}
-	
+
 	public NewItemController() {
 		// TODO Auto-generated constructor stub
 	}

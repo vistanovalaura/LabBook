@@ -95,7 +95,7 @@ public class NewAdminController {
 			iOException.printStackTrace();
 		}
 	}
-	
+
 	private void showTakenNameWindow() {
 		TakenNameController controller = new TakenNameController();
 		try {
@@ -116,7 +116,6 @@ public class NewAdminController {
 			iOException.printStackTrace();
 		}
 	}
-
 
 	private boolean isAvailable(String name) {
 		List<Admin> admins = adminDao.getAll();

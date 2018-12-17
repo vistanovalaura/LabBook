@@ -22,7 +22,6 @@ public class LaboratoryFxModel {
 		if (laboratory.getItems() != null) {
 			setItems(laboratory.getItems());
 		}
-		System.out.println(getName());
 	}
 	
 	public LaboratoryFxModel() {

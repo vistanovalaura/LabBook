@@ -31,7 +31,7 @@ public class ExportUserDataToExcelManagerTest {
 
 	@Test
 	void excelTest() {
-		// USER
+		
 		User testUser = new User();
 		testUser.setName("tester");
 		testUser.setPassword("1234");
@@ -39,7 +39,6 @@ public class ExportUserDataToExcelManagerTest {
 		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
 		userDAO.addUser(testUser);
 
-		// PROJECT
 		Project project = new Project();
 		project.setName("testovaci_projekt");
 		project.setActive(true);
@@ -49,7 +48,6 @@ public class ExportUserDataToExcelManagerTest {
 		ProjectDAO projectDAO = DAOfactory.INSTANCE.getProjectDAO();
 		projectDAO.addProject(project);
 
-		// TASK
 		Laboratory testLaboratory = new Laboratory();
 		testLaboratory.setName("tester");
 		testLaboratory.setLocation("testovacia");
@@ -98,8 +96,6 @@ public class ExportUserDataToExcelManagerTest {
 		task1.setItems(Arrays.asList(testItem, testItem2, testItem3));
 		taskDAO.addTask(task1);
 
-
-		// NOTE
 		Note note = new Note();
 		note.setText("testovaci text");
 		note.setTimestamp(LocalDateTime.now());
@@ -108,12 +104,10 @@ public class ExportUserDataToExcelManagerTest {
 		NoteDAO noteDAO = DAOfactory.INSTANCE.getNoteDAO();
 		noteDAO.addNote(note);
 
-		// test
 		try {
 			ExportUserDataToExcelManager.exportUserData(testUser);
 
 			// https://stackoverflow.com/questions/6896435/count-number-of-worksheets-in-excel-file
-			//String fileName = "userData.xlsx";
 			XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream("userData.xlsx"));
 			assertTrue(workbook.getNumberOfSheets() == 3);
 			assertTrue(workbook.getSheetAt(0).getPhysicalNumberOfRows() == 2);
@@ -125,18 +119,11 @@ public class ExportUserDataToExcelManagerTest {
 			e.printStackTrace();
 		}
 
-		// delete
 		itemDAO.deleteItem(testItem);
 		itemDAO.deleteItem(testItem2);
 		itemDAO.deleteItem(testItem3);
 		laboratoryDAO.deleteLaboratory(testLaboratory);
 
-		noteDAO.deleteNote(note);
-		projectDAO.deleteProject(project);
-
-		taskDAO.deleteTask(task);
-		taskDAO.deleteTask(task1);
-		userDAO.deleteUser(testUser);
 		userDAO.deleteUser(testUser);
 	}
 

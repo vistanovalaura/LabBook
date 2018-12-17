@@ -128,10 +128,10 @@ public class SelectTaskController {
 		tasksTableView.getColumns().add(nameCol);
 		columnsVisibility.put("name", nameCol.visibleProperty());
 
-//		TableColumn<Task, Laboratory> labCol = new TableColumn<>("Laboratory");
-//		labCol.setCellValueFactory(new PropertyValueFactory<>("lab"));
-//		tasksTableView.getColumns().add(labCol);
-//		columnsVisibility.put("lab", labCol.visibleProperty());
+		// TableColumn<Task, Laboratory> labCol = new TableColumn<>("Laboratory");
+		// labCol.setCellValueFactory(new PropertyValueFactory<>("lab"));
+		// tasksTableView.getColumns().add(labCol);
+		// columnsVisibility.put("lab", labCol.visibleProperty());
 
 		tasksTableView.setItems(tasksModel);
 		tasksTableView.setEditable(true);

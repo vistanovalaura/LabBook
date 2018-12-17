@@ -51,6 +51,7 @@ public class EditAdminController {
 				adminDao.saveAdmin(adminModel.getAdmin());
 				saveButton.getScene().getWindow().hide();
 			}
+			
 		});
 	}
 }

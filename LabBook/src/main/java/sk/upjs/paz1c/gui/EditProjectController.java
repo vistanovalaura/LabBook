@@ -59,7 +59,6 @@ public class EditProjectController {
 				projectModel.setCreatedBy(UserIdentificationManager.getUser());
 				projectDao.saveProject(projectModel.getProject());
 				saveButton.getScene().getWindow().hide();
-
 			}
 		});
 

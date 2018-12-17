@@ -1,6 +1,5 @@
 package sk.upjs.paz1c.entities;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 

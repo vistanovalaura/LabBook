@@ -20,7 +20,6 @@ public class DeleteUserAdminController {
 	public DeleteUserAdminController(User user) {
 		this.user = user;
 	}
-	
 
 	@FXML
 	private Button yesButton;

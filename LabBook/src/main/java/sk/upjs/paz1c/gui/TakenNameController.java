@@ -10,9 +10,11 @@ public class TakenNameController {
 
 	@FXML
 	void initialize() {
+
 		closeButton.setOnAction(eh -> {
 			closeButton.getScene().getWindow().hide();
 		});
+
 	}
 
 }

@@ -26,7 +26,6 @@ public class TaskFxModel {
 	private User createdBy;
 
 	public TaskFxModel() {
-
 	}
 
 	public TaskFxModel(Task task) {

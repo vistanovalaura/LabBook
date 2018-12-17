@@ -15,9 +15,9 @@ public class Project {
 	private List<Item> items;
 	private boolean eachItemAvailable;
 	private List<User> completedBy;
-	
+
 	public Project() {
-		
+
 	}
 
 	public Project(String name, LocalDate dateFrom, LocalDate dateUntil, boolean active) {
@@ -112,7 +112,5 @@ public class Project {
 	public String toString() {
 		return "Project [projectID=" + projectID + ", name=" + name + "]";
 	}
-	
-	
 
 }

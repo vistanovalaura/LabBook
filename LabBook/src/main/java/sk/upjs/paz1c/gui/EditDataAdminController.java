@@ -84,6 +84,9 @@ public class EditDataAdminController {
 
 		List<User> users = userDao.getAll();
 		userComboBox.setItems(FXCollections.observableList(users));
+		// zoberieme model comboboxu, z neho vybraneho itemu, pridame changelistenera -
+		// ak sa zmeni observableValue tak sa nastavi instancia userFxmodelu na novu
+		// value
 		userComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
 
 			@Override
@@ -140,10 +143,10 @@ public class EditDataAdminController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println(selectedLaboratoryModel.getLaboratory().toString());
-//				DeleteLaboratoryController deleteController = new DeleteLaboratoryController(
-//						selectedLaboratoryModel.getLaboratory());
-//				showModalWindow(deleteController, "deleteLaboratory.fxml");
+				// System.out.println(selectedLaboratoryModel.getLaboratory().toString());
+				// DeleteLaboratoryController deleteController = new DeleteLaboratoryController(
+				// selectedLaboratoryModel.getLaboratory());
+				// showModalWindow(deleteController, "deleteLaboratory.fxml");
 				laboratoryDao.deleteLaboratory(selectedLaboratoryModel.getLaboratory());
 				laboratoryModel.setAll(laboratoryDao.getAll());
 				laboratoriesComboBox.setItems(FXCollections.observableList(laboratoryDao.getAll()));

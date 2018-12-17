@@ -92,7 +92,5 @@ public class User {
 //		return "User [userID=" + userID + ", name=" + name + ", password=" + password + ", projects=" + projects
 //				+ ", tasks=" + tasks + ", email=" + email + "]";
 //	}
-	
-	
 
 }

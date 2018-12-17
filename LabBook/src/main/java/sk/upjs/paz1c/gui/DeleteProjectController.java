@@ -10,10 +10,10 @@ import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.ProjectDAO;
 
 public class DeleteProjectController {
-	
+
 	private ProjectDAO projectDao = DAOfactory.INSTANCE.getProjectDAO();
-	private ProjectFxModel projectModel; 
-	private Project project; 
+	private ProjectFxModel projectModel;
+	private Project project;
 
 	@FXML
 	private Button yesButton;
@@ -22,20 +22,19 @@ public class DeleteProjectController {
 	private Button noButton;
 
 	public DeleteProjectController(Project project) {
-		this.project = project; 
-    	this.projectModel = new ProjectFxModel(project);
+		this.project = project;
+		this.projectModel = new ProjectFxModel(project);
 	}
-	
+
 	@FXML
 	void initialize() {
-		
-		
+
 		yesButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				projectDao.deleteProject(projectModel.getProject());
-				//projectDao.saveProject(projectModel.getProject());
+				// projectDao.saveProject(projectModel.getProject());
 				yesButton.getScene().getWindow().hide();
 			}
 		});

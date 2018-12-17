@@ -55,7 +55,6 @@ public class NewNoteController {
 					noteDao.addNote(note);
 				}
 				saveButton.getScene().getWindow().hide();
-
 			}
 		});
 	}

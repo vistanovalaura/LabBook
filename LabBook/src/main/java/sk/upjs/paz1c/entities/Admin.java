@@ -8,7 +8,6 @@ public class Admin {
 	private String email;
 
 	public Admin() {
-
 	}
 
 	public Admin(String name, String password) {

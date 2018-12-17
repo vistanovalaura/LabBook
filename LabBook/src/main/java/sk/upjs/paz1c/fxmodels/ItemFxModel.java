@@ -14,7 +14,7 @@ public class ItemFxModel {
 		setItemID(item.getItemID());
 		setQuantity(item.getQuantity());
 	}
-	
+
 	public ItemFxModel() {
 		// TODO Auto-generated constructor stub
 	}
@@ -32,7 +32,7 @@ public class ItemFxModel {
 		item.setQuantity(getQuantity());
 		return item;
 	}
-	
+
 	public void setItem(Item item) {
 		setName(item.getName());
 		setItemID(item.getItemID());

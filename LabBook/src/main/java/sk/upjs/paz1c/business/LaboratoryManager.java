@@ -9,6 +9,7 @@ import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.ItemDAO;
 
 public class LaboratoryManager {
+	
 	public static List<Item> getItemsOfLaboratory(Laboratory laboratory) {
 		ItemDAO itemDao = DAOfactory.INSTANCE.getItemDAO();
 		List<Item> items = new ArrayList<>();

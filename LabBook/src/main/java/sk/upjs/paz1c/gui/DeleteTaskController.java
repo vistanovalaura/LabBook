@@ -12,26 +12,25 @@ import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.TaskDAO;
 
 public class DeleteTaskController {
-	
+
 	private TaskDAO taskDao = DAOfactory.INSTANCE.getTaskDAO();
-	private TaskFxModel taskModel; 
-	private Task task; 
+	private TaskFxModel taskModel;
+	private Task task;
 
 	@FXML
-    private Button yesButton;
+	private Button yesButton;
 
-    @FXML
-    private Button noButton;
-    
-    public DeleteTaskController(Task task) {
-		this.task = task; 
-    	this.taskModel = new TaskFxModel(task);
+	@FXML
+	private Button noButton;
+
+	public DeleteTaskController(Task task) {
+		this.task = task;
+		this.taskModel = new TaskFxModel(task);
 	}
-    
+
 	@FXML
 	void initialize() {
-		
-		
+
 		yesButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

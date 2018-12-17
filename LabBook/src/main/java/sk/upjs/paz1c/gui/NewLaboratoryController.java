@@ -58,7 +58,6 @@ public class NewLaboratoryController {
 
 			}
 		});
-	
 
 	}
 
@@ -113,7 +112,7 @@ public class NewLaboratoryController {
 		}
 		return true;
 	}
-	
+
 	private void showModalWindow(Object controller, String fxml) {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));

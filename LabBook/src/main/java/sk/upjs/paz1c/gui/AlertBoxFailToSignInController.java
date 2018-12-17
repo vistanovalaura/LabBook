@@ -12,7 +12,6 @@ public class AlertBoxFailToSignInController {
         closeButton.setOnAction(eh -> {
             closeButton.getScene().getWindow().hide();
         });
-
     }
 
 }

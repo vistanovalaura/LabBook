@@ -13,30 +13,29 @@ import sk.upjs.paz1c.persistent.ItemDAO;
 import sk.upjs.paz1c.persistent.ProjectDAO;
 
 public class DeleteItemController {
-	
+
 	@FXML
 	private Button yesButton;
 
 	@FXML
 	private Button noButton;
-	
+
 	private ItemDAO itemDao = DAOfactory.INSTANCE.getItemDAO();
-	private ItemFxModel itemModel; 
-	
+	private ItemFxModel itemModel;
+
 	public DeleteItemController(Item item) {
-    	this.itemModel = new ItemFxModel(item);
+		this.itemModel = new ItemFxModel(item);
 	}
-	
+
 	@FXML
 	void initialize() {
-		
-		
+
 		yesButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				itemDao.deleteItem(itemModel.getItem());
-				//projectDao.saveProject(projectModel.getProject());
+				// projectDao.saveProject(projectModel.getProject());
 				yesButton.getScene().getWindow().hide();
 			}
 		});

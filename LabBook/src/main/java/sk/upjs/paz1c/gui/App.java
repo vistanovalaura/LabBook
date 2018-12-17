@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
+	// spustenie aplikacie
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FrontPageController mainController = new FrontPageController();

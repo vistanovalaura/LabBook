@@ -40,6 +40,8 @@ public class UserIdentificationManager {
 		return null;
 	}
 
+	// nastavy id a typ usera + podla toho aka hodnota sa vrati sa vyberie dalsie
+	// okno (pre admina, pre usera alebo wrongData)
 	public static int setUser(String userName, String password) {
 		List<User> users = DAOfactory.INSTANCE.getUserDAO().getAll();
 		for (User user : users) {

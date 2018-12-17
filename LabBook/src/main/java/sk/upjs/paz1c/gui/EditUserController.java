@@ -15,30 +15,30 @@ import sk.upjs.paz1c.persistent.DAOfactory;
 import sk.upjs.paz1c.persistent.UserDAO;
 
 public class EditUserController {
-	
+
 	private UserDAO userDao = DAOfactory.INSTANCE.getUserDAO();
 	private UserFxModel userModel;
 
 	@FXML
-    private Button saveButton;
+	private Button saveButton;
 
-    @FXML
-    private PasswordField newPasswordPasswordField;
+	@FXML
+	private PasswordField newPasswordPasswordField;
 
-    @FXML
-    private PasswordField confirmNewPasswordPasswordField;
+	@FXML
+	private PasswordField confirmNewPasswordPasswordField;
 
-    @FXML
-    private TextField emailTextField;
+	@FXML
+	private TextField emailTextField;
 
-    @FXML
-    private TextField nameTextField;
-    
-    public EditUserController(User user) {
+	@FXML
+	private TextField nameTextField;
+
+	public EditUserController(User user) {
 		this.userModel = new UserFxModel(user);
 	}
-    
-    @FXML
+
+	@FXML
 	void initialize() {
 		nameTextField.textProperty().bindBidirectional(userModel.nameProperty());
 		emailTextField.textProperty().bindBidirectional(userModel.EmailProperty());
@@ -55,6 +55,4 @@ public class EditUserController {
 		});
 	}
 
-    
-    
 }

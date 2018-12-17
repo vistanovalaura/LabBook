@@ -53,10 +53,10 @@ public class FrontPageController {
 
 	}
 
-//	 public FrontPageController(User user) {
-//	 this.user = user;
-//	 this.userModel = new UserFxModel(user);
-//	 }
+	// public FrontPageController(User user) {
+	// this.user = user;
+	// this.userModel = new UserFxModel(user);
+	// }
 
 	@FXML
 	void initialize() {
@@ -213,6 +213,7 @@ public class FrontPageController {
 
 			Stage stage = new Stage();
 			stage.setScene(scene);
+			// nikde sa neda v aplikacii kliknut kym je toto okno aktivne
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setResizable(false);
 			stage.setTitle("Fail to sign in");

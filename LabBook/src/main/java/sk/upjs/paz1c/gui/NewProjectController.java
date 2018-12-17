@@ -33,9 +33,9 @@ public class NewProjectController {
 
 	@FXML
 	private DatePicker untilDatePicker;
-	
+
 	private UserFxModel userModel;
-	
+
 	public NewProjectController(User user) {
 		userModel = new UserFxModel(user);
 	}
@@ -50,7 +50,7 @@ public class NewProjectController {
 				String name = nameTextField.getText();
 				LocalDate from = fromDatePicker.getValue();
 				LocalDate until = untilDatePicker.getValue();
-				
+
 				if (name.isEmpty() || from == null || until == null) {
 					showWrongDataInputWindow();
 				} else {
@@ -60,7 +60,7 @@ public class NewProjectController {
 					projectDao.addProject(project);
 					saveButton.getScene().getWindow().hide();
 				}
-				
+
 			}
 		});
 

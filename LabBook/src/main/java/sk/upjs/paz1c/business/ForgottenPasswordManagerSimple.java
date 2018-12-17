@@ -19,12 +19,12 @@ public class ForgottenPasswordManagerSimple {
 
 	public static void sendPassword(String email) {
 		UserDAO userDAO = DAOfactory.INSTANCE.getUserDAO();
-		
+
 		User user = userDAO.getByEmail(email);
 		String newPassword = RandomStringUtils.randomAscii(10);
 		user.setPassword(newPassword);
 		userDAO.saveUser(user);
-		
+
 		String from = USER_NAME;
 		String pass = PASSWORD;
 		String[] to = { email }; // list of recipient email addresses

@@ -51,7 +51,7 @@ public class ExportUserDataToExcelManager {
 		Font headerFont = workbook.createFont();
 		headerFont.setBold(true);
 		headerFont.setFontHeightInPoints((short) 14);
-		headerFont.setColor(IndexedColors.RED.getIndex());
+		headerFont.setColor(IndexedColors.PINK.getIndex());
 		// Create a CellStyle with the font
 		CellStyle headerCellStyle = workbook.createCellStyle();
 		headerCellStyle.setFont(headerFont);
@@ -71,8 +71,6 @@ public class ExportUserDataToExcelManager {
 		int rowNum = 1;
 		for (Project project : projects) {
 			Row row = sheet.createRow(rowNum++);
-			// { "Name", "Active", "Start of the project", "End of the project", "Each item
-			// is available" }
 			row.createCell(0).setCellValue(project.getName());
 			row.createCell(1).setCellValue(project.isActive());
 			Cell dateFrom = row.createCell(2);
@@ -98,8 +96,6 @@ public class ExportUserDataToExcelManager {
 		}
 
 		sheet = workbook.createSheet("Tasks");
-
-		headerFont.setColor(IndexedColors.BLUE.getIndex());
 
 		headerRow = sheet.createRow(0);
 
@@ -145,8 +141,6 @@ public class ExportUserDataToExcelManager {
 
 		sheet = workbook.createSheet("Notes");
 
-		headerFont.setColor(IndexedColors.PINK.getIndex());
-
 		headerRow = sheet.createRow(0);
 
 		for (int i = 0; i < noteColumns.length; i++) {
@@ -164,10 +158,10 @@ public class ExportUserDataToExcelManager {
 			// https://stackoverflow.com/questions/19431234/converting-between-java-time-localdatetime-and-java-util-date
 			timeStamp.setCellValue(Date.from(note.getTimestamp().atZone(ZoneId.systemDefault()).toInstant()));
 			timeStamp.setCellStyle(dateCellStyle);
-//			if (note.getProject() != null)
-//				row.createCell(2).setCellValue(note.getProject().getName());
-//			else
-//				row.createCell(2).setCellValue("Not defined");
+			if (note.getProject() != null)
+				row.createCell(2).setCellValue(note.getProject().getName());
+			else
+				row.createCell(2).setCellValue("Not defined");
 			if (note.getTask() != null)
 				row.createCell(2).setCellValue(note.getTask().getName());
 			else

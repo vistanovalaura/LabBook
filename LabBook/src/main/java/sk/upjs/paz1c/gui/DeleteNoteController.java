@@ -14,24 +14,23 @@ import sk.upjs.paz1c.persistent.TaskDAO;
 
 public class DeleteNoteController {
 	private NoteDAO noteDao = DAOfactory.INSTANCE.getNoteDAO();
-	private NoteFxModel noteModel; 
-	private Note note; 
+	private NoteFxModel noteModel;
+	private Note note;
 
 	@FXML
-    private Button yesButton;
+	private Button yesButton;
 
-    @FXML
-    private Button noButton;
-    
-    public DeleteNoteController(Note note) {
-		this.note = note; 
-    	this.noteModel = new NoteFxModel(note);
+	@FXML
+	private Button noButton;
+
+	public DeleteNoteController(Note note) {
+		this.note = note;
+		this.noteModel = new NoteFxModel(note);
 	}
-    
+
 	@FXML
 	void initialize() {
-		
-		
+
 		yesButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

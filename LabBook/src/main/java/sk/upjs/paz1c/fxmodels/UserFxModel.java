@@ -21,7 +21,7 @@ public class UserFxModel {
 		this.user = user;
 		setName(user.getName());
 		setPassword(user.getPassword());
-		System.out.println(user.getUserID());
+		//System.out.println(user.getUserID());
 		setUserID(user.getUserID());
 		setEmail(user.getEmail());
 	}

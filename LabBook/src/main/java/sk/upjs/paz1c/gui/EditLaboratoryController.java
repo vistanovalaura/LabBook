@@ -79,7 +79,6 @@ public class EditLaboratoryController {
 	@FXML
 	void initialize() {
 		itemModel = FXCollections.observableArrayList(getItems());
-		// itemModel = FXCollections.observableArrayList(getItems());
 		nameTextField.textProperty().bindBidirectional(laboratoryModel.nameProperty());
 		locationTextField.textProperty().bindBidirectional(laboratoryModel.locationProperty());
 

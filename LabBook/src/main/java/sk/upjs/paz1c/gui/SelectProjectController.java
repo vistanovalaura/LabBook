@@ -238,7 +238,6 @@ public class SelectProjectController {
 			stage.setTitle("Tasks");
 			stage.show();
 			openButton.getScene().getWindow().hide();
-
 		} catch (IOException iOException) {
 			iOException.printStackTrace();
 		}
